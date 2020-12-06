@@ -6,8 +6,8 @@
       <router-view />
     </div>
   </div>
-  <div class="news-list">
-    <v-row :justify="end" >
+  <div class="user-list">
+    <v-row  >
       <v-col cols="8" >
       </v-col>
         <v-col cols="4">
@@ -16,8 +16,8 @@
             cols="4"
 
           >
-            <RouterLink :to="'/api/news-add/'" class="white--text" >
-              Add News
+            <RouterLink :to="'/api/user-add/'" class="white--text" >
+              Add User
             </RouterLink>
           </v-btn>
         </v-col>
@@ -30,43 +30,30 @@
                 <thead>
                   <tr>
                     <th>ID</th>
-                    <th>ID Game</th>
-                    <th>Judul Berita</th>
-                    <th>Kategori</th>
-                    <th>Isi</th>
-                    <th>Date Publish</th>
-                    <th>Date Update</th>
+                    <th>Username</th>
+                    <th>Email</th>
+                    <th>Password</th>
+                    <th>is admin</th>
 
                     <th class="text-center">Pilihan</th>
                   </tr>
                 </thead>
                 <tbody>
-                  <tr v-for="news_item in news" :key="news_item.id_berita">
-                    <td class="text-xs-center">{{ news_item.id_berita }}</td>
-                    <td class="text-xs-center">{{ news_item.id_game }}</td>
-                    <td class="text-xs-center">{{ news_item.judul_berita }}</td>
-                    <td class="text-xs-center">{{ news_item.kategori }}</td>
-                    <td class="text-xs-center">{{ news_item.isi }}</td>
-                    <td class="text-xs-center">{{ news_item.publish_date }}</td>
-                    <td class="text-xs-center">{{ news_item.lastupdate_date }}</td>
+                  <tr v-for="user in users" :key="user.id_user">
+                    <td class="text-xs-center">{{ user.id_user }}</td>
+                    <td class="text-xs-center">{{ user.username }}</td>
+                    <td class="text-xs-center">{{ user.email }}</td>
+                    <td class="text-xs-center">{{ user.password }}</td>
+                    <td class="text-xs-center">{{ user.is_admin }}</td>
                     <td class="text-center">
                         <v-btn
                           class="ma-2"
                           color="warning"
                           dark
                           width="110px"
-                          :to="'/api/news/' + news_item.id_berita"
+                          :to="'/api/users/' + user.id_user"
                         >
                         Edit
-                      </v-btn>
-                      <v-btn
-                          class="ma-2"
-                          color="warning"
-                          dark
-                          width="200px"
-                          :to="'/api/news-update-thumbnail/' + news_item.id_berita"
-                        >
-                        Update Thumbnail
                       </v-btn>
                         <v-dialog
                           v-model="dialog"
@@ -81,14 +68,14 @@
                             width="100px"
                             v-bind="attrs"
                             v-on="on"
-                            @click.prevent="selectedNews(news_item.id_berita)"
+                            @click.prevent="selectedUser(user.id_user)"
                             >
                             Delete
                           </v-btn>
                         </template>
                         <v-card>
                           <v-card-title class="text-h8">
-                            Apakah Anda yakin untuk menghapus berita ini? (ID = :{{selectedIdBerita}})
+                            Apakah Anda yakin untuk menghapus user ini? (ID = :{{selectedIdUser}})
                           </v-card-title>
                           <v-card-text></v-card-text>
                           <v-card-actions>
@@ -104,7 +91,7 @@
                               color="blue darken-1"
                               text
                               @click="dialog = false"
-                              @click.prevent="deleteNews(selectedIdBerita)"
+                              @click.prevent="deleteUser(selectedIdUser)"
                             >
                               Yakin
                             </v-btn>
@@ -122,12 +109,12 @@
   </div>
   <div class="col-md-8">
       <div class="input-group mb-3">
-        <input type="text" class="form-control" placeholder="Search by Judul Berita"
-          v-model="judul_berita"/>
+        <input type="text" class="form-control" placeholder="Search by Username"
+          v-model="username"/>
         <div class="input-group-append">
           <button class="btn btn-outline-secondary" type="button"
-            @click="searchJudulBerita"
-            :to="'/api/news?judul_berita=' + judul_berita"
+            @click="searchUsername"
+            :to="'/api/user?username=' + username"
           >
             Search
           </button>
@@ -140,33 +127,32 @@
 <script>
 import http from "@/http";
 import "bootstrap/dist/css/bootstrap.css";
-//import NewsDataService from "../services/NewsDataService";
 export default {
-    name:"news",
+    name:"users",
     data () {
       return {
-        news: [],
+        users: [],
         key: "",
         id: 0,
         dialog: false,
         isLoading: false,
-        judul_berita: "",
-        selectedIdBerita: null
+        username: "",
+        selectedIdUser: null
       }
     },
     methods:{
         retrieve(){
           http
-          .get('http://localhost:8000/api/news')
+          .get('http://localhost:8000/api/users')
             .then((response) =>{
-              this.news = response.data;
+              this.users = response.data;
             })
             .catch((e)=>{
               console.log(e);
             });
         },
-        searchJudulBerita() {
-          http.get('http://localhost:8000/api/news/search/'+this.judul_berita)
+        searchUsername() {
+          http.get('http://localhost:8000/api/users/search/'+this.username)
             .then(response => {
               this.news = response.data;
               console.log(response.data);
@@ -175,8 +161,8 @@ export default {
               console.log(e);
             });
         },
-        deleteNews(id_berita) {
-          http.delete('http://localhost:8000/api/news/'+id_berita)
+        deleteUser(id_user) {
+          http.delete('http://localhost:8000/api/users/'+id_user)
             .then(response => {
               console.log(response.data);
             })
@@ -184,8 +170,8 @@ export default {
               console.log(e);
             });
         },
-        selectedNews(id_berita) {
-          this.selectedIdBerita = id_berita
+        selectedUser(id_user) {
+          this.selectedIdUser = id_user
         }
     },
     mounted(){

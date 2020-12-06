@@ -33,7 +33,8 @@ app.post('/api/users/', async (req, res)=>{
     const password = req.body.password
     const isAdmin = req.body.is_admin
 
-    await user.insertUser(username, email, password, user.string_to_boolean(isAdmin))
+    await user.insertUser(username, email, password, isAdmin)
+    console.log(isAdmin)
     res.status(201).end()
 })
 
@@ -49,15 +50,20 @@ app.put('/api/users/:id', async (req, res)=>{
     const password = req.body.password
     const isAdmin = req.body.is_admin
 
-    await user.updateUser(id, username, email, password, user.string_to_boolean(isAdmin))
+    await user.updateUser(id, username, email, password, isAdmin)
+    console.log(isAdmin)
     res.status(204).end()
 })
 
 app.get('/api/users/:id', async (req,res)=>{
     const users = await user.getOneUser(req.params.id)
-    res.send(await news.rows)
+    res.send(await users.rows)
 })
 
+app.get('/api/users/search/:username/', async (req,res)=>{
+    const users = await user.getUserByUsername(req.params.username)
+    res.send(await users.rows)
+})
 
 //=============READ LATER BACKEND===========
 app.get('/api/read_later/', async (req,res)=>{
@@ -100,13 +106,20 @@ app.get('/api/game_allthumbnail/:id', async (req,res)=>{
     res.send(await game.rows[0].thumbnail_game)
 })
 
-app.put('/api/game_save/:id', async (req,res)=>{
+app.put('/api/game_save/:id', uploadImage.single("thumbnail"), async (req,res)=>{
     const id = req.params.id
-    var bufs = [];
-    req.on('data', function(d){ bufs.push(d); });
-    req.on('end', function(){
-    var data = Buffer.concat(bufs);
+    filename = req.file.filename;
+    const data = fs.readFileSync(
+        __basedir + "/uploads/" + filename
+    );
+    // var bufs = [];
+    // req.on('data', function(d){ bufs.push(d); });
+    // req.on('end', function(){
+    // var data = Buffer.concat(bufs);
     permainan.updateGameThumbnail(id, data)
+    // });
+    res.send({
+        message: "News was updated successfully."
     });
 })
 
@@ -117,11 +130,10 @@ app.post('/api/game/', async (req, res)=>{
     const platform = req.body.platform
     const release_date = req.body.release_date
     const price = req.body.price
-    const thumbnail_game = req.body.thumbnail_game
     const description = req.body.description
     const system_requirement = req.body.system_requirement
 
-    await permainan.insertGame(judul_game, genre, publisher, platform, release_date, price, thumbnail_game, description, system_requirement)
+    await permainan.insertGame(judul_game, genre, publisher, platform, release_date, price, description, system_requirement)
     res.status(201).end()
 })
 
@@ -138,11 +150,10 @@ app.put('/api/game/:id', async (req, res)=>{
     const platform = req.body.platform
     const release_date = req.body.release_date
     const price = req.body.price
-    const thumbnail_game = req.body.thumbnail_game
     const description = req.body.description
     const system_requirement = req.body.system_requirement
 
-    await permainan.updateGame(id, judul_game, genre, publisher, platform, release_date, price, thumbnail_game, description, system_requirement)
+    await permainan.updateGame(id, judul_game, genre, publisher, platform, release_date, price, description, system_requirement)
     res.status(204).end()
 })
 

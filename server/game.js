@@ -18,18 +18,18 @@ module.exports = {
         return result
     },
     
-    insertGame : async function insertGame(judul_game, genre, publisher, platform, release_date, price, thumbnail_game, description, system_requirement){
-        client.export().query(`INSERT INTO public.game(judul_game, genre, publisher,platform, release_date, price, thumbnail_game, description, system_requirement)
-        VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9)`, [judul_game, genre, publisher, platform, release_date, price, thumbnail_game, description, system_requirement])
+    insertGame : async function insertGame(judul_game, genre, publisher, platform, release_date, price, description, system_requirement){
+        client.export().query(`INSERT INTO public.game(judul_game, genre, publisher,platform, release_date, price, description, system_requirement)
+        VALUES ($1, $2, $3, $4, $5, $6, $7, $8)`, [judul_game, genre, publisher, platform, release_date, price, description, system_requirement])
     },
     
     deleteGame : async function deleteGame(id_game){
         client.export().query('DELETE FROM public.game WHERE id_game = $1', [id_game])
     },
     
-    updateGame : async function updateGame(id, judul_game, genre, publisher, platform, release_date, price, thumbnail_game, description, system_requirement){
-        client.export().query(`UPDATE public.game SET judul_game = $2, genre = $3, publisher = $4, platform = $5, release_date = $6, price = $7, thumbnail_game = $8, description = $9, system_requirement = $10
-                        WHERE id_game = $1`, [id, judul_game, genre, publisher, platform, release_date, price, thumbnail_game, description, system_requirement])
+    updateGame : async function updateGame(id, judul_game, genre, publisher, platform, release_date, price, description, system_requirement){
+        client.export().query(`UPDATE public.game SET judul_game = $2, genre = $3, publisher = $4, platform = $5, release_date = $6, price = $7, description = $8, system_requirement = $9
+                        WHERE id_game = $1`, [id, judul_game, genre, publisher, platform, release_date, price, description, system_requirement])
     },
     
     updateGameThumbnail : async function updateGameThumbnail(id, thumbnail_game){

@@ -7,9 +7,18 @@ import home from './components/home';
 import NewsById from './components/NewsById';
 import GameById from './components/GameById';
 import NewsList from './components/NewsList';
-import NewsCMS from './components/NewsCMS';
+import NewsEdit from './components/NewsEdit';
 import AddNews from './components/AddNews';
+import AddGame from './components/AddGame';
 import UploadNewsThumbnail from './components/UploadFiles';
+import UploadGamePict from './components/UploadGamePict';
+import GameList from './components/GameList';
+import GameEdit from './components/GameEdit';
+import UserList from './components/UserLIst';
+import UserEdit from './components/UserEdit';
+import AddUser from './components/AddUser';
+import Login from './components/Login';
+import SignUp from './components/SignUp';
 
 Vue.use(VueRouter)
 
@@ -18,6 +27,26 @@ const routes = [
         path : "/cmsNews",
         name : 'lists',
         component : NewsList
+    },
+    {
+        path : "/cmsGame",
+        name : 'GameList',
+        component :GameList,
+    },
+    {
+        path : "/cmsUser",
+        name : 'UserList',
+        component :UserList,
+    },
+    {
+        path : "/login",
+        name : 'Login',
+        component :Login,
+    },
+    {
+        path : "/sign_up",
+        name : 'SignUp',
+        component :SignUp,
     },
     {
         path :"/game",
@@ -51,8 +80,18 @@ const routes = [
     },
     {
         path :"/api/news/:id_berita",
-        name : 'NewsCMS',
-        component :NewsCMS
+        name : 'NewsEdit',
+        component :NewsEdit
+    },
+    {
+        path :"/api/game/:id_game",
+        name : 'GameEdit',
+        component :GameEdit
+    },
+    {
+        path :"/api/users/:id_user",
+        name : 'UserEdit',
+        component :UserEdit
     },
     {
         path :"/api/news-add/",
@@ -60,9 +99,24 @@ const routes = [
         component :AddNews,
     },
     {
+        path :"/api/game-add/",
+        name : 'AddGame',
+        component :AddGame,
+    },
+    {
+        path :"/api/user-add/",
+        name : 'AddUser',
+        component :AddUser,
+    },
+    {
         path :"/api/news-update-thumbnail/:id_berita",
         name : 'UploadNewsThumbnail',
         component :UploadNewsThumbnail,
+    },
+    {
+        path :"/api/games-update-thumbnail/:id_game",
+        name : 'UploadGamePict',
+        component :UploadGamePict,
     },
 ];
 
