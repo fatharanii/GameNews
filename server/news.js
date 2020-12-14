@@ -9,7 +9,7 @@ module.exports = {
     },
     
     getNewsByJudul : async function getNewsByJudul(judul_berita){
-        const result = await client.export().query('SELECT * FROM public.news_item WHERE judul_berita LIKE $1 ', ['%'+judul_berita+'%'])
+        const result = await client.export().query('SELECT * FROM public.news_item WHERE judul_berita ILIKE $1 ', ['%'+judul_berita+'%'])
         return result
     },
     
@@ -23,8 +23,8 @@ module.exports = {
         return result
     },
     
-    getAllNew : async function getAllNew(){
-        const result = await client.export().query('SELECT * FROM public.news_item ORDER BY publish_date ASC limit 1')
+    getFiveNewsASC : async function getFiveNewsASC(){
+        const result = await client.export().query('SELECT * FROM public.news_item ORDER BY publish_date ASC limit 5')
         return result
     },
     

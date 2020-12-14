@@ -262,9 +262,9 @@ app.get('/api/news', async (req,res)=>{
        res.send(await news.rows)
    })
    
-   //GET berita terbaru berdasarkan hasil sort publish_date
+   //GET berita 5 terbaru berdasarkan hasil sort publish_date
    app.get('/api/home', async(req,res)=>{
-       const news = await berita.getAllNew()
+       const news = await berita.getFiveNewsASC()
        res.send(await news.rows)
    })
 

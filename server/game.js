@@ -59,7 +59,7 @@ module.exports = {
     },
     
     getGamesBySearch : async function getGamesBySearch(judul_game){
-            const result = await client.export().query('SELECT * FROM public.game WHERE judul_game LIKE $1', ['%'+judul_game+'%'])
+            const result = await client.export().query('SELECT * FROM public.game WHERE judul_game ILIKE $1', ['%'+judul_game+'%'])
             return result
     },
 
