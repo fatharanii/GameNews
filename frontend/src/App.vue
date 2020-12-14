@@ -22,6 +22,11 @@
               <a class="nav-link" href="#">Game</a>
             </RouterLink>
           </li>
+          <li class="nav-item">
+            <RouterLink :to="'/bookmark/'" class="routerlinkgame">
+              <a class="nav-link" href="#">Bookmark</a>
+            </RouterLink>
+          </li>
         </ul>
         <ul class="navbar-nav ">
           <li class="nav-item">
