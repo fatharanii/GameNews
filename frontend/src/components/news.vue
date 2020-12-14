@@ -22,6 +22,10 @@
                                             <v-flex xs12 align-end d-flex>
                                                 <span class="headline">{{ news.judul_berita }}</span>
                                             </v-flex>
+                                            <v-btn 
+                                            icon>
+                                              <v-icon>mdi-bookmark</v-icon>
+                                            </v-btn>
                                         </v-layout>
                                     </v-container>
                                 </v-card-media>
