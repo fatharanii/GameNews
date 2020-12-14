@@ -63,8 +63,11 @@ export default {
       http.post('http://localhost:8000/api/users/signin', data)
         .then(response => {
           console.log(response.data);
-          //console.log(data.is_admin)
+          // console.log(data.is_admin)
+          localStorage.removeItem('user');
+          localStorage.setItem('user', JSON.stringify(response.data));
           this.submitted = true;
+          //this.$router.push('/')
         })
         .catch(e => {
           console.log(e);

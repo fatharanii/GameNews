@@ -1,54 +1,60 @@
 <template id="news-details">
-  <div v-if="currentUser" class="edit-form">
-    <h4>User</h4>
+  <div v-if="adminAuth">
+    <div v-if="currentUser" class="edit-form">
+      <h4>User</h4>
 
-      <div class="form-group">
-        <v-text-field
-        v-model="currentUser.username"
-        label="username"
-        required
-        name="username"
-        id="username"
-      ></v-text-field>
-      </div>
-    
-      <div class="form-group">
-        <v-text-field
-        v-model="currentUser.email"
-        label="email"
-        required
-        name="email"
-        id="email"
-      ></v-text-field>
-      </div>
+        <div class="form-group">
+          <v-text-field
+          v-model="currentUser.username"
+          label="username"
+          required
+          name="username"
+          id="username"
+        ></v-text-field>
+        </div>
+      
+        <div class="form-group">
+          <v-text-field
+          v-model="currentUser.email"
+          label="email"
+          required
+          name="email"
+          id="email"
+        ></v-text-field>
+        </div>
 
-      <div class="form-group">
-        <v-text-field
-        v-model="currentUser.password"
-        label="password"
-        required
-        name="password"
-        id="password"
-      ></v-text-field>
-      </div>
+        <div class="form-group">
+          <v-text-field
+          v-model="currentUser.password"
+          label="password"
+          required
+          name="password"
+          id="password"
+        ></v-text-field>
+        </div>
 
-      <v-checkbox
-        v-model="currentUser.is_admin"
-        label="Is Admin" 
-      ></v-checkbox>
+        <v-checkbox
+          v-model="currentUser.is_admin"
+          label="Is Admin" 
+        ></v-checkbox>
 
-    <button type="submit" class="badge badge-success"
-      @click="updateUser"
-    >
-      Update
-    </button>
-    <p>{{ message }}</p>
+      <button type="submit" class="badge badge-success"
+        @click="updateUser"
+      >
+        Update
+      </button>
+      <p>{{ message }}</p>
+    </div>
+
+    <div v-else>
+      <br />
+      <p>Please click on a User...</p>
+      ID User {{ $route.params.id_user}}
+    </div>
   </div>
 
   <div v-else>
-    <br />
-    <p>Please click on a User...</p>
-    ID User {{ $route.params.id_user}}
+    <h4>Admin Content</h4>
   </div>
 </template>
 
@@ -56,6 +62,7 @@
 
 import http from "@/http";
 import "bootstrap/dist/css/bootstrap.css";
+import authHeader from '../services/auth-header';
 export default {
   name: "user-details",
   data() {
@@ -65,7 +72,8 @@ export default {
         username: "",
         email: "",
         password: "",
-        is_admin: ""
+        is_admin: "",
+        adminAuth: false
       },
     };
   },
@@ -85,7 +93,7 @@ export default {
     },
 
     updateUser() {
-      http.put('http://localhost:8000/api/users/'+this.$route.params.id_user, this.currentUser)
+      http.put('http://localhost:8000/api/users/'+this.$route.params.id_user, this.currentUser, { headers: authHeader() })
         .then(response => {
           console.log(response.data.is_admin);
           console.log(this.currentUser);
@@ -95,9 +103,20 @@ export default {
           console.log(e);
         });
     },
+    authenticateAdmin() {
+          http.get('http://localhost:8000/api/admin/auth', { headers: authHeader() })
+            .then(response => {
+              this.adminAuth = response.data;
+              console.log(response.data);
+            })
+            .catch(e => {
+              console.log(e);
+            });
+        }
   },
   mounted() {
     this.getUser();
+    this.authenticateAdmin();
   }
 };
 </script>

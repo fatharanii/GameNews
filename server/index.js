@@ -66,6 +66,11 @@ app.post('/api/users/signup', auth.checkDuplicateUsernameOrEmail, auth.signup)
 
 app.post('/api/users/signin', auth.signin)
 
+// Authenticate Admin for CMS
+app.get ('/api/admin/auth', [auth.verifyToken, auth.isAdmin],async (req, res)=>{
+   adminAuth = true;
+   res.send(adminAuth)
+})
 
 //=============READ LATER BACKEND===========
 app.get('/api/read_later/', async (req,res)=>{
