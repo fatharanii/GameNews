@@ -19,7 +19,7 @@ import UserEdit from './components/UserEdit';
 import AddUser from './components/AddUser';
 import Login from './components/Login';
 import SignUp from './components/SignUp';
-
+import Bookmark from './components/Bookmark';
 Vue.use(VueRouter)
 
 const routes = [
@@ -118,6 +118,11 @@ const routes = [
         name : 'UploadGamePict',
         component :UploadGamePict,
     },
+    {
+        path :"/bookmark",
+        name :'Bookmark',
+        component :Bookmark,
+    }
 ];
 
 const router = new VueRouter({

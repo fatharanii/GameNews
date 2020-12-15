@@ -1,6 +1,6 @@
 <template>
 <v-app light>
-  <h1>NEWS</h1>
+  <h1>BOOKMARK</h1>
   <v-row>
     <v-col
       cols="8"
@@ -12,29 +12,33 @@
                     <v-flex xs11 offset-md1>
                         <div v-for="news in articles" :key="news.id_berita">
                             <v-card class="my-4 mx-2" hover>
-                                <v-img
-                                height="200px"
-                                v-bind:src="'http://localhost:8000/api/news_thumbnail/' + news.id_berita"
-                                ></v-img>
                                 <v-card-media>
                                     <v-container fill-height fluid>
                                         <v-layout>
-                                            <v-flex xs12 align-end d-flex>
-                                                <span class="headline">{{ news.judul_berita }}</span>
+                                            <v-flex xs3 >
+                                                <v-img
+                                                height="150px"
+                                                width="150px"
+                                                class="mt-3"
+                                                v-bind:src="'http://localhost:8000/api/news_thumbnail/' + news.id_berita"
+                                                ></v-img>
                                             </v-flex>
-                                            <v-btn 
-                                            icon>
-                                              <v-icon>mdi-bookmark</v-icon>
-                                            </v-btn>
+                                            <v-flex xs12 align-end >
+                                                    <div
+                                                        class="pl-3 mt-3"
+                                                    >
+                                                        <span class="headline">{{ news.judul_berita }}</span>
+                                                        <div class=" subtitle-1 text--primary">
+                                                            {{ news.kategori }}
+                                                        </div>
+                                                        <p class="text-start text--secondary" v-if="!readMoreActivated">{{ news.isi.slice(0, 200) }}
+                                                            <readmore v-if="!readMoreActivated">...</readmore>
+                                                        </p>
+                                                    </div>
+                                            </v-flex>
                                         </v-layout>
                                     </v-container>
                                 </v-card-media>
-                                <div class="mx-4 my-1 subtitle-1 text--primary">
-                                  {{ news.kategori }}
-                                </div>
-                                <p class="text-start mx-4 text--secondary" v-if="!readMoreActivated">{{ news.isi.slice(0, 300) }}
-                                  <readmore v-if="!readMoreActivated">...</readmore>
-                                </p>
                                 <v-divider class="mx-5 my-0"></v-divider>
                                 <v-card-actions>
                                     <v-chip small class="grey--text">
@@ -136,6 +140,7 @@
 </v-app>
 </template>
 
+
 <script>
 import http from "@/http";
 
@@ -208,6 +213,5 @@ export default {
     this.retrieve();
   },
 }
-
 </script>
 <style scoped src="@/assets/styles/style.css"></style>
