@@ -1,5 +1,5 @@
 <template>
-<div>
+<div v-if="adminAuth">
   <div id="brand">
 
     <div class="container mt-3">
@@ -138,11 +138,16 @@
       </div>
     </div>
 </div>
+
+<div v-else>
+      <h4>Admin Content</h4>
+</div>
 </template>
 
 <script>
 import http from "@/http";
 import "bootstrap/dist/css/bootstrap.css";
+import authHeader from '../services/auth-header';
 //import NewsDataService from "../services/NewsDataService";
 export default {
     name:"games",
@@ -154,7 +159,8 @@ export default {
         dialog: false,
         isLoading: false,
         judul_game: "",
-        selectedIdGame: null
+        selectedIdGame: null,
+        adminAuth: false
       }
     },
     methods:{
@@ -189,10 +195,21 @@ export default {
         },
         selectedGame(id_game) {
           this.selectedIdGame = id_game
+        },
+        authenticateAdmin() {
+          http.get('http://localhost:8000/api/admin/auth', { headers: authHeader() })
+            .then(response => {
+              this.adminAuth = response.data;
+              console.log(response.data);
+            })
+            .catch(e => {
+              console.log(e);
+            });
         }
     },
     mounted(){
       this.retrieve();
+      this.authenticateAdmin();
     },
 };
 </script>

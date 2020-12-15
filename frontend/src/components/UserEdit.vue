@@ -73,8 +73,8 @@ export default {
         email: "",
         password: "",
         is_admin: "",
-        adminAuth: false
       },
+      adminAuth: false
     };
   },
   methods: {

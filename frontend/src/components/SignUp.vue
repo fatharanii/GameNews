@@ -20,7 +20,9 @@
                 <label for="password">Password</label>
                 <input type="password" class="form-control" placeholder="Password.." v-model="user.password">
               </div>
-              <button @click="saveUser" type="submit" class="btn btn-primary">Submit</button>
+              <RouterLink :to="'/'">
+                  <a href="#"><button @click="saveUser" type="submit" class="btn btn-primary">Submit</button></a>
+                </RouterLink>
             </form>
           </div>
         </div>
@@ -72,10 +74,14 @@ export default {
         });
     },
     
-    newUser() {
-      this.submitted = false;
-      this.user = {};
-    }
+    // newUser() {
+    //   this.submitted = false;
+    //   this.user = {};
+    // }
+  },
+  mounted(){
+    this.submitted = false;
+    this.user = {};
   }
 };
 </script>
