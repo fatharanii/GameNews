@@ -1,149 +1,158 @@
 <template>
-<v-app light>
-  <h1>BOOKMARK</h1>
-  <v-row>
-    <v-col
-      cols="8"
-      class="flex-grow-0 flex-shrink-0"
-    >
-      <v-content>
-            <v-container fluid>
-                <v-layout row wrap align-center>
-                    <v-flex xs11 offset-md1>
-                        <div v-for="news in articles" :key="news.id_berita">
-                            <v-card class="my-4 mx-2" hover>
-                                <v-card-media>
-                                    <v-container fill-height fluid>
-                                        <v-layout>
-                                            <v-flex xs3 >
-                                                <v-img
-                                                height="150px"
-                                                width="150px"
-                                                class="mt-3"
-                                                v-bind:src="'http://localhost:8000/api/news_thumbnail/' + news.id_berita"
-                                                ></v-img>
-                                            </v-flex>
-                                            <v-flex xs12 align-end >
-                                                    <div
-                                                        class="pl-3 mt-3"
-                                                    >
-                                                        <span class="headline">{{ news.judul_berita }}</span>
-                                                        <div class=" subtitle-1 text--primary">
-                                                            {{ news.kategori }}
-                                                        </div>
-                                                        <p class="text-start text--secondary" v-if="!readMoreActivated">{{ news.isi.slice(0, 200) }}
-                                                            <readmore v-if="!readMoreActivated">...</readmore>
-                                                        </p>
-                                                    </div>
-                                            </v-flex>
-                                        </v-layout>
-                                    </v-container>
-                                </v-card-media>
-                                <v-divider class="mx-5 my-0"></v-divider>
-                                <v-card-actions>
-                                    <v-chip small class="grey--text">
-                                        {{news.publish_date}}
-                                    </v-chip>
-                                    <v-spacer></v-spacer>
-                                    <v-btn
-                                      color="deep-purple lighten-2"
-                                      text
-                                    >
-                                      <readmore v-if="!readMoreActivated">
-                                        <RouterLink :to="'/news/'+news.id_berita" class="routerlinkgame">
-                                          Read More
-                                        </RouterLink>
-                                      </readmore>
-                                    </v-btn>
-                                </v-card-actions>
-                            </v-card>
-                        </div>
-                    </v-flex>
-                </v-layout>
-            </v-container>
-        </v-content>
-    </v-col>
-    <v-col
-      cols=""
-      class="flex-grow-1 flex-shrink-0"
-    >
-      <v-row>
-      <v-flex  sm6 ml-4>
-        <v-text-field
-          label='Cari berita'
-          v-model='searchString'
-          clearable
-          >
-        </v-text-field>
-      </v-flex>
-      <v-btn
-        icon
-        color="black"
-        @click="retrieve"
-        class="mt-6 ml-2"
-        x-small
+<div v-if="userAuth">
+  <v-app light>
+    <h1>BOOKMARK</h1>
+    <v-row>
+      <v-col
+        cols="8"
+        class="flex-grow-0 flex-shrink-0"
       >
-        <v-icon>mdi-delete</v-icon>
-      </v-btn>
-      <v-btn
-        flat
-        color="error"
-        @click="searchNews"
-        class="mt-5 ml-2"
-        small
+        <v-content>
+              <v-container fluid>
+                  <v-layout row wrap align-center>
+                      <v-flex xs11 offset-md1>
+                          <div v-for="news in articles" :key="news.id_berita">
+                              <v-card class="my-4 mx-2" hover>
+                                  <v-card-media>
+                                      <v-container fill-height fluid>
+                                          <v-layout>
+                                              <v-flex xs3 >
+                                                  <v-img
+                                                  height="150px"
+                                                  width="150px"
+                                                  class="mt-3"
+                                                  v-bind:src="'http://localhost:8000/api/news_thumbnail/' + news.id_berita"
+                                                  ></v-img>
+                                              </v-flex>
+                                              <v-flex xs12 align-end >
+                                                      <div
+                                                          class="pl-3 mt-3"
+                                                      >
+                                                          <span class="headline">{{ news.judul_berita }}</span>
+                                                          <div class=" subtitle-1 text--primary">
+                                                              {{ news.kategori }}
+                                                          </div>
+                                                          <p class="text-start text--secondary" v-if="!readMoreActivated">{{ news.isi.slice(0, 200) }}
+                                                              <readmore v-if="!readMoreActivated">...</readmore>
+                                                          </p>
+                                                      </div>
+                                              </v-flex>
+                                          </v-layout>
+                                      </v-container>
+                                  </v-card-media>
+                                  <v-divider class="mx-5 my-0"></v-divider>
+                                  <v-card-actions>
+                                      <v-chip small class="grey--text">
+                                          {{news.publish_date}}
+                                      </v-chip>
+                                      <v-spacer></v-spacer>
+                                      <v-btn
+                                        color="deep-purple lighten-2"
+                                        text
+                                      >
+                                        <readmore v-if="!readMoreActivated">
+                                          <RouterLink :to="'/news/'+news.id_berita" class="routerlinkgame">
+                                            Read More
+                                          </RouterLink>
+                                        </readmore>
+                                      </v-btn>
+                                  </v-card-actions>
+                              </v-card>
+                          </div>
+                      </v-flex>
+                  </v-layout>
+              </v-container>
+          </v-content>
+      </v-col>
+      <v-col
+        cols=""
+        class="flex-grow-1 flex-shrink-0"
       >
-        <span>Search</span>
-      </v-btn>
-      </v-row>
-      <div class="game_by">
-        <h2>Kategori :</h2>
-        <v-card
-          class="d-flex align-content-center flex-wrap"
-          flat
-          tile
+        <v-row>
+        <v-flex  sm6 ml-4>
+          <v-text-field
+            label='Cari berita'
+            v-model='searchString'
+            clearable
+            >
+          </v-text-field>
+        </v-flex>
+        <v-btn
+          icon
+          color="black"
+          @click="retrieve"
+          class="mt-6 ml-2"
+          x-small
         >
+          <v-icon>mdi-delete</v-icon>
+        </v-btn>
+        <v-btn
+          flat
+          color="error"
+          @click="searchNews"
+          class="mt-5 ml-2"
+          small
+        >
+          <span>Search</span>
+        </v-btn>
+        </v-row>
+        <div class="game_by">
+          <h2>Kategori :</h2>
           <v-card
-            v-for="n in kategori"
-            :key="n"
-            class="kategori pa-1 mx-1 my-2"
-            outlined
+            class="d-flex align-content-center flex-wrap"
+            flat
             tile
           >
-            <button
-            v-on:click="selectKategori(n)">
-						{{n}}</button>
+            <v-card
+              v-for="n in kategori"
+              :key="n"
+              class="kategori pa-1 mx-1 my-2"
+              outlined
+              tile
+            >
+              <button
+              v-on:click="selectKategori(n)">
+              {{n}}</button>
+            </v-card>
           </v-card>
-        </v-card>
-      </div>
-      <div class="game_by">
-        <h2>Urutkan :</h2>
-        <v-card
-          class="d-flex align-content-center flex-wrap"
-          flat
-          tile
-        >
+        </div>
+        <div class="game_by">
+          <h2>Urutkan :</h2>
           <v-card
-            v-for="n in urutkan"
-            :key="n"
-            class="kategori pa-1 mx-1 my-2"
-            outlined
+            class="d-flex align-content-center flex-wrap"
+            flat
             tile
           >
-            <button
-            v-on:click="selectUrutkan(n)">
-						{{n}}</button>
+            <v-card
+              v-for="n in urutkan"
+              :key="n"
+              class="kategori pa-1 mx-1 my-2"
+              outlined
+              tile
+            >
+              <button
+              v-on:click="selectUrutkan(n)">
+              {{n}}</button>
+            </v-card>
           </v-card>
-        </v-card>
-      </div>
-    </v-col>
-  </v-row>
-</v-app>
+        </div>
+      </v-col>
+    </v-row>
+  </v-app>
+</div>
+
+<div v-else>
+      <h4>You must log in first</h4>
+      <RouterLink :to="'/login/'">
+                  <a class="nav-link" href="#">Don't Have an Account? Sign Up Here</a>
+      </RouterLink>
+</div>
 </template>
 
 
 <script>
 import http from "@/http";
-
+import authHeader from '../services/auth-header';
 export default {
   data(){
     return{
@@ -152,7 +161,8 @@ export default {
       error:[],
       kategori:["All","Action", "Survival","Strategy", "Adventure","Sport"],
       urutkan:["All","Terbaru"],
-      searchString: ''
+      searchString: '',
+      userAuth: false
     }
   },
   methods:{
@@ -207,10 +217,21 @@ export default {
           this.errors(e)
         })
       }
-    }
+    },
+    authenticateUser() {
+          http.get('http://localhost:8000/api/user/auth', { headers: authHeader() })
+            .then(response => {
+              this.userAuth = response.data;
+              console.log(response.data);
+            })
+            .catch(e => {
+              console.log(e);
+            });
+        }
   },
   mounted(){
     this.retrieve();
+    this.authenticateUser();
   },
 }
 </script>

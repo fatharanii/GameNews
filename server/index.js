@@ -72,6 +72,12 @@ app.get ('/api/admin/auth', [auth.verifyToken, auth.isAdmin],async (req, res)=>{
    res.send(adminAuth)
 })
 
+// Authenticate Logged User
+app.get ('/api/user/auth', [auth.verifyToken],async (req, res)=>{
+   userAuth = true;
+   res.send(userAuth)
+})
+
 //=============READ LATER BACKEND===========
 app.get('/api/read_later/', async (req,res)=>{
    const bookmark = await read_later.getAllReadLater()
