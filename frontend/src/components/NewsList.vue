@@ -1,94 +1,72 @@
 <template>
-<div>
   <div id="brand">
-
-    <div class="container mt-3">
-      <router-view />
-    </div>
-  </div>
   <div class="news-list">
-    <v-row :justify="end" >
-      <v-col cols="8" >
-      </v-col>
-        <v-col cols="4">
+    <v-container>
+    <v-row justify="space-around">
+      <v-col>
+        <router-view />
           <v-btn
-            color="blue darken-1"
-            cols="4"
-
-          >
+            color="grey darken-1"
+             width="110px"
+            >
             <RouterLink :to="'/api/news-add/'" class="white--text" >
               Add News
             </RouterLink>
           </v-btn>
-        </v-col>
-    </v-row>
-    <v-container>
-    <v-row>
-          <v-col>
-            <v-simple-table height="500px" class="grey lighten-5">
-              <template v-slot:default>
-                <thead>
-                  <tr>
-                    <th>ID</th>
-                    <th>ID Game</th>
-                    <th>Judul Berita</th>
-                    <th>Kategori</th>
-                    <th>Isi</th>
-                    <th>Date Publish</th>
-                    <th>Date Update</th>
-
-                    <th class="text-center">Pilihan</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr v-for="news_item in news" :key="news_item.id_berita">
-                    <td class="text-xs-center">{{ news_item.id_berita }}</td>
-                    <td class="text-xs-center">{{ news_item.id_game }}</td>
-                    <td class="text-xs-center">{{ news_item.judul_berita }}</td>
-                    <td class="text-xs-center">{{ news_item.kategori }}</td>
-                    <td class="text-xs-center">{{ news_item.isi }}</td>
-                    <td class="text-xs-center">{{ news_item.publish_date }}</td>
-                    <td class="text-xs-center">{{ news_item.lastupdate_date }}</td>
-                    <td class="text-center">
-                        <v-btn
-                          class="ma-2"
-                          color="warning"
-                          dark
-                          width="110px"
-                          :to="'/api/news/' + news_item.id_berita"
-                        >
-                        Edit
-                      </v-btn>
-                      <v-btn
-                          class="ma-2"
-                          color="warning"
-                          dark
-                          width="200px"
-                          :to="'/api/news-update-thumbnail/' + news_item.id_berita"
-                        >
-                        Update Thumbnail
-                      </v-btn>
-                        <v-dialog
-                          v-model="dialog"
-                          persistent
-                          max-width="290"
-                          :retain-focus="false"
-                        >
-                        <template v-slot:activator="{ on, attrs }">
-                          <v-btn
-                            class="ma-2"
-                            color="error"
-                            width="100px"
-                            v-bind="attrs"
-                            v-on="on"
-                            @click.prevent="selectedNews(news_item.id_berita)"
-                            >
-                            Delete
-                          </v-btn>
-                        </template>
-                        <v-card>
-                          <v-card-title class="text-h8">
-                            Apakah Anda yakin untuk menghapus berita ini? (ID = :{{selectedIdBerita}})
+          <v-card>
+          <div class="col-md-12">
+            <div class="input-group mb-1">
+              <input type="text" class="form-control" placeholder="Search by Judul Berita"
+                v-model="judul_berita"/>
+              <div class="input-group-append">
+                <button class="btn btn-outline-secondary" type="button"
+                  @click="searchJudulBerita"
+                  :to="'/api/news?judul_berita=' + judul_berita"
+                >
+                Search
+              </button>
+              </div>
+            </div>
+          </div>
+            <v-data-table
+              :headers="headers"
+              :items="news"
+              :items-per-page="5"
+              class="grey lighten-5"
+              fixed-header
+            >
+             <template v-slot:[`item.actions`]="{ item }">
+                <v-btn 
+                class="ma-2"
+                width="190px"  
+                color="warning" 
+                :to="'/api/news/' + item.id_berita"
+                :loading="item.createloading" 
+                :disabled="createloading">
+                Update Data
+                </v-btn>
+                <br> 
+                <v-dialog
+                  v-model="dialog"
+                  persistent
+                  max-width="290"
+                  :retain-focus="false"
+                >
+                <template v-slot:activator="{ on, attrs }">
+                  <v-btn
+                    class="ma-2"
+                    color="error"
+                    width="190px"       
+                    v-bind="attrs"
+                    v-on="on"
+                    @click.prevent="selectedNews(item.id_berita)"
+                  >
+                  Delete
+                  </v-btn>
+                    </template>
+                      <v-card>
+                        <v-card-title class="text-h8">
+                          Apakah Anda yakin untuk menghapus berita ini? (ID = :{{selectedIdBerita}})
                           </v-card-title>
                           <v-card-text></v-card-text>
                           <v-card-actions>
@@ -111,41 +89,47 @@
                           </v-card-actions>
                         </v-card> 
                         </v-dialog>
-                      </td>
-                    </tr> 
-                  </tbody>
-              </template>
-            </v-simple-table>
+                        <br>
+                        <v-btn
+                          class="ma-2"
+                          color="warning"
+                          dark
+                          :to="'/api/news-update-thumbnail/' + item.id_berita"
+                        >
+                        Update Thumbnail
+                      </v-btn>   
+                </template>
+                <template v-slot:[`item.thumbnail`]="{ item }">
+                <img :src="'http://localhost:8000/api/news_thumbnail/' + item.id_berita" style="width: 80%;" />
+                </template>
+                </v-data-table>
+          </v-card>
           </v-col>
     </v-row>
     </v-container>
   </div>
-  <div class="col-md-8">
-      <div class="input-group mb-3">
-        <input type="text" class="form-control" placeholder="Search by Judul Berita"
-          v-model="judul_berita"/>
-        <div class="input-group-append">
-          <button class="btn btn-outline-secondary" type="button"
-            @click="searchJudulBerita"
-            :to="'/api/news?judul_berita=' + judul_berita"
-          >
-            Search
-          </button>
-        </div>
-      </div>
-    </div>
 </div>
 </template>
 
 <script>
 import http from "@/http";
-import "bootstrap/dist/css/bootstrap.css";
+
 //import NewsDataService from "../services/NewsDataService";
 export default {
     name:"news",
     data () {
       return {
         news: [],
+        headers: [
+        { text: "ID News", align: "center", sortable: true, value: "id_berita" },
+        { text: "ID Games",align: "center",sortable: false, value: "id_game" },
+        { text: "News Title",align: "center",sortable: false, value: "judul_berita" },
+        { text: "Category", align: "center", sortable: false, value: "kategori"},
+        { text: "Thumbnail", align: "center", sortable: false, value: "thumbnail"},
+        { text: "Date Publish",align: "center", sortable: false, value: "publish_date"},
+        { text: "Date Update", align: "center", sortable: false,value: "lastupdate_date"},
+        { text: "Action", align: "center",sortable: false, value: "actions"},
+      ],
         key: "",
         id: 0,
         dialog: false,
@@ -179,6 +163,7 @@ export default {
           http.delete('http://localhost:8000/api/news/'+id_berita)
             .then(response => {
               console.log(response.data);
+              this.retrieve();
             })
             .catch(e => {
               console.log(e);
@@ -199,5 +184,10 @@ export default {
   position: relative;
   bottom: 50%;
   left: 50%;
+}
+
+.col-md-6{
+  position: relative;
+  left :51%
 }
 </style>
