@@ -39,7 +39,6 @@
 </template>
 
 <script>
-
 import http from "@/http";
 import "bootstrap/dist/css/bootstrap.css";
 
@@ -53,6 +52,7 @@ export default {
         password: "",
       },
       submitted: false,
+      childWindow: "",
     };
   },
   methods: {
@@ -66,16 +66,16 @@ export default {
         .then(response => {
           console.log(response.data);
           // console.log(data.is_admin)
-          localStorage.removeItem('user');
+          //localStorage.removeItem('user');
           localStorage.setItem('user', JSON.stringify(response.data));
           this.submitted = true;
-          //this.$router.push('/')
+          location.reload();
+          return false;
         })
         .catch(e => {
           console.log(e);
         });
     },
-    
     // newUser() {
     //   this.submitted = false;
     //   this.user = {};
