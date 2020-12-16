@@ -45,6 +45,16 @@
                                         {{news.publish_date}}
                                     </v-chip>
                                     <v-spacer></v-spacer>
+      <v-btn
+        flat
+        color="error"
+        @click="deleteBookmark"
+        class="mt-0 ml-2"
+        small
+      >
+        <span>Delete Bookmark</span>
+        <v-icon>mdi-delete</v-icon>
+      </v-btn>
                                     <v-btn
                                       color="deep-purple lighten-2"
                                       text
@@ -167,6 +177,17 @@ export default {
         this.errors(e)
       })
     },
+	deleteBookmark(){
+	http.delete('http://localhost:8000/api/read_later/:id_read_later')
+      .then(response =>{
+        this.articles = response.data;
+        console.log('data')
+        console.log(response.data)
+      })
+      .catch(e=>{
+        this.errors(e)
+      })
+	},
     selectKategori: function (kategori){
       if(kategori=="All"){
         this.retrieve();
