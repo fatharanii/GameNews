@@ -46,6 +46,7 @@
                                           {{news.publish_date}}
                                       </v-chip>
                                       <v-spacer></v-spacer>
+                                      <v-btn color="error">Delete From Bookmark</v-btn>
                                       <v-btn
                                         color="deep-purple lighten-2"
                                         text
@@ -144,7 +145,7 @@
 <div v-else>
       <h4>You must log in first</h4>
       <RouterLink :to="'/login/'">
-                  <a class="nav-link" href="#">Login</a>
+                  <a class="nav-link" href="#">Don't Have an Account? Sign Up Here</a>
       </RouterLink>
 </div>
 </template>
