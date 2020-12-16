@@ -145,7 +145,7 @@
 <div v-else>
       <h4>You must log in first</h4>
       <RouterLink :to="'/login/'">
-                  <a class="nav-link" href="#">Don't Have an Account? Sign Up Here</a>
+                  <a class="nav-link" href="#">Login</a>
       </RouterLink>
 </div>
 </template>
