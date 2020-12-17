@@ -158,6 +158,7 @@ export default {
   },
   computed: {
     visiblePages () {
+      window.scrollTo(0,0);
       return this.articles.slice((this.page - 1)* this.perPage, this.page* this.perPage)
     }
   },
