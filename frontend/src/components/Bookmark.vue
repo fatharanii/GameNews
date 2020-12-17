@@ -10,7 +10,7 @@
             <v-container fluid>
                 <v-layout row wrap align-center>
                     <v-flex xs11 offset-md1>
-                        <div v-for="news in articles" :key="news.id_berita">
+                        <div v-for="news in visiblePages" :key="news.id_berita">
                             <v-card class="my-4 mx-2" hover>
                                 <v-card-media>
                                     <v-container fill-height fluid>
@@ -58,6 +58,10 @@
                                 </v-card-actions>
                             </v-card>
                         </div>
+                        <v-pagination
+                              v-model="page"
+                              :length="Math.ceil(articles.length/perPage)"
+                        ></v-pagination>
                     </v-flex>
                 </v-layout>
             </v-container>
@@ -150,9 +154,16 @@ export default {
       drawer : false,
       articles :[],
       error:[],
+      page: 1,
+      perPage: 4,
       kategori:["All","Action", "Survival","Strategy", "Adventure","Sport"],
       urutkan:["All","Terbaru"],
       searchString: ''
+    }
+  },
+  computed: {
+    visiblePages () {
+      return this.articles.slice((this.page - 1)* this.perPage, this.page* this.perPage)
     }
   },
   methods:{
