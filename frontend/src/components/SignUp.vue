@@ -5,7 +5,6 @@
         <div class="card-header">
           Sign Up
         </div>
-        <div v-if="!submitted">
           <div class="card-body">
             <form>
               <div class="form-group">
@@ -20,16 +19,30 @@
                 <label for="password">Password</label>
                 <input type="password" class="form-control" placeholder="Password.." v-model="user.password">
               </div>
-              <RouterLink :to="'/'">
+              <RouterLink :to="'/sign_up/'">
                   <a href="#"><button @click="saveUser" type="submit" class="btn btn-primary">Submit</button></a>
                 </RouterLink>
             </form>
           </div>
-        </div>
+          <v-alert 
+              dense
+              outlined
+              type="error"
+              :icon="false"
+              v-if="isError"
+              class="text-center text-subtitle-2">
+              {{errorMessage}}
+            </v-alert>
 
-        <div v-else>
-          <h4>You submitted successfully!</h4>
-        </div>
+          <v-alert 
+              dense
+              outlined
+              type="success"
+              :icon="false"
+              v-if="submitted"
+              class="text-center text-subtitle-2">
+              You have registered successfully!
+            </v-alert>
       </div>
     </div>
   </div>
@@ -52,6 +65,8 @@ export default {
         is_admin: false
       },
       submitted: false,
+      isError: false,
+      errorMessage: "",
     };
   },
   methods: {
@@ -65,9 +80,20 @@ export default {
 
       http.post('http://localhost:8000/api/users/signup', data)
         .then(response => {
-          console.log(response.data);
-          console.log(data.is_admin)
-          this.submitted = true;
+          if(response.data.message != "registered sucessfully") {
+            this.submitted = false;
+            this.isError = true;
+            this.errorMessage = response.data.message;
+            console.log(response.data.message);
+            console.log(response.data);
+            console.log(data.is_admin)
+          }
+          else {
+            console.log(response.data);
+            console.log(data.is_admin)
+            this.submitted = true;
+            this.isError = false;
+          }
         })
         .catch(e => {
           console.log(e);
