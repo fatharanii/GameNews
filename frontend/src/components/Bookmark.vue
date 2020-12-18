@@ -230,6 +230,17 @@ export default {
             });
         }
   },
+  deleteBookmark(){
+    http.delete('http://localhost:8000/api/read_later/:id_readLater')
+    .then(response =>{
+      this.articles = response.data;
+      console.log('data')
+      console.log(response.data)
+    })
+    .catch(e=>{
+      this.error(e)
+    })
+  },
   mounted(){
     this.retrieve();
     this.authenticateUser();
