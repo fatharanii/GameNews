@@ -22,7 +22,7 @@ module.exports = {
                         WHERE id_user = $1`, [id, username, email, password, isAdmin])
     },
     getUserByUsername : async function getUserByUsername(username){
-        const result = await client.export().query('SELECT * FROM public.user WHERE username LIKE $1', ['%'+username+'%'])
+        const result = await client.export().query('SELECT * FROM public.user WHERE username ILIKE $1', ['%'+username+'%'])
         return result
     },
     getOneUserByUsername : async function getOneUserByUsername(username){

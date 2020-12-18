@@ -32,9 +32,9 @@
                                 <div class="mx-4 my-1 subtitle-1 text--primary">
                                   {{ news.kategori }}
                                 </div>
-                                <p class="text-start mx-4 text--secondary" v-if="!readMoreActivated">{{ news.isi.slice(0, 300) }}
-                                  <readmore v-if="!readMoreActivated">...</readmore>
-                                </p>
+                                <div class="text-start mx-4 text--secondary" v-if="!readMoreActivated" v-html="news.isi.slice(0, 300)">
+                                </div>
+                                 <readmore  class="mx-4"  v-if="!readMoreActivated">...</readmore>
                                 <v-divider class="mx-5 my-0"></v-divider>
                                 <v-card-actions>
                                     <v-chip small class="grey--text">
