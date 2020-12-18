@@ -70,6 +70,9 @@ export default {
               console.log(e);
             });
         }
+  },
+  mounted(){
+    this.authenticateAdmin();
   }
 }
 </script>
