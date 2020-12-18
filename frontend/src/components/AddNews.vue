@@ -1,4 +1,5 @@
 <template id="add-news">
+<div v-if="adminAuth">
     <v-form ref="form" v-model="valid">
         <v-container>
           <v-card
@@ -71,11 +72,17 @@
           </v-card>
         </v-container>
     </v-form>
+   </div>
+     <div v-else>
+      <h4>Admin Content</h4>
+    </div>
 </template>
 
 <script>
+import http from "@/http";
 import NewsDataService from "../services/NewsDataService";
 import { VueEditor } from "vue2-editor";
+import authHeader from '../services/auth-header';
 export default {
   components: { VueEditor },
   data(){
@@ -96,7 +103,9 @@ export default {
       kategoriRules: [(v) => !!v || "Kategori tidak boleh kosong."],
       isiRules:[
         (v) => !!v|| "Konten Berita Tidak Boleh kosong"
-      ]
+      ],
+      submitted: false,
+      adminAuth: false
     }
   },
   methods:{
@@ -107,16 +116,42 @@ export default {
         kategori: this.news.kategori,
         isi: this.news.isi
       };
-      NewsDataService.create(data)
-      .then((response)=>{
-        this.news.id_berita = response.data.id_berita;
-        //window.location.href="http://localhost:8000/api/news_thumbnail/" + this.news.id_berita;
-        console.log(response.data);
-      })
-      .catch(e=>{
-        console.log(e);
-      });
-    }
-  }
+      NewsDataService.create(data, { headers: authHeader() })
+        .then(response => {
+          console.log(response.data);
+          this.submitted = true;
+        })
+        .catch(e => {
+          console.log(e);
+        });
+    },
+    
+    newNews() {
+      this.submitted = false;
+      this.news = {};
+    },
+
+    authenticateAdmin() {
+          http.get('http://localhost:8000/api/admin/auth', { headers: authHeader() })
+            .then(response => {
+              this.adminAuth = response.data;
+              console.log(response.data);
+            })
+            .catch(e => {
+              console.log(e);
+            });
+        }
+  },
+  mounted(){
+      this.authenticateAdmin();
+    },
+};
+</script>
+
+<style>
+.submit-form {
+  max-width: 400px;
+  margin: auto;
+  margin-top: 100px;
 }
 </script>

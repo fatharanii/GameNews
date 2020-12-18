@@ -1,120 +1,126 @@
 <template id="game-details">
-  <div v-if="currentGame" class="edit-form">
-    <h4>Game</h4>
+  <div v-if="adminAuth">
+    <div v-if="currentGame" class="edit-form">
+      <h4>Game</h4>
 
-      <div class="form-group">
-        <v-text-field
-        v-model="currentGame.judul_game"
-        label="Judul Game"
-        required
-        name="judul_game"
-        id="judul_game"
-      ></v-text-field>
-      </div>
-    
-      <div class="form-group">
-        <v-text-field
-        v-model="currentGame.genre"
-        label="genre"
-        required
-        name="genre"
-        id="genre"
-      ></v-text-field>
-      </div>
-
-      <div class="form-group">
-        <v-text-field
-        v-model="currentGame.publisher"
-        label="publisher"
-        required
-        name="publisher"
-        id="publisher"
-      ></v-text-field>
-      </div>
-
-      <div class="form-group">
-        <v-text-field
-        v-model="currentGame.platform"
-        label="platform"
-        required
-        name="platform"
-        id="platform"
-      ></v-text-field>
-      </div>
-
-      <v-menu
-      ref="menu"
-      v-model="menu"
-      :close-on-content-click="false"
-      transition="scale-transition"
-      offset-y
-      min-width="290px"
-    >
-      <template v-slot:activator="{ on, attrs }">
-        <v-text-field
-          v-model="currentGame.release_date"
-          label="Release Date"
-          prepend-icon="mdi-calendar"
-          readonly
-          v-bind="attrs"
-          v-on="on"
+        <div class="form-group">
+          <v-text-field
+          v-model="currentGame.judul_game"
+          label="Judul Game"
+          required
+          name="judul_game"
+          id="judul_game"
         ></v-text-field>
-      </template>
-      <v-date-picker
-        ref="picker"
-        v-model="currentGame.release_date"
-        max="2030-01-01"
-        min="1950-01-01"
-        @change="saveDate"
-      ></v-date-picker>
-      </v-menu>
+        </div>
+      
+        <div class="form-group">
+          <v-text-field
+          v-model="currentGame.genre"
+          label="genre"
+          required
+          name="genre"
+          id="genre"
+        ></v-text-field>
+        </div>
 
-      <div class="form-group">
-        <v-text-field
-        v-model="currentGame.price"
-        label="price"
-        required
-        name="price"
-        id="price"
-      ></v-text-field>
-      </div>
+        <div class="form-group">
+          <v-text-field
+          v-model="currentGame.publisher"
+          label="publisher"
+          required
+          name="publisher"
+          id="publisher"
+        ></v-text-field>
+        </div>
 
-      <div class="form-group">
-        <label for="description">Description</label>
-        <v-textarea
-            outlined
-            name="description"
-            required
-            v-model="currentGame.description"
-            label=""
-            id="description">
-          </v-textarea>
-      </div>
+        <div class="form-group">
+          <v-text-field
+          v-model="currentGame.platform"
+          label="platform"
+          required
+          name="platform"
+          id="platform"
+        ></v-text-field>
+        </div>
 
-      <div class="form-group">
-        <label for="system_requirement">System Requirement</label>
-        <v-textarea
-            outlined
-            name="system_requirement"
-            required
-            v-model="currentGame.system_requirement"
-            label=""
-            id="system_requirement">
-          </v-textarea>
-      </div>
+        <v-menu
+        ref="menu"
+        v-model="menu"
+        :close-on-content-click="false"
+        transition="scale-transition"
+        offset-y
+        min-width="290px"
+      >
+        <template v-slot:activator="{ on, attrs }">
+          <v-text-field
+            v-model="currentGame.release_date"
+            label="Release Date"
+            prepend-icon="mdi-calendar"
+            readonly
+            v-bind="attrs"
+            v-on="on"
+          ></v-text-field>
+        </template>
+        <v-date-picker
+          ref="picker"
+          v-model="currentGame.release_date"
+          max="2030-01-01"
+          min="1950-01-01"
+          @change="saveDate"
+        ></v-date-picker>
+        </v-menu>
 
-    <button type="submit" class="badge badge-success"
-      @click="updateGame"
-    >
-      Update
-    </button>
-    <p>{{ message }}</p>
+        <div class="form-group">
+          <v-text-field
+          v-model="currentGame.price"
+          label="price"
+          required
+          name="price"
+          id="price"
+        ></v-text-field>
+        </div>
+
+        <div class="form-group">
+          <label for="description">Description</label>
+          <v-textarea
+              outlined
+              name="description"
+              required
+              v-model="currentGame.description"
+              label=""
+              id="description">
+            </v-textarea>
+        </div>
+
+        <div class="form-group">
+          <label for="system_requirement">System Requirement</label>
+          <v-textarea
+              outlined
+              name="system_requirement"
+              required
+              v-model="currentGame.system_requirement"
+              label=""
+              id="system_requirement">
+            </v-textarea>
+        </div>
+
+      <button type="submit" class="badge badge-success"
+        @click="updateGame"
+      >
+        Update
+      </button>
+      <p>{{ message }}</p>
+    </div>
+
+    <div v-else>
+      <br />
+      <p>Please click on a Game...</p>
+      ID Game {{ $route.params.id_berita}}
+    </div>
   </div>
 
   <div v-else>
-    <br />
-    <p>Please click on a Game...</p>
-    ID Game {{ $route.params.id_berita}}
+    <h4>Admin Content</h4>
   </div>
 </template>
 
@@ -122,6 +128,7 @@
 
 import http from "@/http";
 import "bootstrap/dist/css/bootstrap.css";
+import authHeader from '../services/auth-header';
 export default {
   name: "game-details",
   data() {
@@ -140,6 +147,7 @@ export default {
       },
       date: null,
       menu: false,
+      adminAuth: false
     };
   },
   methods: {
@@ -166,7 +174,7 @@ export default {
     },
 
     updateGame() {
-      http.put('http://localhost:8000/api/game/'+this.$route.params.id_game, this.currentGame)
+      http.put('http://localhost:8000/api/game/'+this.$route.params.id_game, this.currentGame, { headers: authHeader() })
         .then(response => {
           console.log(response.data);
           this.message = 'The game was updated successfully!';
@@ -178,6 +186,16 @@ export default {
     saveDate (date) {
       this.$refs.menu.save(date)
     },
+    authenticateAdmin() {
+          http.get('http://localhost:8000/api/admin/auth', { headers: authHeader() })
+            .then(response => {
+              this.adminAuth = response.data;
+              console.log(response.data);
+            })
+            .catch(e => {
+              console.log(e);
+            });
+        }
   },
   watch: {
     menu (val) {
@@ -186,6 +204,7 @@ export default {
   },
   mounted() {
     this.getGame();
+    this.authenticateAdmin();
   },
 };
 </script>

@@ -1,4 +1,5 @@
 <template>
+<div v-if="adminAuth">
   <div id="brand">
   <div class="news-list">
     <v-container>
@@ -109,11 +110,16 @@
     </v-container>
   </div>
 </div>
+
+<div v-else>
+      <h4>Admin Content</h4>
+</div>
 </template>
 
 <script>
 import http from "@/http";
-
+import "bootstrap/dist/css/bootstrap.css";
+import authHeader from '../services/auth-header';
 //import NewsDataService from "../services/NewsDataService";
 export default {
     name:"news",
@@ -135,7 +141,8 @@ export default {
         dialog: false,
         isLoading: false,
         judul_berita: "",
-        selectedIdBerita: null
+        selectedIdBerita: null,
+        adminAuth: false
       }
     },
     methods:{
@@ -160,7 +167,7 @@ export default {
             });
         },
         deleteNews(id_berita) {
-          http.delete('http://localhost:8000/api/news/'+id_berita)
+          http.delete('http://localhost:8000/api/news/'+id_berita, { headers: authHeader() })
             .then(response => {
               console.log(response.data);
               this.retrieve();
@@ -171,10 +178,21 @@ export default {
         },
         selectedNews(id_berita) {
           this.selectedIdBerita = id_berita
+        },
+        authenticateAdmin() {
+          http.get('http://localhost:8000/api/admin/auth', { headers: authHeader() })
+            .then(response => {
+              this.adminAuth = response.data;
+              console.log(response.data);
+            })
+            .catch(e => {
+              console.log(e);
+            });
         }
     },
     mounted(){
       this.retrieve();
+      this.authenticateAdmin();
     },
 };
 </script>

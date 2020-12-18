@@ -28,7 +28,7 @@
             </RouterLink>
           </li>
         </ul>
-        <ul class="navbar-nav ">
+        <ul v-if="!userAuth" class="navbar-nav ">
           <li class="nav-item">
             <RouterLink :to="'/login/'" class="routerlinkgame">
               <a class="nav-link" href="#">Login</a>
@@ -38,6 +38,30 @@
             <RouterLink :to="'/sign_up/'" class="routerlinkgame">
               <a class="nav-link" href="#">Sign Up</a>
             </RouterLink>
+          </li>
+        </ul>
+        <ul v-if="adminAuth" class="navbar-nav ">
+          <li class="nav-item">
+            <RouterLink :to="'/cmsNews/'" class="routerlinkgame">
+              <a class="nav-link" href="#">News CMS</a>
+            </RouterLink>
+          </li>
+          <li class="nav-item">
+            <RouterLink :to="'/cmsGame/'" class="routerlinkgame">
+              <a class="nav-link" href="#">Game CMS</a>
+            </RouterLink>
+          </li>
+          <li class="nav-item">
+            <RouterLink :to="'/cmsUser/'" class="routerlinkgame">
+              <a class="nav-link" href="#">User CMS</a>
+            </RouterLink>
+          </li>
+        </ul>
+        <ul v-if="userAuth" class="navbar-nav ">
+          <li class="nav-item">
+              <RouterLink :to="'/'" class="routerlinkgame">
+                <a class="nav-link" href="#" @click="logOut">Logout</a>
+              </RouterLink>
           </li>
         </ul>
       </div>
@@ -51,6 +75,48 @@
 </template>
 
 <script>
+import http from "@/http";
+import authHeader from './services/auth-header';
+export default {
+    name:"app",
+    data () {
+      return {
+        userAuth: false,
+        adminAuth: false
+      }
+    },
+    methods:{
+        authenticateUser() {
+          http.get('http://localhost:8000/api/user/auth', { headers: authHeader() })
+            .then(response => {
+              this.userAuth = response.data;
+              console.log(response.data);
+            })
+            .catch(e => {
+              console.log(e);
+            });
+        },
+        authenticateAdmin() {
+          http.get('http://localhost:8000/api/admin/auth', { headers: authHeader() })
+            .then(response => {
+              this.adminAuth = response.data;
+              console.log(response.data);
+            })
+            .catch(e => {
+              console.log(e);
+            });
+        },
+        logOut() {
+          localStorage.removeItem('user');
+          location.reload();
+          return false;
+        }
+    },
+    mounted(){
+      this.authenticateUser();
+      this.authenticateAdmin();
+    },
+};
 </script>
 
 <style>

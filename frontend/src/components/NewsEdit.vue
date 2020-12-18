@@ -1,4 +1,5 @@
 <template id="add-news">
+  <div v-if="adminAuth">
     <v-form ref="form" v-model="valid">
       <div v-if="currentNews">
         <v-container>
@@ -102,11 +103,17 @@
         ID BERITA {{ $route.params.id_berita}}
   </div>
     </v-form>
+   </div>
+   <div v-else>
+    <h4>Admin Content</h4>
+    </div>
 </template>
 
 <script>
 import http from "@/http";
 import { VueEditor } from "vue2-editor";
+import "bootstrap/dist/css/bootstrap.css";
+import authHeader from '../services/auth-header';
 export default {
   components: { VueEditor },
   name: "news-details",
@@ -129,7 +136,9 @@ export default {
       kategoriRules: [(v) => !!v || "Kategori tidak boleh kosong."],
       isiRules:[
         (v) => !!v|| "Konten Berita Tidak Boleh kosong"
-      ]
+      ],
+      adminAuth: false
+
     };
   },
   methods: {
@@ -150,7 +159,7 @@ export default {
 
     updateNews() {
 
-      http.put('http://localhost:8000/api/news/'+this.$route.params.id_berita, this.currentNews)
+      http.put('http://localhost:8000/api/news/'+this.$route.params.id_berita, this.currentNews, { headers: authHeader() })
         .then(response => {
           console.log(response.data);
           this.message = 'The news was updated successfully!';
@@ -159,9 +168,20 @@ export default {
           console.log(e);
         });
     },
+    authenticateAdmin() {
+          http.get('http://localhost:8000/api/admin/auth', { headers: authHeader() })
+            .then(response => {
+              this.adminAuth = response.data;
+              console.log(response.data);
+            })
+            .catch(e => {
+              console.log(e);
+            });
+        }
   },
   mounted() {
     this.getNews();
+    this.authenticateAdmin();
   }
 };
 </script>

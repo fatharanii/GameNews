@@ -4,8 +4,8 @@ const connection = "postgres://lcczsojytqgsru:6008c425f1b5441c1e67a72fe0990b8be7
 
 const client = new Client({
     connectionString: connection,
-    ssl:{
-        rejectUnauthorized:false
+    ssl: {
+        rejectUnauthorized: false
     }
     })
 
