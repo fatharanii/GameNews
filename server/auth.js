@@ -12,7 +12,7 @@ exports.checkDuplicateUsernameOrEmail = (req, res, next) => {
     const email = req.body.email
     User.getOneUserByUsername(username).then(result => {
         if (result.rows != '') {
-        res.status(400).send({
+        res.status(200).send({
           message: "Failed! Username is already in use!"
         });
         return;
@@ -21,7 +21,7 @@ exports.checkDuplicateUsernameOrEmail = (req, res, next) => {
       // Email
       User.getOneUserByEmail(email).then(result => {
         if (result.rows != '') {
-          res.status(400).send({
+          res.status(200).send({
             message: "Failed! Email is already in use!"
           });
           return;
@@ -94,7 +94,7 @@ exports.signin = (req, res) => {
   const password = req.body.password
   User.getOneUserByUsername(username).then(result =>{
     if(result.rows == ''){
-        return res.status(404).send({ message: "User Not found." });
+        return res.status(200).send({ message: "User Not found." });
     }
     User.getOneUserPass(username).then(result =>{
       //mengambil isi dari "password"
@@ -106,7 +106,7 @@ exports.signin = (req, res) => {
           therow
       );
       if (!passwordIsValid) {
-            return res.status(401).send({
+            return res.status(200).send({
             accessToken: null,
             message: "Invalid Password!"
           });

@@ -1,4 +1,5 @@
 import http from "../http";
+import authHeader from '../services/auth-header';
 
 class NewsDataService {
   getAll() {
@@ -10,7 +11,7 @@ class NewsDataService {
   }
 
   create(data) {
-    return http.post('http://localhost:8000/api/news', data);
+    return http.post('http://localhost:8000/api/news', data, { headers: authHeader() });
   }
 
   update(id_berita, data) {
