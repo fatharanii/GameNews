@@ -16,9 +16,19 @@ module.exports = {
     deleteBookmark : async function deleteBookmark(id){
         client.export().query('DELETE FROM public.read_later WHERE "id_readLater" = $1', [id])
     },
+	
+	deleteNewsFromBookmark : async function deleteBookmark(id){
+        client.export().query('DELETE FROM public.read_later WHERE "id_berita" = $1', [id])
+    },
     
     getUserBookmark : async function getUserBookmark(id){
         const result = await client.export().query('SELECT * FROM public.read_later WHERE id_user = $1', [id])
         return result
     }
+	
+	getNewsByJudul : async function getNewsByJudul(judul_berita){
+        const result = await client.export().query('SELECT * FROM public.read_later WHERE judul_berita LIKE $1 ', ['%'+judul_berita+'%'])
+        return result
+    },
+	
 }

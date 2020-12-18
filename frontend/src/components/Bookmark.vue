@@ -178,7 +178,7 @@ export default {
       })
     },
 	deleteBookmark(){
-	http.delete('http://localhost:8000/api/read_later/:id_read_later')
+	http.delete('http://localhost:8000/api/read_later/news/:id_berita')
       .then(response =>{
         this.articles = response.data;
         console.log('data')
