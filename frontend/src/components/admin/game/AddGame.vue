@@ -122,9 +122,11 @@
 
 <script>
 
-import http from "@/http";
+// import http from "@/http";
 import "bootstrap/dist/css/bootstrap.css";
-import authHeader from '../../../services/auth-header';
+// import authHeader from '../../../services/auth-header';
+import GameDataService from "../../../services/GameDataService";
+import UserDataService from '../../../services/UserDataService';
 export default {
   template: '#add-game',
   name: "add-game",
@@ -159,7 +161,7 @@ export default {
         system_requirement : this.game.system_requirement
       };
 
-      http.post('http://localhost:8000/api/game', data, { headers: authHeader() })
+      GameDataService.create(data)
         .then(response => {
           console.log(response.data);
           this.submitted = true;
@@ -177,7 +179,7 @@ export default {
       this.$refs.menu.save(date)
     },
     authenticateAdmin() {
-          http.get('http://localhost:8000/api/admin/auth', { headers: authHeader() })
+          UserDataService.adminAuthentication()
             .then(response => {
               this.adminAuth = response.data;
               console.log(response.data);

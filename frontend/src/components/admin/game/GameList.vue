@@ -145,9 +145,11 @@
 </template>
 
 <script>
-import http from "@/http";
+// import http from "@/http";
 import "bootstrap/dist/css/bootstrap.css";
-import authHeader from '../../../services/auth-header';
+// import authHeader from '../../../services/auth-header';
+import GameDataService from "../../../services/GameDataService";
+import UserDataService from '../../../services/UserDataService';
 //import NewsDataService from "../services/NewsDataService";
 export default {
     name:"games",
@@ -165,8 +167,7 @@ export default {
     },
     methods:{
         retrieve(){
-          http
-          .get('http://localhost:8000/api/game')
+          GameDataService.getAll()
             .then((response) =>{
               this.games = response.data;
             })
@@ -175,7 +176,7 @@ export default {
             });
         },
         searchJudulGame() {
-          http.get('http://localhost:8000/api/games/search/'+this.judul_game)
+          GameDataService.search(this.judul_game)
             .then(response => {
               this.games = response.data;
               console.log(response.data);
@@ -185,7 +186,7 @@ export default {
             });
         },
         deleteGame(id_game) {
-          http.delete('http://localhost:8000/api/game/'+id_game, { headers: authHeader() })
+          GameDataService.delete(id_game)
             .then(response => {
               console.log(response.data);
             })
@@ -197,7 +198,7 @@ export default {
           this.selectedIdGame = id_game
         },
         authenticateAdmin() {
-          http.get('http://localhost:8000/api/admin/auth', { headers: authHeader() })
+          UserDataService.adminAuthentication()
             .then(response => {
               this.adminAuth = response.data;
               console.log(response.data);

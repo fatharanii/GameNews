@@ -50,9 +50,9 @@
 
 <script>
 
-import http from "@/http";
+// import http from "@/http";
 import "bootstrap/dist/css/bootstrap.css";
-
+import UserDataService from "../../../services/UserDataService";
 export default {
   template: '#sign-up',
   name: "sign-up",
@@ -78,7 +78,7 @@ export default {
         is_admin: this.user.is_admin
       };
 
-      http.post('http://localhost:8000/api/users/signup', data)
+      UserDataService.signUp(data)
         .then(response => {
           if(response.data.message != "registered sucessfully") {
             this.submitted = false;

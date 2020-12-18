@@ -22,7 +22,7 @@
                                                 height="150px"
                                                 width="150px"
                                                 class="mt-3"
-                                                v-bind:src="'http://localhost:8000/api/news_thumbnail/' + news.id_berita"
+                                                v-bind:src="baseURL + '/api/news_thumbnail/' + news.id_berita"
                                                 ></v-img>
                                             </v-flex>
                                             <v-flex xs12 align-end >
@@ -104,7 +104,7 @@
                                                   height="150px"
                                                   width="150px"
                                                   class="mt-3"
-                                                  v-bind:src="'http://localhost:8000/api/news_thumbnail/' + news.id_berita"
+                                                  v-bind:src="baseURL + '/api/news_thumbnail/' + news.id_berita"
                                                   ></v-img>
                                               </v-flex>
                                               <v-flex xs12 align-end >
@@ -236,8 +236,12 @@
 
 
 <script>
-import http from "@/http";
-import authHeader from '../../../services/auth-header';
+// import http from "@/http";
+// import authHeader from '../../../services/auth-header';
+import UserDataService from "../../../services/UserDataService";
+import NewsDataService from "../../../services/NewsDataService";
+import GameDataService from "../../../services/GameDataService";
+import BASE_URL from "../../../base-url"
 export default {
   data(){
     return{
@@ -249,7 +253,8 @@ export default {
       kategori:["All","Action", "Survival","Strategy", "Adventure","Sport"],
       urutkan:["All","Terbaru"],
       searchString: '',
-      userAuth: false
+      userAuth: false,
+      baseURL: BASE_URL
     }
   },
   computed: {
@@ -260,7 +265,7 @@ export default {
   },
   methods:{
     retrieve() {
-      http.get('http://localhost:8000/api/news/')
+      NewsDataService.getAll()
       .then(response =>{
         this.articles = response.data;
         console.log('data')
@@ -274,7 +279,7 @@ export default {
       if(kategori=="All"){
         this.retrieve();
       }else{
-        http.get('http://localhost:8000/api/news/kategori/'+kategori)
+        NewsDataService.getByKategori(kategori)
         .then(response =>{
           this.articles = response.data;
           console.log('data')
@@ -286,7 +291,7 @@ export default {
       } 
     },
     searchNews () {
-      http.get('http://localhost:8000/api/news/search/'+this.searchString)
+      NewsDataService.search(this.searchString)
       .then(response =>{
         this.articles = response.data;
         console.log('data')
@@ -300,7 +305,7 @@ export default {
       if(urutkan=="All"){
         this.retrieve();
       }else{
-        http.get('http://localhost:8000/api/gamesASC')
+        GameDataService.getASC()
         .then(response =>{
           this.articles = response.data;
           console.log('data')
@@ -312,7 +317,7 @@ export default {
       }
     },
     authenticateUser() {
-          http.get('http://localhost:8000/api/user/auth', { headers: authHeader() })
+          UserDataService.userAuthentication()
             .then(response => {
               this.userAuth = response.data;
               console.log(response.data);

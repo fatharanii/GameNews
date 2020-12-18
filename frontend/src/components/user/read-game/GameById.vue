@@ -14,7 +14,7 @@
             >
                 <div class="Gamebyid-gambar">
                     <v-img
-                        v-img v-bind:src="'http://localhost:8000/api/game_allthumbnail/' + games.id_game"
+                        v-img v-bind:src="baseURL + '/api/game_allthumbnail/' + games.id_game"
                     ></v-img>
                         
                 </div>
@@ -45,17 +45,20 @@
 </template>
 
 <script>
-import http from "@/http";
+// import http from "@/http";
+import BASE_URL from "../../../base-url";
+import GameDataService from "../../../services/GameDataService";
 export default {
   data(){
     return{
       drawer : false,
-      game : []
+      game : [],
+      baseURL: BASE_URL
     }
   },
   methods:{
     retrieve() {
-      http.get('http://localhost:8000/api/game/'+ this.$route.params.id_game)
+      GameDataService.getById(this.$route.params.id_game)
       .then(response =>{
         this.game = response.data;
         console.log('data')

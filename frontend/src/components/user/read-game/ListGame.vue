@@ -20,7 +20,7 @@
               hover
             >
               <v-img
-                v-img v-bind:src="'http://localhost:8000/api/game_allthumbnail/' + game.id_game"
+                v-img v-bind:src="baseURL + '/api/game_allthumbnail/' + game.id_game"
               ></v-img>
               <v-card-title>{{ game.judul_game }}</v-card-title>
               <v-card-text>
@@ -139,8 +139,9 @@
 </template>
 
 <script>
-import http from "@/http";
-
+// import http from "@/http";
+import BASE_URL from "../../../base-url";
+import GameDataService from "../../../services/GameDataService";
 export default {
   data(){
     return{
@@ -151,7 +152,8 @@ export default {
       perPage: 4,
       genre:["All","Action", "Survival","Strategy", "Adventure","Sport"],
       platform:["All","Steam", "Itch.io","GOG", "GamersGate","Humble Bundle", "Game Jolt"],
-      searchString: ''
+      searchString: '',
+      baseURL: BASE_URL
     }
   },
   computed: {
@@ -162,7 +164,7 @@ export default {
   },
   methods:{
     retrieve() {
-      http.get('http://localhost:8000/api/game/')
+      GameDataService.getAll()
       .then(response =>{
         this.articles = response.data;
         console.log('data')
@@ -176,7 +178,7 @@ export default {
       if(genre=="All"){
         this.retrieve();
       }else{
-        http.get('http://localhost:8000/api/games/genre/'+genre)
+        GameDataService.getByGenre(genre)
         .then(response =>{
           this.articles = response.data;
           console.log('data')
@@ -191,7 +193,7 @@ export default {
       if(platform=="All"){
         this.retrieve();
       }else{
-        http.get('http://localhost:8000/api/games/platform/'+platform)
+        GameDataService.getByPlatform(platform)
         .then(response =>{
           this.articles = response.data;
           console.log('data')
@@ -203,7 +205,7 @@ export default {
       } 
     },
     searchGame () {
-      http.get('http://localhost:8000/api/games/search/'+this.searchString)
+      GameDataService.search(this.searchString)
       .then(response =>{
         this.articles = response.data;
         console.log('data')
