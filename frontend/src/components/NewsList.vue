@@ -110,6 +110,7 @@
     </v-container>
   </div>
 </div>
+</div>
 
 <div v-else>
       <h4>Admin Content</h4>
