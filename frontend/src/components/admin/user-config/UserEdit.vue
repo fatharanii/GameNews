@@ -60,11 +60,11 @@
 
 <script>
 
-import http from "@/http";
+// import http from "@/http";
 import "bootstrap/dist/css/bootstrap.css";
-import authHeader from '../../../services/auth-header';
+// import authHeader from '../../../services/auth-header';
 import UserDataService from '../../../services/UserDataService';
-import { use } from 'vue/types/umd';
+// import { use } from 'vue/types/umd';
 export default {
   name: "user-details",
   data() {
