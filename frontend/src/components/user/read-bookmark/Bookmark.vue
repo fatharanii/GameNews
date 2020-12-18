@@ -129,8 +129,15 @@
                                           {{news.publish_date}}
                                       </v-chip>
                                       <v-spacer></v-spacer>
-                                      <v-btn color="error">Delete From Bookmark</v-btn>
-                                      <v-btn
+        <v-btn
+          flat
+          color="error"
+          @click="deleteNewsFromBookmarkbyid"
+          class="mt-0 ml-0"
+          small
+        >
+          <span>Delete From Bookmark</span>
+        </v-btn>                                      <v-btn
                                         color="deep-purple lighten-2"
                                         text
                                       >
@@ -260,7 +267,16 @@ export default {
   },
   methods:{
     retrieve() {
-      http.get('http://localhost:8000/api/news/')
+      http.get('http://localhost:8000/api/my_bookmark/:id')
+      .then(response =>{
+        this.articles = response.data;
+        console.log('data')
+        console.log(response.data)
+      })
+      .catch(e=>{
+        this.errors(e)
+      })
+      http.get('http://localhost:8000/api/read_later/')
       .then(response =>{
         this.articles = response.data;
         console.log('data')
@@ -270,6 +286,17 @@ export default {
         this.errors(e)
       })
     },
+	deleteNewsFromBookmarkbyid(){
+      http.get('http://localhost:8000/read_later/:id'+this.$route.params.id_berita)
+        .then(response => {
+          console.log(response.data);
+          this.message = 'The news was removed from bookmark!';
+        })
+        .catch(e => {
+          console.log(e);
+        });
+
+	},
     selectKategori: function (kategori){
       if(kategori=="All"){
         this.retrieve();

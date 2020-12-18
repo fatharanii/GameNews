@@ -23,6 +23,7 @@
                                                 <span class="headline">{{ news.judul_berita }}</span>
                                             </v-flex>
                                             <v-btn 
+											
                                             icon>
                                               <v-icon>mdi-bookmark</v-icon>
                                             </v-btn>
@@ -174,6 +175,17 @@ export default {
         this.errors(e)
       })
     },
+	addToBookmark(){
+      http.get('http://localhost:8000/api/read_later/')
+      .then(response =>{
+        this.articles = response.data;
+        console.log('data')
+        console.log(response.data)
+      })
+      .catch(e=>{
+        this.errors(e)
+      })
+	},
     selectKategori: function (kategori){
       if(kategori=="All"){
         this.retrieve();

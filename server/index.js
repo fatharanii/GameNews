@@ -102,6 +102,11 @@ app.get('/api/read_later/my_bookmark/:id', async (req,res)=>{
    res.send(await bookmark.rows)
 })
 
+app.get('/api/read_later/search/:judul_berita', async(req,res)=>{
+       const news = await berita.getNewsByJudul(req.params.judul_berita)
+       res.send(await news.rows)
+})
+
 //===============GAME BACKEND================
 app.get('/api/game/:id', async (req,res)=>{
    const game = await permainan.getGameById(req.params.id)
