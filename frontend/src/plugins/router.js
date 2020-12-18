@@ -1,25 +1,24 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
-import helloworld from './components/HelloWorld';
-import ListGame from './components/ListGame';
-import news from './components/news';
-import home from './components/home';
-import NewsById from './components/NewsById';
-import GameById from './components/GameById';
-import NewsList from './components/NewsList';
-import NewsEdit from './components/NewsEdit';
-import AddNews from './components/AddNews';
-import AddGame from './components/AddGame';
-import UploadNewsThumbnail from './components/UploadFiles';
-import UploadGamePict from './components/UploadGamePict';
-import GameList from './components/GameList';
-import GameEdit from './components/GameEdit';
-import UserList from './components/UserLIst';
-import UserEdit from './components/UserEdit';
-import AddUser from './components/AddUser';
-import Login from './components/Login';
-import SignUp from './components/SignUp';
-import Bookmark from './components/Bookmark';
+import ListGame from '../components/user/read-game/ListGame';
+import news from '../components/user/read-news/news';
+import home from '../components/user/home';
+import NewsById from '../components/user/read-news/NewsById';
+import GameById from '../components/user/read-game/GameById';
+import NewsList from '../components/admin/news/NewsList';
+import NewsEdit from '../components/admin/news/NewsEdit';
+import AddNews from '../components/admin/news/AddNews';
+import AddGame from '../components/admin/game/AddGame';
+import UploadNewsThumbnail from '../components/admin/news/UploadFiles';
+import UploadGamePict from '../components/admin/game/UploadGamePict';
+import GameList from '../components/admin/game/GameList';
+import GameEdit from '../components/admin/game/GameEdit';
+import UserList from '../components/admin/user-config/UserLIst';
+import UserEdit from '../components/admin/user-config/UserEdit';
+import AddUser from '../components/admin/user-config/AddUser';
+import Login from '../components/user/user-auth/Login';
+import SignUp from '../components/user/user-auth/SignUp';
+import Bookmark from '../components/user/read-bookmark/Bookmark';
 Vue.use(VueRouter)
 
 const routes = [
@@ -62,11 +61,6 @@ const routes = [
         path :"/",
         name : 'home',
         component :home,
-    },
-    {
-        path :"/home",
-        name : 'helloworld',
-        component :helloworld,
     },
     {
         path :"/news/:id_berita",

@@ -6,13 +6,13 @@ const bodyParser = require('body-parser');
 const app = express()
 const port = 8000
 
-const client = require ('./database')
-const user = require ('./user')
-const auth = require ('./auth')
-const read_later = require ('./read_later.js')
-const permainan = require ('./game')
-const berita = require ('./news')
-const uploadImage = require("./upload");
+const client = require ('./app/util/database')
+const user = require ('./app/function/user')
+const auth = require ('./app/middleware/auth')
+const read_later = require ('./app/function/read_later.js')
+const permainan = require ('./app/function/game')
+const berita = require ('./app/function/news')
+const uploadImage = require("./app/middleware/upload");
 const fs = require("fs");
 global.__basedir = __dirname;
 
@@ -123,7 +123,7 @@ app.put('/api/game_save/:id', uploadImage.single("thumbnail"), async (req,res)=>
    const id = req.params.id
    filename = req.file.filename;
    const data = fs.readFileSync(
-       __basedir + "/uploads/" + filename
+       __basedir + "/app/public/images/" + filename
    );
    // var bufs = [];
    // req.on('data', function(d){ bufs.push(d); });
@@ -289,7 +289,7 @@ app.get('/api/news', async (req,res)=>{
        const id = req.params.id
        filename = req.file.filename;
        const data = fs.readFileSync(
-           __basedir + "/uploads/" + filename
+           __basedir + "/app/public/images/" + filename
        );
        // var bufs = [];
        // req.on('data', function(d){ bufs.push(d); });

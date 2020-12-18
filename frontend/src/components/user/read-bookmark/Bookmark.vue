@@ -82,13 +82,14 @@
           >
         </v-text-field>
       </v-flex>
+
       <v-btn
         icon
         color="black"
         @click="retrieve"
         class="mt-6 ml-2"
         x-small
-      >
+      ></v-btn>
         <v-content>
               <v-container fluid>
                   <v-layout row wrap align-center>
@@ -146,6 +147,7 @@
                   </v-layout>
               </v-container>
           </v-content>
+       </v-row>
       </v-col>
       <v-col
         cols=""
@@ -235,7 +237,7 @@
 
 <script>
 import http from "@/http";
-import authHeader from '../services/auth-header';
+import authHeader from '../../../services/auth-header';
 export default {
   data(){
     return{

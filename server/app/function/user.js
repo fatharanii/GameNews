@@ -1,5 +1,5 @@
 //==============USER FUNCTION================
-const client = require ('./database')
+const client = require ('../util/database')
 
 module.exports = {
     getAllUser : async function getAllUser(){

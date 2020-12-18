@@ -5,7 +5,7 @@ import jquery from 'jquery'
 import App from './App.vue'
 import http from './http'
 import vuetify from './plugins/vuetify';
-import router from './router'
+import router from './plugins/router'
 
 Vue.config.productionTip = false
 Vue.prototype.$jquery = jquery

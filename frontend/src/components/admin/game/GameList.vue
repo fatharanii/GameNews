@@ -147,7 +147,7 @@
 <script>
 import http from "@/http";
 import "bootstrap/dist/css/bootstrap.css";
-import authHeader from '../services/auth-header';
+import authHeader from '../../../services/auth-header';
 //import NewsDataService from "../services/NewsDataService";
 export default {
     name:"games",

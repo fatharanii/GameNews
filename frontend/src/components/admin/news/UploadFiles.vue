@@ -30,7 +30,7 @@
 <script>
 
 import http from "@/http";
-import authHeader from '../services/auth-header';
+import authHeader from '../../../services/auth-header';
 export default {
   name: 'UploadFiles',
   data() {
@@ -70,6 +70,9 @@ export default {
               console.log(e);
             });
         }
+  },
+  mounted(){
+    this.authenticateAdmin();
   }
 }
 </script>

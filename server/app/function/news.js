@@ -1,4 +1,4 @@
-const client = require ('./database')
+const client = require ('../util/database')
 
 //==================NEWS FUNCTION======================
 

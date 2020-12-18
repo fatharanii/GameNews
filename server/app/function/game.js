@@ -1,6 +1,6 @@
 //==============GAME FUNCTION================
 
-const client = require ('./database')
+const client = require ('../util/database')
 
 module.exports = {
     getAllGame : async function getAllGame(){

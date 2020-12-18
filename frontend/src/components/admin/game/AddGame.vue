@@ -124,7 +124,7 @@
 
 import http from "@/http";
 import "bootstrap/dist/css/bootstrap.css";
-import authHeader from '../services/auth-header';
+import authHeader from '../../../services/auth-header';
 export default {
   template: '#add-game',
   name: "add-game",
