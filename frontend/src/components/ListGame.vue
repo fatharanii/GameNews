@@ -9,7 +9,7 @@
       <div class="listGame">
         <v-layout row wrap class="pa-4">
           <v-flex
-            v-for="(game, i) in articles"
+            v-for="(game, i) in visiblePages"
             :key="i"
           >
             <v-card
@@ -56,6 +56,10 @@
           </v-flex>
         </v-layout>
       </div>
+      <v-pagination
+        v-model="page"
+        :length="Math.ceil(articles.length/perPage)"
+      ></v-pagination>
     </v-col>
     <v-col
       cols=""
@@ -143,9 +147,17 @@ export default {
       drawer : false,
       articles :[],
       error:[],
+      page: 1,
+      perPage: 4,
       genre:["All","Action", "Survival","Strategy", "Adventure","Sport"],
       platform:["All","Steam", "Itch.io","GOG", "GamersGate","Humble Bundle", "Game Jolt"],
       searchString: ''
+    }
+  },
+  computed: {
+    visiblePages () {
+      window.scrollTo(0,0);
+      return this.articles.slice((this.page - 1)* this.perPage, this.page* this.perPage)
     }
   },
   methods:{

@@ -1,11 +1,93 @@
 <template>
+
 <div v-if="userAuth">
-  <v-app light>
-    <h1>BOOKMARK</h1>
-    <v-row>
-      <v-col
-        cols="8"
-        class="flex-grow-0 flex-shrink-0"
+<v-app light>
+  <h1>BOOKMARK</h1>
+  <v-row>
+    <v-col
+      cols="8"
+      class="flex-grow-0 flex-shrink-0"
+    >
+      <v-content>
+            <v-container fluid>
+                <v-layout row wrap align-center>
+                    <v-flex xs11 offset-md1>
+                        <div v-for="news in visiblePages" :key="news.id_berita">
+                            <v-card class="my-4 mx-2" hover>
+                                <v-card-media>
+                                    <v-container fill-height fluid>
+                                        <v-layout>
+                                            <v-flex xs3 >
+                                                <v-img
+                                                height="150px"
+                                                width="150px"
+                                                class="mt-3"
+                                                v-bind:src="'http://localhost:8000/api/news_thumbnail/' + news.id_berita"
+                                                ></v-img>
+                                            </v-flex>
+                                            <v-flex xs12 align-end >
+                                                    <div
+                                                        class="pl-3 mt-3"
+                                                    >
+                                                        <span class="headline">{{ news.judul_berita }}</span>
+                                                        <div class=" subtitle-1 text--primary">
+                                                            {{ news.kategori }}
+                                                        </div>
+                                                        <p class="text-start text--secondary" v-if="!readMoreActivated">{{ news.isi.slice(0, 200) }}
+                                                            <readmore v-if="!readMoreActivated">...</readmore>
+                                                        </p>
+                                                    </div>
+                                            </v-flex>
+                                        </v-layout>
+                                    </v-container>
+                                </v-card-media>
+                                <v-divider class="mx-5 my-0"></v-divider>
+                                <v-card-actions>
+                                    <v-chip small class="grey--text">
+                                        {{news.publish_date}}
+                                    </v-chip>
+                                    <v-spacer></v-spacer>
+                                    <v-btn
+                                      color="deep-purple lighten-2"
+                                      text
+                                    >
+                                      <readmore v-if="!readMoreActivated">
+                                        <RouterLink :to="'/news/'+news.id_berita" class="routerlinkgame">
+                                          Read More
+                                        </RouterLink>
+                                      </readmore>
+                                    </v-btn>
+                                </v-card-actions>
+                            </v-card>
+                        </div>
+                        <v-pagination
+                              v-model="page"
+                              :length="Math.ceil(articles.length/perPage)"
+                        ></v-pagination>
+                    </v-flex>
+                </v-layout>
+            </v-container>
+        </v-content>
+    </v-col>
+    <v-col
+      cols=""
+      class="flex-grow-1 flex-shrink-0"
+    >
+      <v-row>
+      <v-flex  sm6 ml-4>
+        <v-text-field
+          label='Cari berita'
+          v-model='searchString'
+          clearable
+          >
+        </v-text-field>
+      </v-flex>
+      <v-btn
+        icon
+        color="black"
+        @click="retrieve"
+        class="mt-6 ml-2"
+        x-small
       >
         <v-content>
               <v-container fluid>
@@ -160,10 +242,18 @@ export default {
       drawer : false,
       articles :[],
       error:[],
+      page: 1,
+      perPage: 4,
       kategori:["All","Action", "Survival","Strategy", "Adventure","Sport"],
       urutkan:["All","Terbaru"],
       searchString: '',
       userAuth: false
+    }
+  },
+  computed: {
+    visiblePages () {
+      window.scrollTo(0,0);
+      return this.articles.slice((this.page - 1)* this.perPage, this.page* this.perPage)
     }
   },
   methods:{
