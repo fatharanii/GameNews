@@ -159,7 +159,7 @@ export default {
         system_requirement : this.game.system_requirement
       };
 
-      http.post('http://localhost:8000/api/game', data)
+      http.post('http://localhost:8000/api/game', data, { headers: authHeader() })
         .then(response => {
           console.log(response.data);
           this.submitted = true;

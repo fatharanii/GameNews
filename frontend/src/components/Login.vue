@@ -96,7 +96,7 @@ export default {
             localStorage.setItem('user', JSON.stringify(response.data));
             this.submitted = true;
             this.isError = false;
-            // this.$router.push({path: '/'});
+            this.$router.push({path: '/'});
             location.reload();
             return false;
           }

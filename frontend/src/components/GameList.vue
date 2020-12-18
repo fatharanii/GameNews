@@ -185,7 +185,7 @@ export default {
             });
         },
         deleteGame(id_game) {
-          http.delete('http://localhost:8000/api/game/'+id_game)
+          http.delete('http://localhost:8000/api/game/'+id_game, { headers: authHeader() })
             .then(response => {
               console.log(response.data);
             })

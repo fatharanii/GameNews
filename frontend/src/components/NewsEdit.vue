@@ -103,7 +103,7 @@ export default {
 
     updateNews() {
 
-      http.put('http://localhost:8000/api/news/'+this.$route.params.id_berita, this.currentNews)
+      http.put('http://localhost:8000/api/news/'+this.$route.params.id_berita, this.currentNews, { headers: authHeader() })
         .then(response => {
           console.log(response.data);
           this.message = 'The news was updated successfully!';

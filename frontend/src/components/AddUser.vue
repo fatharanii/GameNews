@@ -88,7 +88,7 @@ export default {
         is_admin: this.user.is_admin
       };
 
-      http.post('http://localhost:8000/api/users', data)
+      http.post('http://localhost:8000/api/users/signup', data)
         .then(response => {
           console.log(response.data);
           console.log(data.is_admin)

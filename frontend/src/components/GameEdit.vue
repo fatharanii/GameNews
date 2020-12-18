@@ -174,7 +174,7 @@ export default {
     },
 
     updateGame() {
-      http.put('http://localhost:8000/api/game/'+this.$route.params.id_game, this.currentGame)
+      http.put('http://localhost:8000/api/game/'+this.$route.params.id_game, this.currentGame, { headers: authHeader() })
         .then(response => {
           console.log(response.data);
           this.message = 'The game was updated successfully!';

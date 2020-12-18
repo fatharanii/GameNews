@@ -182,7 +182,7 @@ export default {
             });
         },
         deleteNews(id_berita) {
-          http.delete('http://localhost:8000/api/news/'+id_berita)
+          http.delete('http://localhost:8000/api/news/'+id_berita, { headers: authHeader() })
             .then(response => {
               console.log(response.data);
             })

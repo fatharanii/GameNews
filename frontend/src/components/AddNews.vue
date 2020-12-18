@@ -90,7 +90,7 @@ export default {
         isi: this.news.isi
       };
 
-      NewsDataService.create(data)
+      NewsDataService.create(data, { headers: authHeader() })
         .then(response => {
           console.log(response.data);
           this.submitted = true;

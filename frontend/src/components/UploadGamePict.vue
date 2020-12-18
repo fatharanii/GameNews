@@ -1,4 +1,5 @@
 <template>
+<div v-if="adminAuth">
   <div class="file text--left">
     <h4>Upload File</h4>
     <form @submit.prevent="onSubmit"  enctype="multipart/form-data">
@@ -19,19 +20,25 @@
       </div>
     </form>
   </div>
+</div>
+
+<div v-else>
+    <h4>Admin Content</h4>
+  </div>
 </template>
 
 <script>
 
 import http from "@/http";
-
+import authHeader from '../services/auth-header';
 export default {
   name: 'UploadFiles',
   data() {
     
     return {
       file: "",
-      idGameSelected: this.$route.params.id_game
+      idGameSelected: this.$route.params.id_game,
+      adminAuth: false
     }
   },
   methods: {
@@ -52,7 +59,17 @@ export default {
         console.log(err);
         this.message = 'Wrong !!'
       }
-    }
+    },
+    authenticateAdmin() {
+          http.get('http://localhost:8000/api/admin/auth', { headers: authHeader() })
+            .then(response => {
+              this.adminAuth = response.data;
+              console.log(response.data);
+            })
+            .catch(e => {
+              console.log(e);
+            });
+        }
   }
 }
 </script>

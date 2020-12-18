@@ -93,6 +93,7 @@ export default {
             console.log(data.is_admin)
             this.submitted = true;
             this.isError = false;
+            this.$router.push({path: '/login/'});
           }
         })
         .catch(e => {
