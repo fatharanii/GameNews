@@ -134,6 +134,7 @@
 import http from "@/http";
 import "bootstrap/dist/css/bootstrap.css";
 import authHeader from '../../../services/auth-header';
+import UserDataService from '../../../services/UserDataService';
 export default {
     name:"users",
     data () {
@@ -150,8 +151,7 @@ export default {
     },
     methods:{
         retrieve(){
-          http
-          .get('http://localhost:8000/api/users')
+          UserDataService.getAll()
             .then((response) =>{
               this.users = response.data;
             })
@@ -170,7 +170,7 @@ export default {
             });
         },
         deleteUser(id_user) {
-          http.delete('http://localhost:8000/api/users/'+id_user, { headers: authHeader() })
+          UserDataService.delete(id_user)
             .then(response => {
               console.log(response.data);
             })
@@ -182,7 +182,7 @@ export default {
           this.selectedIdUser = id_user
         },
         authenticateAdmin() {
-          http.get('http://localhost:8000/api/admin/auth', { headers: authHeader() })
+          UserDataService.adminAuthentication()
             .then(response => {
               this.adminAuth = response.data;
               console.log(response.data);

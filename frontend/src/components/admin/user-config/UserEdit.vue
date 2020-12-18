@@ -63,6 +63,8 @@
 import http from "@/http";
 import "bootstrap/dist/css/bootstrap.css";
 import authHeader from '../../../services/auth-header';
+import UserDataService from '../../../services/UserDataService';
+import { use } from 'vue/types/umd';
 export default {
   name: "user-details",
   data() {
@@ -79,7 +81,7 @@ export default {
   },
   methods: {
     getUser() {
-      http.get('http://localhost:8000/api/users/'+this.$route.params.id_user)
+      UserDataService.getById(this.$route.params.id_user)
         .then(response => {
           this.currentUser.username = response.data[0].username;
           this.currentUser.email = response.data[0].email;
@@ -93,7 +95,7 @@ export default {
     },
 
     updateUser() {
-      http.put('http://localhost:8000/api/users/'+this.$route.params.id_user, this.currentUser, { headers: authHeader() })
+      UserDataService.update(this.$route.params.id_user, this.currentUser)
         .then(response => {
           console.log(response.data.is_admin);
           console.log(this.currentUser);
@@ -104,7 +106,7 @@ export default {
         });
     },
     authenticateAdmin() {
-          http.get('http://localhost:8000/api/admin/auth', { headers: authHeader() })
+          UserDataService.adminAuthentication()
             .then(response => {
               this.adminAuth = response.data;
               console.log(response.data);

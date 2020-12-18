@@ -61,9 +61,10 @@
 
 <script>
 
-import http from "@/http";
+// import http from "@/http";
 import "bootstrap/dist/css/bootstrap.css";
-import authHeader from '../../../services/auth-header';
+// import authHeader from '../../../services/auth-header';
+import UserDataService from '../../../services/UserDataService';
 export default {
   template: '#add-user',
   name: "add-user",
@@ -88,7 +89,7 @@ export default {
         is_admin: this.user.is_admin
       };
 
-      http.post('http://localhost:8000/api/users/signup', data)
+      UserDataService.signUp(data)
         .then(response => {
           console.log(response.data);
           console.log(data.is_admin)
@@ -105,7 +106,7 @@ export default {
     },
 
     authenticateAdmin() {
-          http.get('http://localhost:8000/api/admin/auth', { headers: authHeader() })
+          UserDataService.adminAuthentication()
             .then(response => {
               this.adminAuth = response.data;
               console.log(response.data);
