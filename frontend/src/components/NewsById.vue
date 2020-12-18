@@ -13,7 +13,7 @@
                     v-img v-bind:src="'http://localhost:8000/api/news_thumbnail/' + newsDetail.id_berita"
                 ></v-img>      
             </div>
-            <p class="Newsbyid-isi">{{ newsDetail.isi }}</p>
+            <div class="Newsbyid-isi" v-html="newsDetail.isi"></div>
         </v-container>
     </v-flex>
 </v-app>
