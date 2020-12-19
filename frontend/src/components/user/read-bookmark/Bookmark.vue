@@ -230,15 +230,6 @@ export default {
       .catch(e=>{
         this.errors(e)
       })
-      // BookmarkDataService.getAllReadLater()
-      // .then(response =>{
-      //   this.articles = response.data;
-      //   console.log('data')
-      //   console.log(response.data)
-      // })
-      // .catch(e=>{
-      //   this.errors(e)
-      // })
     },
     // deleteNewsFromBookmarkbyid(){
     //     BookmarkDataService.delete(this.$route.params.id_berita)
@@ -250,47 +241,6 @@ export default {
     //         console.log(e);
     //       });
 
-    // },
-    // selectKategori: function (kategori){
-    //   if(kategori=="All"){
-    //     this.retrieve();
-    //   }else{
-    //     NewsDataService.getByKategori(kategori)
-    //     .then(response =>{
-    //       this.articles = response.data;
-    //       console.log('data')
-    //       console.log(response.data)
-    //     })
-    //     .catch(e=>{
-    //       this.errors(e)
-    //     })
-    //   } 
-    // },
-    // searchNews () {
-    //   NewsDataService.search(this.searchString)
-    //   .then(response =>{
-    //     this.articles = response.data;
-    //     console.log('data')
-    //     console.log(response.data)
-    //   })
-    //   .catch(e=>{
-    //     this.errors(e)
-    //   })
-    // },
-    // selectUrutkan: function (urutkan) {
-    //   if(urutkan=="All"){
-    //     this.retrieve();
-    //   }else{
-    //     GameDataService.getASC()
-    //     .then(response =>{
-    //       this.articles = response.data;
-    //       console.log('data')
-    //       console.log(response.data)
-    //     })
-    //     .catch(e=>{
-    //       this.errors(e)
-    //     })
-    //   }
     // },
     authenticateUser() {
           UserDataService.userAuthentication()

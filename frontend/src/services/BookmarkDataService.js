@@ -10,8 +10,8 @@ class BookmarkDataService {
     return http.post(`/api/read_later`, data, { headers: authHeader() });
   }
 
-  delete(id_berita) {
-    return http.delete(`/api/read_later/${id_berita}`, { headers: authHeader() });
+  delete(id_read_later) {
+    return http.delete(`/api/read_later/${id_read_later}`, { headers: authHeader() });
   }
 
   getUserBookmark(id_user) {
