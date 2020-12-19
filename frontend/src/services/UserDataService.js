@@ -37,6 +37,10 @@ class UserDataService {
     search(username) {
         return http.get(`/api/users/search/${username}`)
     }
+
+    getUserId(){
+        return http.get('/api/user-id/auth', { headers: authHeader() })
+    }
 }
 
 export default new UserDataService();

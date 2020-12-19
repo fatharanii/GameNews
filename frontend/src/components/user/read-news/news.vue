@@ -173,6 +173,7 @@ export default {
         this.articles = response.data;
         console.log('data')
         console.log(response.data)
+        console.log(this.articles[0])
       })
       .catch(e=>{
         this.errors(e)

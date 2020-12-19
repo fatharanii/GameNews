@@ -30,10 +30,11 @@
 </template>
 
 <script>
-import http from "@/http";
+// import http from "@/http";
 import NewsDataService from "../../../services/NewsDataService";
 import BookmarkDataService from "../../../services/BookmarkDataService";
 import BASE_URL from "../../../base-url"
+import UserDataService from '../../../services/UserDataService';
 export default {
   data(){
     return{
@@ -44,10 +45,11 @@ export default {
   },
   methods:{
     retrieve() {
+      this.getUserId();
       NewsDataService.get(this.$route.params.id_berita)
       .then(response =>{
         this.news = response.data;
-        console.log('data')
+        console.log('data berita')
         console.log(response.data)
       })
       .catch(e=>{
@@ -55,31 +57,31 @@ export default {
       })
     },
     addToBookmark(){
-    var data={
-      id_user:this.id_user,
-      id_berita: this.$route.params.id_berita
-    }
-      BookmarkDataService.add(data, { headers: authHeader() })
-        .then(response => {
-          console.log(response.data);
-          this.submitted = true;
+      var data={
+        id_user:this.id_user,
+        id_berita: this.$route.params.id_berita
+      }
+        BookmarkDataService.add(data)
+          .then(response => {
+            console.log(response.data);
+            this.submitted = true;
+          })
+          .catch(e => {
+            console.log(e);
+          });
+    },
+    getUserId(){
+        UserDataService.getUserId()
+        .then(response =>{
+          this.id_user= response.data;
+          console.log('user id')
+          console.log(response.data)
         })
-        .catch(e => {
-          console.log(e);
-        });
-  },
-  getUserId(){
-      http.get('http://localhost:8000/api/user-id/auth')
-      .then(response =>{
-        this.id_user= response.data;
-        console.log('data')
-        console.log(response.data)
-      })
-      .catch(e=>{
-        this.errors(e)
-      })
+        .catch(e=>{
+          this.errors(e)
+        })
 
-  },
+    },
 
     splitText(text){
         return text.split(",");
@@ -87,7 +89,6 @@ export default {
   },
   mounted(){
     this.retrieve();
-    this.getUserId();
   },
 }
 
