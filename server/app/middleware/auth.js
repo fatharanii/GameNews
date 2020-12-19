@@ -73,7 +73,25 @@ exports.isAdmin = (req, res, next) => {
 };
  
 
+exports.getUserIdByToken = (req, res, next) => {
+  let token = req.headers["x-access-token"];
 
+  if (!token) {
+    return res.status(403).send({
+      message: "No token provided!"
+    });
+  }
+
+  jwt.verify(token, secret, (err, decoded) => {
+    if (err) {
+      return res.status(401).send({
+        message: "Unauthorized!"
+      });
+    }
+    req.userId = decoded.id;
+    res.status(200).send(req.userId)
+  });
+};
 //=======================CONTROLLER========================
 exports.signup = (req, res) => {
   // Save User to Database
