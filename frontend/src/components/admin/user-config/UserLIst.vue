@@ -133,7 +133,6 @@
 <script>
 import http from "@/http";
 import "bootstrap/dist/css/bootstrap.css";
-import authHeader from '../../../services/auth-header';
 import UserDataService from '../../../services/UserDataService';
 export default {
     name:"users",

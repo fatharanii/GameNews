@@ -75,8 +75,6 @@
 </template>
 
 <script>
-import http from "@/http";
-import authHeader from './services/auth-header';
 import UserDataService from './services/UserDataService';
 export default {
     name:"app",
