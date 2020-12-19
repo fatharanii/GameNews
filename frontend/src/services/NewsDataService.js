@@ -47,7 +47,7 @@ class NewsDataService {
   }
 
   home(){
-    return http.get(`/api/news/home`);
+    return http.get(`/api/home`);
   }
 }
 

@@ -93,7 +93,6 @@
 </template>
 
 <script>
-import http from "@/http";
 import GameDataService from "../../services/GameDataService";
 import NewsDataService from "../../services/NewsDataService";
 import "bootstrap/dist/css/bootstrap.css";

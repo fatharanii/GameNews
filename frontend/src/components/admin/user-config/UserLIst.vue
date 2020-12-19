@@ -131,7 +131,6 @@
 </template>
 
 <script>
-import http from "@/http";
 import "bootstrap/dist/css/bootstrap.css";
 import UserDataService from '../../../services/UserDataService';
 export default {
