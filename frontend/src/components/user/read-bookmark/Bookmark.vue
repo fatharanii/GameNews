@@ -243,7 +243,7 @@
 
 
 <script>
-// import http from "@/http";
+import http from "@/http";
 // import authHeader from '../../../services/auth-header';
 import UserDataService from "../../../services/UserDataService";
 import NewsDataService from "../../../services/NewsDataService";
@@ -261,7 +261,8 @@ export default {
       urutkan:["All","Terbaru"],
       searchString: '',
       userAuth: false,
-      baseURL: BASE_URL
+      baseURL: BASE_URL,
+      id_user:''
     }
   },
   computed: {
@@ -284,6 +285,17 @@ export default {
       http.get('http://localhost:8000/api/read_later/')
       .then(response =>{
         this.articles = response.data;
+        console.log('data')
+        console.log(response.data)
+      })
+      .catch(e=>{
+        this.errors(e)
+      })
+    },
+    getUserId(){
+      http.get('http://localhost:8000/api/user-id/auth')
+      .then(response =>{
+        this.id_user= response.data;
         console.log('data')
         console.log(response.data)
       })
@@ -357,6 +369,7 @@ export default {
   mounted(){
     this.retrieve();
     this.authenticateUser();
+    this.getUserId();
   },
 }
 </script>
