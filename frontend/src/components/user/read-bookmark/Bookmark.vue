@@ -227,7 +227,7 @@
 </div>
 
 <div v-else>
-      <h4>You must log in first</h4>
+      <h6>You must log in first</h6>
       <RouterLink :to="'/login/'">
                   <a class="nav-link" href="#">Login</a>
       </RouterLink>

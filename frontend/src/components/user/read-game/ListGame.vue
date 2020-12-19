@@ -16,7 +16,7 @@
               :loading="loading"
               class="mx-1 my-2"
               max-width="350"
-              height="455"
+              height="500"
               hover
             >
               <v-img
@@ -149,7 +149,7 @@ export default {
       articles :[],
       error:[],
       page: 1,
-      perPage: 4,
+      perPage: 5,
       genre:["All","Action", "Survival","Strategy", "Adventure","Sport"],
       platform:["All","Steam", "Itch.io","GOG", "GamersGate","Humble Bundle", "Game Jolt"],
       searchString: '',

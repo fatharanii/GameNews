@@ -2,7 +2,7 @@
   <v-app light>
     <v-carousel
       cycle
-      height="570"
+      height="590"
       hide-delimiter-background
       show-arrows-on-hover
     >
@@ -31,7 +31,7 @@
         </v-row>
       </v-carousel-item>
     </v-carousel>
-    <h1>GAME TERBARU</h1>
+    <h7>GAME TERBARU</h7>
     <v-slide-group
       v-model="model"
       class="pa-4"
