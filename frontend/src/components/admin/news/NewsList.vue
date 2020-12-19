@@ -101,7 +101,7 @@
                       </v-btn>   
                 </template>
                 <template v-slot:[`item.thumbnail`]="{ item }">
-                <img :src="'http://localhost:8000/api/news_thumbnail/' + item.id_berita" style="width: 80%;" />
+                <img :src="baseURL + '/api/news_thumbnail/' + item.id_berita" style="width: 80%;" />
                 </template>
                 </v-data-table>
           </v-card>
@@ -118,10 +118,12 @@
 </template>
 
 <script>
-import http from "@/http";
+// import http from "@/http";
 import "bootstrap/dist/css/bootstrap.css";
-import authHeader from '../../../services/auth-header';
-//import NewsDataService from "../services/NewsDataService";
+// import authHeader from '../../../services/auth-header';
+import NewsDataService from "../../../services/NewsDataService";
+import UserDataService from '../../../services/UserDataService';
+import BASE_URL from "../../../base-url";
 export default {
     name:"news",
     data () {
@@ -143,13 +145,13 @@ export default {
         isLoading: false,
         judul_berita: "",
         selectedIdBerita: null,
-        adminAuth: false
+        adminAuth: false,
+        baseURL: BASE_URL
       }
     },
     methods:{
         retrieve(){
-          http
-          .get('http://localhost:8000/api/news')
+          NewsDataService.getAll()
             .then((response) =>{
               this.news = response.data;
             })
@@ -158,7 +160,7 @@ export default {
             });
         },
         searchJudulBerita() {
-          http.get('http://localhost:8000/api/news/search/'+this.judul_berita)
+          NewsDataService.search(this.judul_berita)
             .then(response => {
               this.news = response.data;
               console.log(response.data);
@@ -168,7 +170,7 @@ export default {
             });
         },
         deleteNews(id_berita) {
-          http.delete('http://localhost:8000/api/news/'+id_berita, { headers: authHeader() })
+          NewsDataService.delete(id_berita)
             .then(response => {
               console.log(response.data);
               this.retrieve();
@@ -181,7 +183,7 @@ export default {
           this.selectedIdBerita = id_berita
         },
         authenticateAdmin() {
-          http.get('http://localhost:8000/api/admin/auth', { headers: authHeader() })
+          UserDataService.adminAuthentication()
             .then(response => {
               this.adminAuth = response.data;
               console.log(response.data);

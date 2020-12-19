@@ -79,8 +79,9 @@
 </template>
 
 <script>
-import http from "@/http";
+// import http from "@/http";
 import NewsDataService from "../../../services/NewsDataService";
+import UserDataService from '../../../services/UserDataService';
 import { VueEditor } from "vue2-editor";
 import authHeader from '../../../services/auth-header';
 export default {
@@ -132,7 +133,7 @@ export default {
     },
 
     authenticateAdmin() {
-          http.get('http://localhost:8000/api/admin/auth', { headers: authHeader() })
+          UserDataService.adminAuthentication()
             .then(response => {
               this.adminAuth = response.data;
               console.log(response.data);

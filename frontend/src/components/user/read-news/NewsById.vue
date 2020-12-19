@@ -10,7 +10,7 @@
             <p class="Newsbyid-date">{{ newsDetail.publish_date }}</p>
             <div class="Gamebyid-gambar">
                 <v-img
-                    v-img v-bind:src="'http://localhost:8000/api/news_thumbnail/' + newsDetail.id_berita"
+                    v-img v-bind:src="baseURL + '/api/news_thumbnail/' + newsDetail.id_berita"
                 ></v-img>      
             </div>
             <div class="Newsbyid-isi" v-html="newsDetail.isi"></div>
@@ -20,17 +20,20 @@
 </template>
 
 <script>
-import http from "@/http";
+// import http from "@/http";
+import NewsDataService from "../../../services/NewsDataService";
+import BASE_URL from "../../../base-url"
 export default {
   data(){
     return{
       drawer : false,
-      news : []
+      news : [],
+      baseURL: BASE_URL
     }
   },
   methods:{
     retrieve() {
-      http.get('http://localhost:8000/api/news/'+ this.$route.params.id_berita)
+      NewsDataService.get(this.$route.params.id_berita)
       .then(response =>{
         this.news = response.data;
         console.log('data')

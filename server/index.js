@@ -4,7 +4,7 @@ const bodyParser = require('body-parser');
 // const {Client} = require ('pg')
 
 const app = express()
-const port = 8000
+const port = process.env.PORT || 8000
 
 const client = require ('./app/util/database')
 const user = require ('./app/function/user')

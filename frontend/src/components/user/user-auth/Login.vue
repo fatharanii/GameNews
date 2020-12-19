@@ -55,9 +55,10 @@
 </template>
 
 <script>
-import http from "@/http";
+// import http from "@/http";
 import "bootstrap/dist/css/bootstrap.css";
-import authHeader from '../../../services/auth-header';
+// import authHeader from '../../../services/auth-header';
+import UserDataService from "../../../services/UserDataService";
 export default {
   template: '#sign-in',
   name: "sign-in",
@@ -79,7 +80,7 @@ export default {
         password: this.user.password,
       };
 
-      http.post('http://localhost:8000/api/users/signin', data)
+      UserDataService.signIn(data)
         .then(response => {
           // console.log(response.data);
           // console.log(response.data.message);
@@ -109,7 +110,7 @@ export default {
         });
     },
     authenticateUser() {
-          http.get('http://localhost:8000/api/user/auth', { headers: authHeader() })
+          UserDataService.userAuthentication()
             .then(response => {
               this.submitted = response.data;
               console.log(response.data);

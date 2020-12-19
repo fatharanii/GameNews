@@ -46,7 +46,7 @@
 h1 {
     font: normal normal bold 25px/25px Nirmala UI;
     padding-left: 70px;
-    margin-top: 30px;
+    margin-top: 70px;
 }
 h2 {
     font: normal normal bold 20px/20px Nirmala UI;
@@ -66,6 +66,16 @@ h5 {
     font: normal normal bold 35px Nirmala UI;
     margin-top: 15px;
     margin-bottom: 15px;
+}
+h6 {
+    font: normal normal bold 25px/25px Nirmala UI;
+    padding-left: 70px;
+    margin-top: 70px;
+}
+h7 {
+    font: normal normal bold 25px/25px Nirmala UI;
+    padding-left: 70px;
+    margin-top: 30px;
 }
 .news {
     background: rgba(25, 27, 29, 0.8) 0% 0% no-repeat padding-box;

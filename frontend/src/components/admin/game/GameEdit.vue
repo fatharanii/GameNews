@@ -126,9 +126,11 @@
 
 <script>
 
-import http from "@/http";
+// import http from "@/http";
 import "bootstrap/dist/css/bootstrap.css";
-import authHeader from '../../../services/auth-header';
+// import authHeader from '../../../services/auth-header';
+import GameDataService from "../../../services/GameDataService";
+import UserDataService from '../../../services/UserDataService';
 export default {
   name: "game-details",
   data() {
@@ -152,7 +154,7 @@ export default {
   },
   methods: {
     getGame() {
-      http.get('http://localhost:8000/api/game/'+ this.$route.params.id_game)
+      GameDataService.getById(this.$route.params.id_game)
         .then(response => {
           var tanggal = new Date(response.data[0].release_date);
           console.log(tanggal)
@@ -174,7 +176,7 @@ export default {
     },
 
     updateGame() {
-      http.put('http://localhost:8000/api/game/'+this.$route.params.id_game, this.currentGame, { headers: authHeader() })
+      GameDataService.update(this.$route.params.id_game, this.currentGame)
         .then(response => {
           console.log(response.data);
           this.message = 'The game was updated successfully!';
@@ -187,7 +189,7 @@ export default {
       this.$refs.menu.save(date)
     },
     authenticateAdmin() {
-          http.get('http://localhost:8000/api/admin/auth', { headers: authHeader() })
+          UserDataService.adminAuthentication()
             .then(response => {
               this.adminAuth = response.data;
               console.log(response.data);
