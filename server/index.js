@@ -101,8 +101,13 @@ app.delete ('/api/read_later/:id', async (req, res)=>{
 })
 
 app.get('/api/read_later/my_bookmark/:id', async (req,res)=>{
-   const bookmark = await read_later.getUserBookmark(req.params.genre)
+   const bookmark = await read_later.getUserBookmark(req.params.id)
    res.send(await bookmark.rows)
+})
+
+app.get('/api/read_later/search/:judul_berita', async(req,res)=>{
+       const news = await berita.getNewsByJudul(req.params.judul_berita)
+       res.send(await news.rows)
 })
 
 //===============GAME BACKEND================

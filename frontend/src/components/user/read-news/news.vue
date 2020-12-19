@@ -156,7 +156,8 @@ export default {
       kategori:["All","Action", "Survival","Strategy", "Adventure","Sport"],
       urutkan:["All","Terbaru"],
       searchString: '',
-      baseURL: BASE_URL
+      baseURL: BASE_URL,
+      id_user:''
     }
   },
   computed: {
@@ -172,6 +173,7 @@ export default {
         this.articles = response.data;
         console.log('data')
         console.log(response.data)
+        console.log(this.articles[0])
       })
       .catch(e=>{
         this.errors(e)
@@ -221,6 +223,7 @@ export default {
   },
   mounted(){
     this.retrieve();
+    this.getUserId();
   },
 }
 

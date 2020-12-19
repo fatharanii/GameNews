@@ -13,6 +13,16 @@
                     v-img v-bind:src="baseURL + '/api/news_thumbnail/' + newsDetail.id_berita"
                 ></v-img>      
             </div>
+      <v-btn
+        icon
+        color="black"
+        @click="addToBookmark"
+        class="mt-6 ml-2"
+        x-small
+      >
+        <v-icon>mdi-bookmark</v-icon>
+      </v-btn>
+
             <div class="Newsbyid-isi" v-html="newsDetail.isi"></div>
         </v-container>
     </v-flex>
@@ -22,7 +32,9 @@
 <script>
 // import http from "@/http";
 import NewsDataService from "../../../services/NewsDataService";
+import BookmarkDataService from "../../../services/BookmarkDataService";
 import BASE_URL from "../../../base-url"
+import UserDataService from '../../../services/UserDataService';
 export default {
   data(){
     return{
@@ -33,16 +45,44 @@ export default {
   },
   methods:{
     retrieve() {
+      this.getUserId();
       NewsDataService.get(this.$route.params.id_berita)
       .then(response =>{
         this.news = response.data;
-        console.log('data')
+        console.log('data berita')
         console.log(response.data)
       })
       .catch(e=>{
         this.errors(e)
       })
     },
+    addToBookmark(){
+      var data={
+        id_user:this.id_user,
+        id_berita: this.$route.params.id_berita
+      }
+        BookmarkDataService.add(data)
+          .then(response => {
+            console.log(response.data);
+            this.submitted = true;
+          })
+          .catch(e => {
+            console.log(e);
+          });
+    },
+    getUserId(){
+        UserDataService.getUserId()
+        .then(response =>{
+          this.id_user= response.data;
+          console.log('user id')
+          console.log(response.data)
+        })
+        .catch(e=>{
+          this.errors(e)
+        })
+
+    },
+
     splitText(text){
         return text.split(",");
     }
