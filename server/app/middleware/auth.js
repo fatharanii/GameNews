@@ -53,6 +53,26 @@ exports.verifyToken = (req, res, next) => {
       next();
     });
 };
+
+exports.getUserIdByToken = (req, res, next) => {
+  let token = req.headers["x-access-token"];
+
+  if (!token) {
+    return res.status(403).send({
+      message: "No token provided!"
+    });
+  }
+
+  jwt.verify(token, secret, (err, decoded) => {
+    if (err) {
+      return res.status(401).send({
+        message: "Unauthorized!"
+      });
+    }
+    req.userId = decoded.id;
+    return res.status(200).send(req.userId)
+  });
+};
   
 exports.isAdmin = (req, res, next) => {
     User.getOneUserAdmin(req.userId).then(result => {

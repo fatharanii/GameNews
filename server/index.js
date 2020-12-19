@@ -78,6 +78,9 @@ app.get ('/api/user/auth', [auth.verifyToken],async (req, res)=>{
    res.send(userAuth)
 })
 
+// Get User Id By Token
+app.get ('/api/user-id/auth', [auth.getUserIdByToken]);
+
 //=============READ LATER BACKEND===========
 app.get('/api/read_later/', async (req,res)=>{
    const bookmark = await read_later.getAllReadLater()
