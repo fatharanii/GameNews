@@ -158,7 +158,6 @@ nav {
     display: block;
 }
 body {
-    padding-top: 1.5rem;
     color: #5a5a5a;
 }
 body {
