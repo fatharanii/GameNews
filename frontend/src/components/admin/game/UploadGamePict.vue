@@ -1,25 +1,79 @@
 <template>
 <div v-if="adminAuth">
-  <div class="file text--left">
-    <h4>Upload File</h4>
-    <form @submit.prevent="onSubmit"  enctype="multipart/form-data">
-      <div class="fields">
-        <v-container>
-          <v-file-input 
-            v-model="file" 
-            label="Select Image File..." 
-            accept="image/*"
-            type="file"
-            ref="file"
-            @change="onSelect"
-          ></v-file-input>
-        </v-container>
-      </div>
-      <div class="fields button">
-        <button>Submit</button>
-      </div>
+  <form @submit.prevent="onSubmit"  enctype="multipart/form-data">
+      <v-container>
+        <v-card
+          width="800px"
+          :loading="loading"
+          class="mx-auto my-12"
+        >
+        <v-card-title width="590" style="background:#EF5350;color:white" class="white--text mt-10">UPLOAD THUMBNAIL GAME</v-card-title>
+          <v-row  justify="center">
+            <v-col cols="12" md="10">
+              <div class="fields">
+                <div class="text-h6"> Uploade Image</div>
+                <br>
+                  <v-file-input 
+                    v-model="file" 
+                    label="Select Image File..." 
+                    accept="image/*"
+                    type="file"
+                    ref="file"
+                    @change="onSelect"
+                  ></v-file-input>
+              </div>
+              <v-dialog
+                  v-model="dialog"
+                  persistent
+                  max-width="320"
+                  :retain-focus="false"
+                >
+              <template v-slot:activator="{ on, attrs }">
+              <v-btn 
+                class="float-right mt-2 mx-3"
+                elevation="6"
+                color="error"
+                width="140px"
+                large
+                v-bind="attrs"
+                v-on="on"
+                @click="onSubmit"
+                >Submit
+              </v-btn>
+              </template>
+              <v-card>
+                <v-card-title class="text-h8">
+                  The Thumbnail Was Updated Successfully
+                </v-card-title>
+                <v-card-text></v-card-text>
+                <v-card-actions>
+                  <v-btn
+                    class="float mt-2"
+                    color="warning"
+                    width="170px"
+                    large
+                    :to="'/cmsGame'"
+                  >
+                  Back to Dashboard
+                </v-btn>
+                </v-card-actions>
+              </v-card>
+             </v-dialog>
+              <v-btn
+                class="float-right mt-2 mx-1"
+                elevation="6"
+                color="warning"
+                width="140px"
+                large
+                dark
+                :to="'/cmsGame'"
+            >Cancel
+            </v-btn>
+            </v-col>
+          </v-row>
+        </v-card>
+      </v-container>
     </form>
-  </div>
 </div>
 
 <div v-else>

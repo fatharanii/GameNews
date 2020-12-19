@@ -14,7 +14,7 @@ module.exports = {
     },
     
     deleteBookmark : async function deleteBookmark(id){
-        client.export().query('DELETE FROM public.read_later WHERE "id_readLater" = $1', [id])
+        client.export().query('DELETE FROM public.read_later WHERE "id_berita" = $1', [id])
     },
     
     getUserBookmark : async function getUserBookmark(id){

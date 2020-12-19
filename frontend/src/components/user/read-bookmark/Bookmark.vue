@@ -182,7 +182,6 @@ export default {
     }
   },
   methods:{
-
     // getUserId(){
     //   UserDataService.getUserId()
     //   .then(response =>{

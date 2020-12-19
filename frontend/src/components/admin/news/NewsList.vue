@@ -207,6 +207,10 @@ export default {
   left: 50%;
 }
 
+.container{
+  margin-top: 100px;
+}
+
 .col-md-6{
   position: relative;
   left :51%
