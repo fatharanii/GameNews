@@ -15,7 +15,7 @@
             </div>
             <v-btn
               icon
-              color="black"
+              color="gray"
               @click="addToBookmark"
               v-if="!isAdded"
               class="mt-6 ml-2"
@@ -23,7 +23,18 @@
             >
               <v-icon>mdi-bookmark</v-icon>
             </v-btn>
-            <h3 v-if="isAdded">This news was bookmarked</h3>
+            <h3 v-if="!isAdded">This news is not bookmarked</h3>
+            <!-- <h3 v-if="isAdded">This news was bookmarked</h3> -->
+            <v-btn
+              icon
+              color="black"
+              @click="deleteBookmark"
+              v-else
+              class="mt-6 ml-2"
+              x-small
+            >
+              <v-icon>mdi-bookmark</v-icon>
+            </v-btn>
             <div class="Newsbyid-isi" v-html="newsDetail.isi"></div>
         </v-container>
     </v-flex>
@@ -43,7 +54,8 @@ export default {
       news : [],
       baseURL: BASE_URL,
       id_user : '',
-      isAdded : false
+      isAdded : false,
+      id_readLater: ''
     }
   },
   methods:{
@@ -59,10 +71,10 @@ export default {
       })
       BookmarkDataService.getBookmarkByUserAndNews(this.id_user,this.$route.params.id_berita)
       .then(response => {
-        console.log("COKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKK");
         console.log(response.data)
         if(response.data.length!=0){
           this.isAdded = true
+          this.id_readLater = response.data[0].id_readLater;
         }
         else{
           console.log(response.data)
@@ -97,6 +109,37 @@ export default {
           .catch(e => {
             console.log(e);
           });
+    },
+    deleteBookmark() {
+      // var id_readLater;
+      // await BookmarkDataService.getBookmarkByUserAndNews(this.id_user,this.$route.params.id_berita)
+      //   .then(response => {
+      //     console.log(response.data)
+      //     if(response.data.length!=0){
+      //       this.id_readLater = response.data[0].id_readLater;
+      //       console.log(this.id_readLater);
+      //     }
+      //     else{
+      //       console.log(response.data)
+      //     }
+      //   })
+      //   .catch(e=>{
+      //     this.errors(e)
+      //   })
+      
+      BookmarkDataService.delete(this.id_readLater)
+        .then(response => {
+          console.log(this.id_readLater)
+          console.log("berhasil")
+          console.log(response.data)
+          this.isAdded = false
+          this.id_readLater = ''
+          // location.reload()
+          // return false
+        })
+        .catch(e=>{
+          this.errors(e)
+        })
     },
     // getUserId(){
     //   UserDataService.getUserId()
