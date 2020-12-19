@@ -110,10 +110,12 @@
 </template>
 
 <script>
-import http from "@/http";
+// import http from "@/http";
 import { VueEditor } from "vue2-editor";
 import "bootstrap/dist/css/bootstrap.css";
-import authHeader from '../../../services/auth-header';
+// import authHeader from '../../../services/auth-header';
+import NewsDataService from "../../../services/NewsDataService";
+import UserDataService from '../../../services/UserDataService';
 export default {
   components: { VueEditor },
   name: "news-details",
@@ -143,7 +145,7 @@ export default {
   },
   methods: {
     getNews() {
-      http.get('http://localhost:8000/api/news/'+this.$route.params.id_berita)
+      NewsDataService.get(this.$route.params.id_berita)
         .then(response => {
           this.currentNews.id_berita = response.data[0].id_game;
           this.currentNews.id_game = response.data[0].id_game;
@@ -159,7 +161,7 @@ export default {
 
     updateNews() {
 
-      http.put('http://localhost:8000/api/news/'+this.$route.params.id_berita, this.currentNews, { headers: authHeader() })
+      NewsDataService.update(this.$route.params.id_berita, this.currentNews)
         .then(response => {
           console.log(response.data);
           this.message = 'The news was updated successfully!';
@@ -169,7 +171,7 @@ export default {
         });
     },
     authenticateAdmin() {
-          http.get('http://localhost:8000/api/admin/auth', { headers: authHeader() })
+          UserDataService.adminAuthentication()
             .then(response => {
               this.adminAuth = response.data;
               console.log(response.data);

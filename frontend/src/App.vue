@@ -75,8 +75,7 @@
 </template>
 
 <script>
-import http from "@/http";
-import authHeader from './services/auth-header';
+import UserDataService from './services/UserDataService';
 export default {
     name:"app",
     data () {
@@ -87,7 +86,7 @@ export default {
     },
     methods:{
         authenticateUser() {
-          http.get('http://localhost:8000/api/user/auth', { headers: authHeader() })
+          UserDataService.userAuthentication()
             .then(response => {
               this.userAuth = response.data;
               console.log(response.data);
@@ -97,7 +96,7 @@ export default {
             });
         },
         authenticateAdmin() {
-          http.get('http://localhost:8000/api/admin/auth', { headers: authHeader() })
+          UserDataService.adminAuthentication()
             .then(response => {
               this.adminAuth = response.data;
               console.log(response.data);
@@ -159,7 +158,6 @@ nav {
     display: block;
 }
 body {
-    padding-top: 1.5rem;
     color: #5a5a5a;
 }
 body {

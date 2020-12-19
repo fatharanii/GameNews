@@ -14,7 +14,7 @@
                             <v-card class="my-4 mx-2" hover>
                                 <v-img
                                 height="200px"
-                                v-bind:src="'http://localhost:8000/api/news_thumbnail/' + news.id_berita"
+                                v-bind:src="baseURL + '/api/news_thumbnail/' + news.id_berita"
                                 ></v-img>
                                 <v-card-media>
                                     <v-container fill-height fluid>
@@ -142,8 +142,10 @@
 </template>
 
 <script>
-import http from "@/http";
-
+// import http from "@/http";
+import NewsDataService from "../../../services/NewsDataService";
+import GameDataService from "../../../services/GameDataService";
+import BASE_URL from "../../../base-url"
 export default {
   data(){
     return{
@@ -154,7 +156,8 @@ export default {
       perPage: 4,
       kategori:["All","Action", "Survival","Strategy", "Adventure","Sport"],
       urutkan:["All","Terbaru"],
-      searchString: ''
+      searchString: '',
+      baseURL: BASE_URL
     }
   },
   computed: {
@@ -165,7 +168,7 @@ export default {
   },
   methods:{
     retrieve() {
-      http.get('http://localhost:8000/api/news/')
+      NewsDataService.getAll()
       .then(response =>{
         this.articles = response.data;
         console.log('data')
@@ -190,7 +193,7 @@ export default {
       if(kategori=="All"){
         this.retrieve();
       }else{
-        http.get('http://localhost:8000/api/news/kategori/'+kategori)
+        NewsDataService.getByKategori(kategori)
         .then(response =>{
           this.articles = response.data;
           console.log('data')
@@ -202,7 +205,7 @@ export default {
       } 
     },
     searchNews () {
-      http.get('http://localhost:8000/api/news/search/'+this.searchString)
+      NewsDataService.search(this.searchString)
       .then(response =>{
         this.articles = response.data;
         console.log('data')
@@ -216,7 +219,7 @@ export default {
       if(urutkan=="All"){
         this.retrieve();
       }else{
-        http.get('http://localhost:8000/api/gamesASC')
+        GameDataService.getASC()
         .then(response =>{
           this.articles = response.data;
           console.log('data')
