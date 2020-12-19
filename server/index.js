@@ -82,12 +82,12 @@ app.get ('/api/user/auth', [auth.verifyToken],async (req, res)=>{
 app.get ('/api/user-id/auth', [auth.getUserIdByToken]);
 
 //=============READ LATER BACKEND===========
-app.get('/api/read_later/', async (req,res)=>{
+app.get('/api/read_later/', [auth.verifyToken], async (req,res)=>{
    const bookmark = await read_later.getAllReadLater()
    res.send(await bookmark.rows)
 })
 
-app.post('/api/read_later/', async (req, res)=>{
+app.post('/api/read_later/', [auth.verifyToken], async (req, res)=>{
    const id_user = req.body.id_user
    const id_berita = req.body.id_berita
 
@@ -95,19 +95,19 @@ app.post('/api/read_later/', async (req, res)=>{
    res.status(201).end()
 })
 
-app.delete ('/api/read_later/:id', async (req, res)=>{
+app.delete ('/api/read_later/:id', [auth.verifyToken], async (req, res)=>{
    await read_later.deleteBookmark(req.params.id)
    res.status(200).send()
 })
 
-app.get('/api/read_later/my_bookmark/:id', async (req,res)=>{
+app.get('/api/read_later/my_bookmark/:id', [auth.verifyToken], async (req,res)=>{
    const bookmark = await read_later.getUserBookmark(req.params.id)
    res.send(await bookmark.rows)
 })
 
-app.get('/api/read_later/search/:judul_berita', async(req,res)=>{
-       const news = await berita.getNewsByJudul(req.params.judul_berita)
-       res.send(await news.rows)
+app.get('/api/read_later/my_bookmark/:idUser/:idBerita', [auth.verifyToken], async (req,res)=>{
+   const bookmark = await read_later.getBookmarkByUserAndNews(req.params.idUser, req.params.idBerita)
+   res.send(await bookmark.rows)
 })
 
 //===============GAME BACKEND================

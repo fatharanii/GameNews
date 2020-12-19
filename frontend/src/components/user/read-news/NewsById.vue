@@ -4,7 +4,7 @@
         v-for="(newsDetail, i) in news"
         :key="i"
     >
-        <v-container class="white" style="width: 800px">
+        <v-container class="white pt-16" style="width: 800px">
             <p class="Newsbyid-subtext"><kategori>{{ newsDetail.kategori }}</kategori></p>
             <h5>{{newsDetail.judul_berita}}</h5>
             <p class="Newsbyid-date">{{ newsDetail.publish_date }}</p>
@@ -13,16 +13,17 @@
                     v-img v-bind:src="baseURL + '/api/news_thumbnail/' + newsDetail.id_berita"
                 ></v-img>      
             </div>
-      <v-btn
-        icon
-        color="black"
-        @click="addToBookmark"
-        class="mt-6 ml-2"
-        x-small
-      >
-        <v-icon>mdi-bookmark</v-icon>
-      </v-btn>
-
+            <v-btn
+              icon
+              color="black"
+              @click="addToBookmark"
+              v-if="!isAdded"
+              class="mt-6 ml-2"
+              x-small
+            >
+              <v-icon>mdi-bookmark</v-icon>
+            </v-btn>
+            <h3 v-if="isAdded">This news was bookmarked</h3>
             <div class="Newsbyid-isi" v-html="newsDetail.isi"></div>
         </v-container>
     </v-flex>
@@ -40,12 +41,37 @@ export default {
     return{
       drawer : false,
       news : [],
-      baseURL: BASE_URL
+      baseURL: BASE_URL,
+      id_user : '',
+      isAdded : false
     }
   },
   methods:{
-    retrieve() {
-      this.getUserId();
+    async retrieve() {
+      await UserDataService.getUserId()
+      .then(response =>{
+        this.id_user= response.data;
+        console.log('user id')
+        console.log(response.data)
+      })
+      .catch(e=>{
+        this.errors(e)
+      })
+      BookmarkDataService.getBookmarkByUserAndNews(this.id_user,this.$route.params.id_berita)
+      .then(response => {
+        console.log("COKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKK");
+        console.log(response.data)
+        if(response.data.length!=0){
+          this.isAdded = true
+        }
+        else{
+          console.log(response.data)
+        }
+      })
+      .catch(e=>{
+        this.errors(e)
+      })
+      console.log(this.id_user);
       NewsDataService.get(this.$route.params.id_berita)
       .then(response =>{
         this.news = response.data;
@@ -61,27 +87,37 @@ export default {
         id_user:this.id_user,
         id_berita: this.$route.params.id_berita
       }
+      console.log(data.id_user);
         BookmarkDataService.add(data)
           .then(response => {
             console.log(response.data);
             this.submitted = true;
+            location.reload();
           })
           .catch(e => {
             console.log(e);
           });
     },
-    getUserId(){
-        UserDataService.getUserId()
-        .then(response =>{
-          this.id_user= response.data;
-          console.log('user id')
-          console.log(response.data)
-        })
-        .catch(e=>{
-          this.errors(e)
-        })
-
-    },
+    // getUserId(){
+    //   UserDataService.getUserId()
+    //   .then(response =>{
+    //     this.id_user= response.data;
+    //     console.log('user id')
+    //     console.log(response.data)
+    //   })
+    //   .catch(e=>{
+    //     this.errors(e)
+    //   })
+    // },
+    // checkBookmarked(){
+    //   BookmarkDataService.getBookmarkByUserAndNews(this.id_user,this.$route.params.id_berita)
+    //   .then(response => {
+    //     console.log(response.data)
+    //   })
+    //   .catch(e=>{
+    //     this.errors(e)
+    //   })
+    // },
 
     splitText(text){
         return text.split(",");
@@ -93,4 +129,5 @@ export default {
 }
 
 </script>
-<style scoped src="@/assets/styles/style.css"></style>
+<style scoped src="@/assets/styles/style.css">
+</style>

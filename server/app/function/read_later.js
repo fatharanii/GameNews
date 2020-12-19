@@ -14,16 +14,16 @@ module.exports = {
     },
     
     deleteBookmark : async function deleteBookmark(id){
-        client.export().query('DELETE FROM public.read_later WHERE "id_berita" = $1', [id])
+        client.export().query('DELETE FROM public.read_later WHERE "id_readLater" = $1', [id])
     },
     
     getUserBookmark : async function getUserBookmark(id){
         const result = await client.export().query('SELECT * FROM public.read_later WHERE id_user = $1', [id])
         return result
     },
-	
-	getNewsByJudul : async function getNewsByJudul(judul_berita){
-        const result = await client.export().query('SELECT * FROM public.read_kater WHERE judul_berita ILIKE $1 ', ['%'+judul_berita+'%'])
+
+    getBookmarkByUserAndNews : async function getBookmarkByUserAndNews(id_user, id_berita){
+        const result = await client.export().query('SELECT * FROM public.read_later WHERE id_user = $1 AND id_berita = $2', [id_user, id_berita])
         return result
-    }
+    },
 }
