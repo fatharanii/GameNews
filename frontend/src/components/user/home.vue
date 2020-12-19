@@ -2,7 +2,7 @@
   <v-app light>
     <v-carousel
       cycle
-      height="590"
+      height="620"
       hide-delimiter-background
       show-arrows-on-hover
     >
@@ -20,13 +20,13 @@
           <div class="news" >
             <p class="kategori"><kategori>{{ News.kategori }}</kategori></p>
             <h3 class="judul" >{{ News.judul_berita}}</h3>
-            <p class="text-start" v-if="!readMoreActivated">{{ News.isi.slice(0, 400) }}
-              <readmore v-if="!readMoreActivated">
+            <div class="text-start" v-if="!readMoreActivated" v-html="News.isi.slice(0, 400)">
+              </div>
+              <readmore class="text-start" v-if="!readMoreActivated">
                 <RouterLink :to="'/news/'+News.id_berita" class="routerlinknews">
-                  ... Read More
+                Read More
                 </RouterLink>
               </readmore>
-            </p>
           </div>
         </v-row>
       </v-carousel-item>

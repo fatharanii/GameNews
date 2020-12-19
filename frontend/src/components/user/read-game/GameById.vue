@@ -15,8 +15,7 @@
                 <div class="Gamebyid-gambar">
                     <v-img
                         v-img v-bind:src="baseURL + '/api/game_allthumbnail/' + games.id_game"
-                    ></v-img>
-                        
+                    ></v-img>  
                 </div>
             </v-col>
             <v-col
