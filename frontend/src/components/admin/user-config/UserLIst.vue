@@ -159,7 +159,7 @@ export default {
             });
         },
         searchUsername() {
-          http.get('http://localhost:8000/api/users/search/'+this.username)
+          UserDataService.search(this.username)
             .then(response => {
               this.news = response.data;
               console.log(response.data);

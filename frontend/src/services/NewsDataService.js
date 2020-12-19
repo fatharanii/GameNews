@@ -45,6 +45,10 @@ class NewsDataService {
   search(searchString) {
     return http.get(`/api/news/search/${searchString}`);
   }
+
+  home(){
+    return http.get(`/api/news/home`);
+  }
 }
 
 export default new NewsDataService();

@@ -9,7 +9,7 @@
       <v-carousel-item
         v-for="(News, index) in news"
         :key="index"
-        v-img v-bind:src="'http://localhost:8000/api/news_thumbnail/' + News.id_berita"
+        v-img v-bind:src="baseURL + '/api/news_thumbnail/' + News.id_berita"
       >
         <v-row
           class="fill-height"
@@ -48,7 +48,7 @@
           max-width="300"
         >
           <v-img
-            v-img v-bind:src="'http://localhost:8000/api/game_allthumbnail/' + game.id_game"
+            v-img v-bind:src="baseURL + '/api/game_allthumbnail/' + game.id_game"
           ></v-img>
           <v-card-title>{{ game.judul_game }}</v-card-title>
           <v-card-text>
@@ -94,9 +94,10 @@
 
 <script>
 import http from "@/http";
-
+import GameDataService from "../../services/GameDataService";
+import NewsDataService from "../../services/NewsDataService";
 import "bootstrap/dist/css/bootstrap.css";
-
+import BASE_URL from "../../base-url"
 export default {
   data(){
     return{
@@ -104,11 +105,12 @@ export default {
       articles :[],
       news:[],
       error:[],
-      readMoreActivated : false
+      readMoreActivated : false,
+      baseURL: BASE_URL
     }
   },
   created() {
-      http.get('http://localhost:8000/api/gamesASC')
+      GameDataService.getASC()
       .then(response =>{
         this.articles = response.data;
         console.log('data')
@@ -117,7 +119,7 @@ export default {
       .catch(e=>{
         this.errors(e)
       }),
-      http.get('http://localhost:8000/api/home')
+      NewsDataService.home()
       .then(response =>{
         this.news = response.data;
         console.log('data')
