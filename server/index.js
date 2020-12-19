@@ -4,15 +4,15 @@ const bodyParser = require('body-parser');
 // const {Client} = require ('pg')
 
 const app = express()
-const port = 8000
+const port = process.env.PORT || 8000
 
-const client = require ('./database')
-const user = require ('./user')
-const auth = require ('./auth')
-const read_later = require ('./read_later.js')
-const permainan = require ('./game')
-const berita = require ('./news')
-const uploadImage = require("./upload");
+const client = require ('./app/util/database')
+const user = require ('./app/function/user')
+const auth = require ('./app/middleware/auth')
+const read_later = require ('./app/function/read_later.js')
+const permainan = require ('./app/function/game')
+const berita = require ('./app/function/news')
+const uploadImage = require("./app/middleware/upload");
 const fs = require("fs");
 global.__basedir = __dirname;
 
@@ -66,14 +66,28 @@ app.post('/api/users/signup', auth.checkDuplicateUsernameOrEmail, auth.signup)
 
 app.post('/api/users/signin', auth.signin)
 
+// Authenticate Admin for CMS
+app.get ('/api/admin/auth', [auth.verifyToken, auth.isAdmin],async (req, res)=>{
+   adminAuth = true;
+   res.send(adminAuth)
+})
+
+// Authenticate Logged User
+app.get ('/api/user/auth', [auth.verifyToken],async (req, res)=>{
+   userAuth = true;
+   res.send(userAuth)
+})
+
+// Get User Id By Token
+app.get ('/api/user-id/auth', [auth.getUserIdByToken]);
 
 //=============READ LATER BACKEND===========
-app.get('/api/read_later/', async (req,res)=>{
+app.get('/api/read_later/', [auth.verifyToken], async (req,res)=>{
    const bookmark = await read_later.getAllReadLater()
    res.send(await bookmark.rows)
 })
 
-app.post('/api/read_later/', async (req, res)=>{
+app.post('/api/read_later/', [auth.verifyToken], async (req, res)=>{
    const id_user = req.body.id_user
    const id_berita = req.body.id_berita
 
@@ -81,13 +95,18 @@ app.post('/api/read_later/', async (req, res)=>{
    res.status(201).end()
 })
 
-app.delete ('/api/read_later/:id', async (req, res)=>{
+app.delete ('/api/read_later/:id', [auth.verifyToken], async (req, res)=>{
    await read_later.deleteBookmark(req.params.id)
    res.status(200).send()
 })
 
-app.get('/api/read_later/my_bookmark/:id', async (req,res)=>{
-   const bookmark = await read_later.getUserBookmark(req.params.genre)
+app.get('/api/read_later/my_bookmark/:id', [auth.verifyToken], async (req,res)=>{
+   const bookmark = await read_later.getUserBookmark(req.params.id)
+   res.send(await bookmark.rows)
+})
+
+app.get('/api/read_later/my_bookmark/:idUser/:idBerita', [auth.verifyToken], async (req,res)=>{
+   const bookmark = await read_later.getBookmarkByUserAndNews(req.params.idUser, req.params.idBerita)
    res.send(await bookmark.rows)
 })
 
@@ -112,7 +131,7 @@ app.put('/api/game_save/:id', uploadImage.single("thumbnail"), async (req,res)=>
    const id = req.params.id
    filename = req.file.filename;
    const data = fs.readFileSync(
-       __basedir + "/uploads/" + filename
+       __basedir + "/app/public/images/" + filename
    );
    // var bufs = [];
    // req.on('data', function(d){ bufs.push(d); });
@@ -278,7 +297,7 @@ app.get('/api/news', async (req,res)=>{
        const id = req.params.id
        filename = req.file.filename;
        const data = fs.readFileSync(
-           __basedir + "/uploads/" + filename
+           __basedir + "/app/public/images/" + filename
        );
        // var bufs = [];
        // req.on('data', function(d){ bufs.push(d); });

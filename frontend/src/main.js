@@ -5,7 +5,14 @@ import jquery from 'jquery'
 import App from './App.vue'
 import http from './http'
 import vuetify from './plugins/vuetify';
-import router from './router'
+import router from './plugins/router'
+
+import VueAnalytics from 'vue-analytics';
+
+Vue.use(VueAnalytics, {
+    id: 'UA-185807551-1',
+    router
+})
 
 Vue.config.productionTip = false
 Vue.prototype.$jquery = jquery
