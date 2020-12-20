@@ -136,7 +136,7 @@ export default {
         searchUsername() {
           UserDataService.search(this.username)
             .then(response => {
-              this.news = response.data;
+              this.users = response.data;
               console.log(response.data);
             })
             .catch(e => {
