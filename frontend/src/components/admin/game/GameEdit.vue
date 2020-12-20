@@ -197,7 +197,7 @@ export default {
       menu: false,
       adminAuth: false,
       listGenre: ['Action','Survival','Strategy','Adventure','Sport'],
-      listPlatform: ['Game Jolt','GamersGate','GOG','Humble Bundle','Itch.io','Steam'],
+      listPlatform: ['Game Jolt','GamersGate','GOG','Humble Bundle','Itch.io','Steam','PS5', 'PS4', 'PC', 'XboxOne', 'Switch', 'Nintendo'],
     };
   },
   methods: {
