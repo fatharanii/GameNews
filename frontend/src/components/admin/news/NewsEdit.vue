@@ -147,7 +147,7 @@ export default {
     getNews() {
       NewsDataService.get(this.$route.params.id_berita)
         .then(response => {
-          this.currentNews.id_berita = response.data[0].id_game;
+          this.currentNews.id_berita = response.data[0].id_berita;
           this.currentNews.id_game = response.data[0].id_game;
           this.currentNews.judul_berita = response.data[0].judul_berita;
           this.currentNews.kategori = response.data[0].kategori;

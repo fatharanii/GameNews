@@ -140,7 +140,7 @@ export default {
         .then(response => {
           console.log(response.data.is_admin);
           console.log(this.currentUser);
-          this.message = 'The news was updated successfully!';
+          this.message = 'The user was updated successfully!';
         })
         .catch(e => {
           console.log(e);

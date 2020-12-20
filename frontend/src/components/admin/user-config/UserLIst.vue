@@ -9,7 +9,7 @@
           <v-card-title width="590" style="background:#EF5350;color:white" class="white--text mt-10">LIST USER</v-card-title>
           <div class="col-md-12">
             <div class="input-group mb-1">
-              <input type="text" class="form-control" placeholder="Search by Judul Berita"
+              <input type="text" class="form-control" placeholder="Search by Username"
                 v-model="username"/>
               <div class="input-group-append">
                 <button class="btn btn-outline-secondary" type="button"

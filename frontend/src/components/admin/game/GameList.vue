@@ -20,7 +20,7 @@
           <v-card>
           <div class="col-md-12">
             <div class="input-group mb-1">
-              <input type="text" class="form-control" placeholder="Search by Judul Berita"
+              <input type="text" class="form-control" placeholder="Search by Judul Game"
                 v-model="judul_game"/>
               <div class="input-group-append">
                 <button class="btn btn-outline-secondary" type="button"
