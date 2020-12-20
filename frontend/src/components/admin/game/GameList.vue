@@ -1,97 +1,77 @@
 <template>
 <div v-if="adminAuth">
   <div id="brand">
-
-    <div class="container mt-3">
-      <router-view />
-    </div>
-  </div>
-  <div class="game-list">
-    <v-row >
-      <v-col cols="8" >
-      </v-col>
-        <v-col cols="4">
+  <div class="news-list">
+    <v-container>
+    <v-row justify="space-around">
+      <v-col>
+        <router-view />
           <v-btn
-            color="blue darken-1"
-            cols="4"
-          >
+            class="float"
+            elevation="6"
+            color="error"
+            width="140px"
+            large
+            >
             <RouterLink :to="'/api/game-add/'" class="white--text" >
               Add Game
             </RouterLink>
           </v-btn>
-        </v-col>
-    </v-row>
-    <v-container>
-    <v-row>
-          <v-col>
-            <v-simple-table height="500px" class="grey lighten-5">
-              <template v-slot:default>
-                <thead>
-                  <tr>
-                    <th>ID</th>
-                    <th>Judul</th>
-                    <th>Genre</th>
-                    <th>Publisher</th>
-                    <th>Platform</th>
-                    <th>Release Date</th>
-                    <th>Price</th>
-                    <th>Description</th>
-                    <th>System Requirement</th>
-
-                    <th class="text-center">Pilihan</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr v-for="games_item in games" :key="games_item.id_game">
-                    <td class="text-xs-center">{{ games_item.id_game }}</td>
-                    <td class="text-xs-center">{{ games_item.judul_game }}</td>
-                    <td class="text-xs-center">{{ games_item.genre }}</td>
-                    <td class="text-xs-center">{{ games_item.publisher }}</td>
-                    <td class="text-xs-center">{{ games_item.platform }}</td>
-                    <td class="text-xs-center">{{ games_item.release_date }}</td>
-                    <td class="text-xs-center">{{ games_item.price }}</td>
-                    <td class="text-xs-center">{{ games_item.description }}</td>
-                    <td class="text-xs-center">{{ games_item.system_requirement }}</td>
-                    <td class="text-center">
-                        <v-btn
-                          class="ma-2"
-                          color="warning"
-                          dark
-                          width="110px"
-                          :to="'/api/game/' + games_item.id_game"
-                        >
-                        Edit
-                      </v-btn>
-                      <v-btn
-                          class="ma-2"
-                          color="warning"
-                          dark
-                          width="200px"
-                          :to="'/api/games-update-thumbnail/' + games_item.id_game"
-                        >
-                        Update Thumbnail
-                      </v-btn>
-                        <v-dialog
-                          v-model="dialog"
-                          persistent
-                          max-width="290"
-                          :retain-focus="false"
-                        >
-                        <template v-slot:activator="{ on, attrs }">
-                          <v-btn
-                            class="ma-2"
-                            color="error"
-                            width="100px"
-                            v-bind="attrs"
-                            v-on="on"
-                            @click.prevent="selectedGame(games_item.id_game)"
-                            >
-                            Delete
-                          </v-btn>
-                        </template>
-                        <v-card>
-                          <v-card-title class="text-h8">
-                            Apakah Anda yakin untuk menghapus game ini? (ID = :{{selectedIdGame}})
+          <v-card>
+          <div class="col-md-12">
+            <div class="input-group mb-1">
+              <input type="text" class="form-control" placeholder="Search by Judul Berita"
+                v-model="judul_game"/>
+              <div class="input-group-append">
+                <button class="btn btn-outline-secondary" type="button"
+                  @click="searchJudulGame"
+                  :to="'/api/game?judul_game=' + judul_game"
+                >
+                Search
+              </button>
+              </div>
+            </div>
+          </div>
+            <v-data-table
+              :headers="headers"
+              :items="games"
+              :items-per-page="5"
+              class="grey lighten-5"
+              fixed-header
+            >
+             <template v-slot:[`item.actions`]="{ item }">
+                <v-btn 
+                class="ma-2"
+                width="190px"  
+                color="warning" 
+                :to="'/api/game/' + item.id_game"
+                :loading="item.createloading" 
+                :disabled="createloading">
+                Update Data
+                </v-btn>
+                <br> 
+                <v-dialog
+                  v-model="dialog"
+                  persistent
+                  max-width="290"
+                  :retain-focus="false"
+                >
+                <template v-slot:activator="{ on, attrs }">
+                  <v-btn
+                    class="ma-2"
+                    elevation="6"
+                    color="error"
+                    width="190px"       
+                    v-bind="attrs"
+                    v-on="on"
+                    @click.prevent="selectedGame(item.id_game)"
+                  >
+                  Delete
+                  </v-btn>
+                    </template>
+                      <v-card>
+                        <v-card-title class="text-h8">
+                          Apakah Anda yakin untuk menghapus game ini?
                           </v-card-title>
                           <v-card-text></v-card-text>
                           <v-card-actions>
@@ -114,29 +94,27 @@
                           </v-card-actions>
                         </v-card> 
                         </v-dialog>
-                      </td>
-                    </tr> 
-                  </tbody>
-              </template>
-            </v-simple-table>
+                        <br>
+                        <v-btn
+                          class="ma-2"
+                          color="warning"
+                          dark
+                          width="190px"
+                          :to="'/api/games-update-thumbnail/' + item.id_game"
+                        >
+                        Update Thumbnail
+                      </v-btn>   
+                </template>
+                <template v-slot:[`item.thumbnail_game`]="{ item }">
+                <img :src="baseURL +'/api/game_allthumbnail/'+item.id_game" style="width: 100%;" />
+                </template>
+                </v-data-table>
+          </v-card>
           </v-col>
     </v-row>
     </v-container>
   </div>
-  <div class="col-md-8">
-      <div class="input-group mb-3">
-        <input type="text" class="form-control" placeholder="Search by Judul Game"
-          v-model="judul_game"/>
-        <div class="input-group-append">
-          <button class="btn btn-outline-secondary" type="button"
-            @click="searchJudulGame"
-            :to="'/api/game?judul_game=' + judul_game"
-          >
-            Search
-          </button>
-        </div>
-      </div>
-    </div>
+</div>
 </div>
 
 <div v-else>
@@ -150,19 +128,33 @@ import "bootstrap/dist/css/bootstrap.css";
 // import authHeader from '../../../services/auth-header';
 import GameDataService from "../../../services/GameDataService";
 import UserDataService from '../../../services/UserDataService';
+import BASE_URL from "../../../base-url";
 //import NewsDataService from "../services/NewsDataService";
 export default {
     name:"games",
     data () {
       return {
         games: [],
+         headers: [
+        { text: "ID Games",align: "center",sortable: true, value: "id_game" },
+        { text: "Game Title",align: "center",sortable: false, value: "judul_game" },
+        { text: "Thumbnail", align: "center", sortable: false,value: "thumbnail_game"},
+        { text: "Genre", align: "center", sortable: false, value: "genre"},
+        { text: "Publisher", align: "center", sortable: false, value: "publisher"},
+        { text: "Platform",align: "center", sortable: false, value: "platform"},
+        { text: "Release Date", align: "center", sortable: false,value: "release_date"},
+        { text: "Price", align: "center", sortable: false,value: "price"},
+        { text: "System Requirment", align: "center", sortable: false,value: "system_requirment"},
+        { text: "Action", align: "center",sortable: false, value: "actions"},
+      ],
         key: "",
         id: 0,
         dialog: false,
         isLoading: false,
         judul_game: "",
         selectedIdGame: null,
-        adminAuth: false
+        adminAuth: false,
+        baseURL: BASE_URL
       }
     },
     methods:{
@@ -189,6 +181,7 @@ export default {
           GameDataService.delete(id_game)
             .then(response => {
               console.log(response.data);
+              this.retrieve();
             })
             .catch(e => {
               console.log(e);
