@@ -55,34 +55,37 @@ export default {
       baseURL: BASE_URL,
       id_user : '',
       isAdded : false,
-      id_readLater: ''
+      id_readLater: '',
+      userAuth: false
     }
   },
   methods:{
     async retrieve() {
-      await UserDataService.getUserId()
-      .then(response =>{
-        this.id_user= response.data;
-        console.log('user id')
-        console.log(response.data)
-      })
-      .catch(e=>{
-        this.errors(e)
-      })
-      BookmarkDataService.getBookmarkByUserAndNews(this.id_user,this.$route.params.id_berita)
-      .then(response => {
-        console.log(response.data)
-        if(response.data.length!=0){
-          this.isAdded = true
-          this.id_readLater = response.data[0].id_readLater;
-        }
-        else{
-          console.log(response.data)
-        }
-      })
-      .catch(e=>{
-        this.errors(e)
-      })
+        await UserDataService.getUserId()
+          .then(response =>{
+            this.id_user= response.data;
+            console.log('user id')
+            console.log(response.data)
+          })
+          .catch(e=>{
+            console.log(e)
+          })
+        if(this.id_user != '') {
+          BookmarkDataService.getBookmarkByUserAndNews(this.id_user,this.$route.params.id_berita)
+            .then(response => {
+              console.log(response.data)
+              if(response.data.length!=0){
+                this.isAdded = true
+                this.id_readLater = response.data[0].id_readLater;
+              }
+              else{
+                console.log(response.data)
+              }
+            })
+            .catch(e=>{
+              this.errors(e)
+            })
+          }
       console.log(this.id_user);
       NewsDataService.get(this.$route.params.id_berita)
       .then(response =>{
@@ -95,20 +98,25 @@ export default {
       })
     },
     addToBookmark(){
-      var data={
-        id_user:this.id_user,
-        id_berita: this.$route.params.id_berita
+      if(this.userAuth != false) {
+        var data={
+          id_user:this.id_user,
+          id_berita: this.$route.params.id_berita
+        }
+        console.log(data.id_user);
+          BookmarkDataService.add(data)
+            .then(response => {
+              console.log(response.data);
+              this.isAdded = true;
+              location.reload();
+            })
+            .catch(e => {
+              console.log(e);
+            });
       }
-      console.log(data.id_user);
-        BookmarkDataService.add(data)
-          .then(response => {
-            console.log(response.data);
-            this.submitted = true;
-            location.reload();
-          })
-          .catch(e => {
-            console.log(e);
-          });
+      else {
+        this.$router.push({path: '/login/'});
+      }
     },
     deleteBookmark() {
       // var id_readLater;
@@ -141,6 +149,16 @@ export default {
           this.errors(e)
         })
     },
+    authenticateUser() {
+          UserDataService.userAuthentication()
+            .then(response => {
+              this.userAuth = response.data;
+              console.log(response.data);
+            })
+            .catch(e => {
+              console.log(e);
+            });
+    },
     // getUserId(){
     //   UserDataService.getUserId()
     //   .then(response =>{
@@ -168,6 +186,7 @@ export default {
   },
   mounted(){
     this.retrieve();
+    this.authenticateUser();
   },
 }
 

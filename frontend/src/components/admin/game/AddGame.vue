@@ -167,7 +167,7 @@ export default {
       submitted: false,
       adminAuth: false,
        listGenre: ['Action','Adventure','Survival','Strategy','Sport'],
-      listPlatform: ['Game Jolt','GamersGate','GOG','Humble Bundle','Itch.io','Steam'],
+      listPlatform: ['Game Jolt','GamersGate','GOG','Humble Bundle','Itch.io','Steam','PS5', 'PS4', 'PC', 'XboxOne', 'Switch', 'Nintendo'],
       judulRules:[
         (v) => !!v || "Judul Tidak Boleh Kosong.",
         (v) => v.length <= 100 || "Judul maksimal 100 karakter",
