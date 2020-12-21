@@ -10,6 +10,10 @@ class GameDataService {
         return http.get(`/api/gamesASC`);
     }
 
+    getFiveGamesASC(){
+        return http.get(`/api/home/NewGame`);
+    }
+
     getAll() {
         return http.get(`/api/game/`)
     }

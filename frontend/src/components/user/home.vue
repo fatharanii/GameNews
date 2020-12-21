@@ -109,7 +109,7 @@ export default {
     }
   },
   created() {
-      GameDataService.getASC()
+      GameDataService.getFiveGamesASC()
       .then(response =>{
         this.articles = response.data;
         console.log('data')
