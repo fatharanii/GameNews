@@ -7,11 +7,10 @@
       <v-col>
         <router-view />
           <v-btn
-            class="float"
-            elevation="6"
             color="error"
-            width="140px"
-            large
+            elevation="4"
+            width="110px"
+            class="my-4"
             >
             <RouterLink :to="'/api/game-add/'" class="white--text" >
               Add Game
@@ -39,6 +38,14 @@
               class="grey lighten-5"
               fixed-header
             >
+             <template v-slot:[`item.release_date`]="{ item }">
+               <span>{{new Date(item.release_date).toLocaleString('id-ID', {
+                  day: 'numeric',
+                  month: 'long',
+                  year: 'numeric',
+                  })}}
+                </span>
+             </template>
              <template v-slot:[`item.actions`]="{ item }">
                 <v-btn 
                 class="ma-2"

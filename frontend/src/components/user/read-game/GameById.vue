@@ -5,7 +5,7 @@
         :key="i"
     >
         <h4>{{games.judul_game}}</h4>
-        <v-container class="grey lighten-4" style="width: 1000px">
+        <v-container class="grey lighten-4" style="width: 1000px; margin-top:30px">
         <v-row no-gutters>
             <v-col
             color="grey lighten-2"
@@ -24,7 +24,11 @@
             >
                 <p class="Gamebyid-subtext"><genre>{{ games.genre }}</genre></p>
                 <p class="Gamebyid-desc">{{ games.description }}</p>
-                <p class="Gamebyid-subtext">Release date : {{ games.release_date }}</p>
+                <p class="Gamebyid-subtext">Release date : <span>{{new Date(games.release_date).toLocaleString('id-ID', {
+                day: 'numeric',
+                month: 'long',
+                year: 'numeric',
+                })}}</span></p>
                 <pre class="Gamebyid-subtext">Publisher      : {{ games.publisher }}</pre>
                 <pre class="Gamebyid-subtext">Platform       : {{ games.platform }}</pre>
                 <pre class="Gamebyid-subtext">Harga           : {{ games.price }}</pre>

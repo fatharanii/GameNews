@@ -149,7 +149,7 @@ export default {
       articles :[],
       error:[],
       page: 1,
-      perPage: 5,
+      perPage: 6,
       genre:["All","Action", "Survival","Strategy", "Adventure","Sport"],
       platform:["All","Steam", "Itch.io","GOG", "GamersGate","Humble Bundle", "Game Jolt","PS5", "PS4", "PC", "XboxOne", "Switch", "Nintendo"],
       searchString: '',

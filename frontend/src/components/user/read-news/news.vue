@@ -7,17 +7,17 @@
       class="flex-grow-0 flex-shrink-0"
     >
       <v-content>
-            <v-container fluid>
+            <v-container style="margin-top:0px">
                 <v-layout row wrap align-center>
                     <v-flex xs11 offset-md1>
                         <div v-for="news in visiblePages" :key="news.id_berita">
                             <v-card class="my-4 mx-2" hover>
                                 <v-img
-                                height="200px"
+                                height="250px"
                                 v-bind:src="baseURL + '/api/news_thumbnail/' + news.id_berita"
                                 ></v-img>
                                 <v-card-media>
-                                    <v-container fill-height fluid>
+                                    <v-container style="margin-top:0px">
                                         <v-layout>
                                             <v-flex xs12 align-end d-flex>
                                                 <span class="headline">{{ news.judul_berita }}</span>
@@ -38,7 +38,12 @@
                                 <v-divider class="mx-5 my-0"></v-divider>
                                 <v-card-actions>
                                     <v-chip small class="grey--text">
-                                        {{news.publish_date}}
+                                      <span>{{new Date(news.publish_date).toLocaleString('id-ID', {
+                                        day: 'numeric',
+                                        month: 'long',
+                                        year: 'numeric',
+                                        })}}
+                                      </span>
                                     </v-chip>
                                     <v-spacer></v-spacer>
                                     <v-btn

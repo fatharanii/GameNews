@@ -4,37 +4,52 @@
         v-for="(newsDetail, i) in news"
         :key="i"
     >
-        <v-container class="white pt-16" style="width: 800px">
+        <v-container class="white pt-16" style="width: 800px; margin-top:30px">
             <p class="Newsbyid-subtext"><kategori>{{ newsDetail.kategori }}</kategori></p>
             <h5>{{newsDetail.judul_berita}}</h5>
-            <p class="Newsbyid-date">{{ newsDetail.publish_date }}</p>
+            <p class="Newsbyid-date">
+              <span>{{new Date(newsDetail.publish_date).toLocaleString('id-ID', {
+                day: 'numeric',
+                month: 'long',
+                year: 'numeric',
+                })}}
+              </span>
+            </p>
+            <v-row>
+              <v-col
+                cols=""
+                class="flex-grow-0 flex-shrink-0">
+                <v-btn
+                  icon
+                  color="gray"
+                  @click="addToBookmark"
+                  v-if="!isAdded"
+                  x-small
+                >
+                  <v-icon>mdi-bookmark</v-icon>
+                </v-btn>
+                <v-btn
+                  icon
+                  color="black"
+                  @click="deleteBookmark"
+                  v-else
+                  x-small
+                >
+                  <v-icon>mdi-bookmark</v-icon>
+                </v-btn>
+              </v-col>
+              <v-col
+              cols="8"
+              class="my-1">
+                <h3 v-if="!isAdded">This news is not bookmarked</h3>
+                <!-- <h3 v-if="isAdded">This news was bookmarked</h3> -->
+              </v-col>
+            </v-row>
             <div class="Gamebyid-gambar">
                 <v-img
                     v-img v-bind:src="baseURL + '/api/news_thumbnail/' + newsDetail.id_berita"
                 ></v-img>      
             </div>
-            <v-btn
-              icon
-              color="gray"
-              @click="addToBookmark"
-              v-if="!isAdded"
-              class="mt-6 ml-2"
-              x-small
-            >
-              <v-icon>mdi-bookmark</v-icon>
-            </v-btn>
-            <h3 v-if="!isAdded">This news is not bookmarked</h3>
-            <!-- <h3 v-if="isAdded">This news was bookmarked</h3> -->
-            <v-btn
-              icon
-              color="black"
-              @click="deleteBookmark"
-              v-else
-              class="mt-6 ml-2"
-              x-small
-            >
-              <v-icon>mdi-bookmark</v-icon>
-            </v-btn>
             <div class="Newsbyid-isi" v-html="newsDetail.isi"></div>
         </v-container>
     </v-flex>

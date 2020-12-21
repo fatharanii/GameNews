@@ -8,8 +8,10 @@
         <router-view />
           <v-btn
             color="error"
-             width="110px"
-            >
+            elevation="4"
+            width="110px"
+            class="my-4"
+          >
             <RouterLink :to="'/api/news-add/'" class="white--text" >
               Add News
             </RouterLink>
@@ -36,6 +38,22 @@
               class="grey lighten-5"
               fixed-header
             >
+             <template v-slot:[`item.publish_date`]="{ item }">
+               <span>{{new Date(item.publish_date).toLocaleString('id-ID', {
+                  day: 'numeric',
+                  month: 'long',
+                  year: 'numeric',
+                  })}}
+                </span>
+             </template>
+             <template v-slot:[`item.lastupdate_date`]="{ item }">
+               <span>{{new Date(item.lastupdate_date).toLocaleString('id-ID', {
+                  day: 'numeric',
+                  month: 'long',
+                  year: 'numeric',
+                  })}}
+                </span>
+             </template>
              <template v-slot:[`item.actions`]="{ item }">
                 <v-btn 
                 class="ma-2"
