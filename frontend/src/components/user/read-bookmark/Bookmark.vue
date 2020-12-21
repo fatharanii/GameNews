@@ -141,11 +141,20 @@
     </v-app>
   </div>
 
-  <div v-else>
-    <h6>You must log in first</h6>
-    <RouterLink :to="'/login/'">
-      <a class="nav-link" href="#">Login</a>
-    </RouterLink>
+  <div v-else class="bookmarklogin">
+    <h2>You must log in first</h2>
+    <v-btn
+        flat
+        color="error"
+        @click="searchNews"
+        class="mt-5 ml-2"
+        small
+      >
+        <RouterLink :to="'/login/'" class="routerlinklogin">
+          <span>Login</span>
+        </RouterLink>
+      </v-btn>
+    
   </div>
 </template>
 
