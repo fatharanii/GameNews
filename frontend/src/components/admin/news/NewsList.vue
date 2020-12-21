@@ -7,7 +7,7 @@
       <v-col>
         <router-view />
           <v-btn
-            color="grey darken-1"
+            color="error"
              width="110px"
             >
             <RouterLink :to="'/api/news-add/'" class="white--text" >

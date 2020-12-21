@@ -109,15 +109,44 @@
                   placeholder="System Requirment"
                   id="system_requirement">
                 </v-textarea>
-              <v-btn
-                class="float-right mt-2"
-                elevation="6"
-                color="error"
-                width="140px"
-                large
-                @click="saveGame"
-              >Add
-              </v-btn>
+              <v-dialog 
+                v-model="dialog"
+                persistent
+                max-width="400"
+                :retain-focus="false"
+              >
+              <template v-slot:activator="{ on, attrs }">
+                <v-btn
+                  class="float-right mt-2"
+                  elevation="6"
+                  color="error"
+                  width="140px"
+                  v-bind="attrs" 
+                  v-on ="on"
+                  large
+                  @click="saveGame"
+                >Add
+                </v-btn>
+              </template>
+                <v-card
+                  width="400px">
+                  <v-card-tittle class="text-h8">
+                    Game Added Successfully
+                  </v-card-tittle>
+                    <v-card-text></v-card-text>
+                      <v-card-actions>
+                        <v-spacer></v-spacer>
+                          <v-btn
+                            class="float-right"
+                            color="warning"
+                            dark
+                            :to="'/cmsGame'"
+                          >
+                          Back to Dashboard
+                          </v-btn>
+                        </v-card-actions> 
+                      </v-card>
+                </v-dialog>
               <v-btn
                 class="float-right mt-2 mx-3"
                 elevation="6"
