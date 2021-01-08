@@ -91,7 +91,7 @@
         <v-icon>mdi-delete</v-icon>
       </v-btn>
       <v-btn
-        flat
+        elevation="2"
         color="error"
         @click="searchNews"
         class="mt-5 ml-2"
@@ -239,7 +239,6 @@ export default {
   },
   mounted(){
     this.retrieve();
-    this.getUserId();
   },
 }
 

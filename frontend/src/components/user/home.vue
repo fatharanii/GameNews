@@ -31,7 +31,7 @@
         </v-row>
       </v-carousel-item>
     </v-carousel>
-    <h7>GAME TERBARU</h7>
+    <h6>GAME TERBARU</h6>
     <v-slide-group
       v-model="model"
       class="pa-4"
@@ -108,7 +108,8 @@ export default {
       baseURL: BASE_URL
     }
   },
-  created() {
+  methods:{
+    created() {
       GameDataService.getFiveGamesASC()
       .then(response =>{
         this.articles = response.data;
@@ -128,7 +129,6 @@ export default {
         this.errors(e)
       })
     },
-  methods:{
   },
   mounted(){
     this.created();

@@ -144,9 +144,8 @@
   <div v-else class="bookmarklogin">
     <h2>You must log in first</h2>
     <v-btn
-        flat
+        elevation="2"
         color="error"
-        @click="searchNews"
         class="mt-5 ml-2"
         small
       >
