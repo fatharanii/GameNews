@@ -1,6 +1,6 @@
 <template id="game-details">
   <div v-if="adminAuth">
-  <v-form ref="form" v-model="valid">
+  <v-form ref="form">
     <div v-if="currentGame">
     <v-container>
       <v-card
@@ -15,7 +15,6 @@
               <v-text-field
                 v-model="currentGame.judul_game"
                 placeholder="Game Tittle"
-                :rule="idgameRules"
                 required
                 name="judul_game"
                 id="judul_game"
@@ -24,7 +23,6 @@
              <div class="text-h6"> Genre</div>
                 <v-select                  
                   v-model="currentGame.genre"
-                  :rules="GenreRules"
                   :items="listGenre"
                   placeholder="Genre"
                   required
@@ -128,9 +126,9 @@
                     </template>
                     <v-card
                       width="400px">
-                      <v-card-tittle class="text-h8">
+                      <v-card-title class="text-h8">
                         The News Was Updated Successfully
-                      </v-card-tittle>
+                      </v-card-title>
                         <v-card-text></v-card-text>
                         <v-card-actions>
                           <v-spacer></v-spacer>
@@ -182,6 +180,8 @@ export default {
   data() {
     return {
       message: '',
+      loading : false,
+      dialog : false,
       currentGame: {
         id_game : "",
         judul_game: "",
@@ -202,6 +202,7 @@ export default {
   },
   methods: {
     getGame() {
+      this.loading = true
       GameDataService.getById(this.$route.params.id_game)
         .then(response => {
           var tanggal = new Date(response.data[0].release_date);
@@ -217,10 +218,12 @@ export default {
           this.currentGame.description = response.data[0].description;
           this.currentGame.system_requirement = response.data[0].system_requirement;
           console.log(response.data);
+          this.loading = false
         })
         .catch(e => {
           console.log(e);
         });
+        
     },
 
     updateGame() {

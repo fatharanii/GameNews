@@ -12,7 +12,6 @@
                     <div class="text-h6">ID Game</div>
                     <v-text-field
                         v-model="news.id_game"
-                        :rule="idgameRules"
                         placeholder="Id Game"
                         required
                         name="id_game"
@@ -117,6 +116,8 @@ export default {
   data(){
     return{
       valid: true,
+      dialog : false,
+      loading : false,
       news:{
         id_game:"",
         judul_berita:"",
@@ -139,6 +140,7 @@ export default {
   },
   methods:{
     saveNews(){
+      this.loading = true
       var data ={
         id_game: Number(this.news.id_game),
         judul_berita: this.news.judul_berita,
@@ -149,6 +151,7 @@ export default {
         .then(response => {
           console.log(response.data);
           this.submitted = true;
+          this.loading = false
         })
         .catch(e => {
           console.log(e);

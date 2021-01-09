@@ -20,7 +20,7 @@
               hover
             >
               <v-img
-                v-img v-bind:src="baseURL + '/api/game_allthumbnail/' + game.id_game"
+                 v-bind:src="baseURL + '/api/game_allthumbnail/' + game.id_game"
               ></v-img>
               <v-card-title>{{ game.judul_game }}</v-card-title>
               <v-card-text>
@@ -146,6 +146,7 @@ export default {
   data(){
     return{
       drawer : false,
+      loading : false,
       articles :[],
       error:[],
       page: 1,
@@ -164,11 +165,13 @@ export default {
   },
   methods:{
     retrieve() {
+      this.loading = true
       GameDataService.getAll()
       .then(response =>{
         this.articles = response.data;
         console.log('data')
         console.log(response.data)
+        this.loading = false
       })
       .catch(e=>{
         this.errors(e)

@@ -94,7 +94,9 @@ export default {
     return {
       file: "",
       idGameSelected: this.$route.params.id_game,
-      adminAuth: false
+      adminAuth: false,
+      dialog : false,
+      loading : false
     }
   },
   methods: {

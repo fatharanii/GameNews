@@ -33,7 +33,6 @@
     </v-carousel>
     <h6>GAME TERBARU</h6>
     <v-slide-group
-      v-model="model"
       class="pa-4"
       active-class="success"
       show-arrows
@@ -101,6 +100,7 @@ export default {
   data(){
     return{
       drawer : false,
+      loading : false,
       articles :[],
       news:[],
       error:[],
@@ -110,11 +110,13 @@ export default {
   },
   methods:{
     created() {
+      this.loading = true
       GameDataService.getFiveGamesASC()
       .then(response =>{
         this.articles = response.data;
         console.log('data')
         console.log(response.data)
+        this.loading = false
       })
       .catch(e=>{
         this.errors(e)
@@ -124,6 +126,7 @@ export default {
         this.news = response.data;
         console.log('data')
         console.log(response.data)
+        this.loading = false
       })
       .catch(e=>{
         this.errors(e)

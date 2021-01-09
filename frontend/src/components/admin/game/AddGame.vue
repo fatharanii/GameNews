@@ -1,10 +1,11 @@
 <template id="add-game">
   <div v-if="adminAuth">
-    <v-form ref="form" v-model="valid">
+    <v-form ref="form">
      <v-container>
        <v-card
             width="800px"
             :loading="loading"
+             loading-text="Loading... Please wait"
             class="mx-auto my-12">
             <v-card-title width="590" style="background:#EF5350;color:white" class="white--text mt-10">ADD GAME</v-card-title>
             <v-row  justify="center">
@@ -181,6 +182,8 @@ export default {
   name: "add-game",
   data() {
     return {
+      loading : false,
+      dialog : false,
       game: {
         judul_game: "",
         genre: "",
@@ -211,7 +214,9 @@ export default {
     };
   },
   methods: {
+ 
     saveGame() {
+      this.loading = true
       var data = {
         judul_game: this.game.judul_game,
         genre: this.game.genre,
@@ -227,6 +232,7 @@ export default {
         .then(response => {
           console.log(response.data);
           this.submitted = true;
+          this.loading = false
         })
         .catch(e => {
           console.log(e);

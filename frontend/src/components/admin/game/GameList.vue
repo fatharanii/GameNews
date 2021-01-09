@@ -35,6 +35,8 @@
               :headers="headers"
               :items="games"
               :items-per-page="5"
+              :loading ="loading"
+              loading-text="Loading... Please wait"
               class="grey lighten-5"
               fixed-header
             >
@@ -52,8 +54,7 @@
                 width="190px"  
                 color="warning" 
                 :to="'/api/game/' + item.id_game"
-                :loading="item.createloading" 
-                :disabled="createloading">
+                >
                 Update Data
                 </v-btn>
                 <br> 
@@ -157,7 +158,7 @@ export default {
         key: "",
         id: 0,
         dialog: false,
-        isLoading: false,
+        loading : false,
         judul_game: "",
         selectedIdGame: null,
         adminAuth: false,
@@ -166,9 +167,11 @@ export default {
     },
     methods:{
         retrieve(){
+          this.loading = true
           GameDataService.getAll()
             .then((response) =>{
               this.games = response.data;
+              this.loading = false
             })
             .catch((e)=>{
               console.log(e);

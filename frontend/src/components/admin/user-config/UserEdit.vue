@@ -1,11 +1,10 @@
 <template id="user-edit">
   <div v-if="adminAuth">
-    <v-form ref="form" v-model="valid">
+    <v-form ref="form">
     <div v-if="currentUser">
      <v-container>
       <v-card
         width="800px"
-        :loading="loading"
         class="mx-auto my-12"
       >
       <v-card-title width="590" style="background:#EF5350;color:white" class="white--text mt-10">UPDATE USER</v-card-title>
@@ -65,9 +64,9 @@
                     </template>
                     <v-card
                       width="400px">
-                      <v-card-tittle class="text-h8">
+                      <v-card-title class="text-h8">
                         The User Was Updated Successfully
-                      </v-card-tittle>
+                      </v-card-title>
                         <v-card-text></v-card-text>
                         <v-card-actions>
                           <v-spacer></v-spacer>
@@ -110,6 +109,7 @@ export default {
   name: "user-details",
   data() {
     return {
+      dialog: false,
       message: '',
       currentUser: {
         username: "",

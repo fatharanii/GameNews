@@ -25,6 +25,7 @@
               :headers="headers"
               :items="users"
               :items-per-page="5"
+              :loading="loading"
               class="grey lighten-5"
               fixed-header
             >
@@ -34,8 +35,7 @@
                 width="110px"  
                 color="warning" 
                 :to="'/api/users/' + item.id_user"
-                :loading="item.createloading" 
-                :disabled="createloading">
+                >
                 Update
                 </v-btn>
                 <br> 
@@ -53,7 +53,7 @@
                     width="110px"       
                     v-bind="attrs"
                     v-on="on"
-                    @click.prevent="selectedNews(item.id_user)"
+                    @click.prevent="selectedUser(item.id_user)"
                   >
                   Delete
                   </v-btn>
@@ -76,7 +76,7 @@
                               color="blue darken-1"
                               text
                               @click="dialog = false"
-                              @click.prevent="deleteNews(selectedIdUser)"
+                              @click.prevent="deleteUser(selectedIdUser)"
                             >
                               Yakin
                             </v-btn>
@@ -117,7 +117,7 @@ export default {
         key: "",
         id: 0,
         dialog: false,
-        isLoading: false,
+        loading : false,
         username: "",
         selectedIdUser: null,
         adminAuth: false
@@ -125,9 +125,11 @@ export default {
     },
     methods:{
         retrieve(){
+          this.loading = true
           UserDataService.getAll()
             .then((response) =>{
               this.users = response.data;
+              this.loading = false
             })
             .catch((e)=>{
               console.log(e);

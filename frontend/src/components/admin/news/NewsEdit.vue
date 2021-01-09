@@ -13,7 +13,6 @@
                     <div class="text-h6">ID Game</div>
                     <v-text-field
                         v-model="currentNews.id_game"
-                        :rule="idgameRules"
                         placeholder="Id Game"
                         required
                         name="id_game"
@@ -122,6 +121,9 @@ export default {
   data() {
     return {
       message: '',
+      dialog : false,
+      loading : false,
+      valid : true,
       currentNews: {
         id_berita: "",
         id_game: "",
@@ -145,6 +147,7 @@ export default {
   },
   methods: {
     getNews() {
+      this.loading = true
       NewsDataService.get(this.$route.params.id_berita)
         .then(response => {
           this.currentNews.id_berita = response.data[0].id_berita;
@@ -157,6 +160,7 @@ export default {
         .catch(e => {
           console.log(e);
         });
+        this.loading = false
     },
 
     updateNews() {

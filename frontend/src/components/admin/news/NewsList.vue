@@ -35,6 +35,8 @@
               :headers="headers"
               :items="news"
               :items-per-page="5"
+              :loading ="loading"
+              loading-text="Loading... Please wait"
               class="grey lighten-5"
               fixed-header
             >
@@ -60,8 +62,7 @@
                 width="190px"  
                 color="warning" 
                 :to="'/api/news/' + item.id_berita"
-                :loading="item.createloading" 
-                :disabled="createloading">
+                >
                 Update Data
                 </v-btn>
                 <br> 
@@ -123,8 +124,8 @@
                 </template>
                 </v-data-table>
           </v-card>
-          </v-col>
-    </v-row>
+        </v-col>
+      </v-row>
     </v-container>
   </div>
 </div>
@@ -169,18 +170,22 @@ export default {
     },
     methods:{
         retrieve(){
+          this.loading = true
           NewsDataService.getAll()
             .then((response) =>{
               this.news = response.data;
+              this.loading = false
             })
             .catch((e)=>{
               console.log(e);
             });
+            
         },
         searchJudulBerita() {
           NewsDataService.search(this.judul_berita)
             .then(response => {
               this.news = response.data;
+              this.loading = false
               console.log(response.data);
             })
             .catch(e => {
