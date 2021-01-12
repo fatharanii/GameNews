@@ -205,6 +205,7 @@ export default {
       await UserDataService.getUserId()
       .then(response =>{
         this.id_user = response.data;
+        if(response.data == ''){this.id_user = 0}
         console.log('id_user')
         console.log(this.id_user)
       })
