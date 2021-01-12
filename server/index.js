@@ -1,9 +1,12 @@
 const cors = require ('cors')
+const compression = require('compression');
 const express = require ('express')
 const bodyParser = require('body-parser');
 // const {Client} = require ('pg')
 
 const app = express()
+// compress all responses
+app.use(compression());
 const port = process.env.PORT || 8000
 
 const client = require ('./app/util/database')

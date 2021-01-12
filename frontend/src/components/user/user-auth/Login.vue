@@ -1,7 +1,7 @@
 <template>
   <div class="row justify-content-md-center">
     <div class="col-md-6">
-      <div v-if="!submitted" class="card">
+      <div style=margin-top:60px v-if="!submitted" class="card">
           <div class="card-header">Login</div>
             <div class="card-body">
               <form>
