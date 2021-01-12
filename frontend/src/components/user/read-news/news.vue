@@ -147,9 +147,8 @@
       </div>
     </v-col>
   </v-row>
-    <v-container fluid class="justify-center fill-height">
+    <v-container style="margin-top:-300px" fluid class="justify-center fill-height">
     <v-progress-circular
-      class="progressbar"
       v-if="loading"
       color="error"
       height="10"

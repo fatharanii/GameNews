@@ -139,9 +139,8 @@
       </div>
     </v-col>
   </v-row>
-  <v-container fluid class="justify-center fill-height">
+  <v-container style="margin-top:-300px" fluid class="justify-center fill-height">
     <v-progress-circular
-      class="progressbar"
       v-if="loading"
       color="error"
       height="10"
@@ -244,11 +243,4 @@ export default {
 }
 
 </script>
-<style scoped src="@/assets/styles/style.css">
-.progressbar {
-  position: relative;
-  bottom: 50%;
-  margin-left:50px;
-}
-
-</style>
+<style scoped src="@/assets/styles/style.css"></style>

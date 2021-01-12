@@ -55,7 +55,6 @@
     </v-flex>
       <v-container fluid class="justify-center fill-height">
     <v-progress-circular
-      class="progressbar"
       v-if="loading"
       color="#E52B38"
       height="10"
@@ -221,5 +220,4 @@ export default {
 }
 
 </script>
-<style scoped src="@/assets/styles/style.css">
-</style>
+<style scoped src="@/assets/styles/style.css"></style>
