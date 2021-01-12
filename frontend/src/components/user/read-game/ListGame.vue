@@ -13,12 +13,16 @@
             :key="i"
           >
             <v-card
-              :loading="loading"
               class="mx-1 my-2"
               max-width="350"
               height="500"
               hover
             >
+             <v-progress-linear
+                v-if="loading"
+                color="error"
+                indeterminate
+              ></v-progress-linear>
               <v-img
                  v-bind:src="baseURL + '/api/game_allthumbnail/' + game.id_game"
               ></v-img>
@@ -135,6 +139,15 @@
       </div>
     </v-col>
   </v-row>
+  <v-container fluid class="justify-center fill-height">
+    <v-progress-circular
+      class="progressbar"
+      v-if="loading"
+      color="error"
+      height="10"
+      indeterminate
+    ></v-progress-circular>
+  </v-container>
 </v-app>
 </template>
 
@@ -181,11 +194,13 @@ export default {
       if(genre=="All"){
         this.retrieve();
       }else{
+        this.loading = true
         GameDataService.getByGenre(genre)
         .then(response =>{
           this.articles = response.data;
           console.log('data')
           console.log(response.data)
+          this.loading = false
         })
         .catch(e=>{
           this.errors(e)
@@ -196,11 +211,13 @@ export default {
       if(platform=="All"){
         this.retrieve();
       }else{
+        this.loading = true
         GameDataService.getByPlatform(platform)
         .then(response =>{
           this.articles = response.data;
           console.log('data')
           console.log(response.data)
+          this.loading = false
         })
         .catch(e=>{
           this.errors(e)
@@ -208,11 +225,13 @@ export default {
       } 
     },
     searchGame () {
+      this.loading = true
       GameDataService.search(this.searchString)
       .then(response =>{
         this.articles = response.data;
         console.log('data')
         console.log(response.data)
+        this.loading = false
       })
       .catch(e=>{
         this.errors(e)
@@ -225,4 +244,11 @@ export default {
 }
 
 </script>
-<style scoped src="@/assets/styles/style.css"></style>
+<style scoped src="@/assets/styles/style.css">
+.progressbar {
+  position: relative;
+  bottom: 50%;
+  margin-left:50px;
+}
+
+</style>

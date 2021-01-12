@@ -53,6 +53,16 @@
             <div class="Newsbyid-isi" v-html="newsDetail.isi"></div>
         </v-container>
     </v-flex>
+      <v-container fluid class="justify-center fill-height">
+    <v-progress-circular
+      class="progressbar"
+      v-if="loading"
+      color="#E52B38"
+      height="10"
+      indeterminate
+    ></v-progress-circular>
+      <v-overlay :value="loading" absolute></v-overlay>
+  </v-container>
 </v-app>
 </template>
 
@@ -66,6 +76,7 @@ export default {
   data(){
     return{
       drawer : false,
+      loading :false,
       news : [],
       baseURL: BASE_URL,
       id_user : '',
@@ -76,11 +87,13 @@ export default {
   },
   methods:{
     async retrieve() {
+      this.loading = true
         await UserDataService.getUserId()
           .then(response =>{
             this.id_user= response.data;
             console.log('user id')
             console.log(response.data)
+            this.loading = false
           })
           .catch(e=>{
             console.log(e)
@@ -92,6 +105,7 @@ export default {
               if(response.data.length!=0){
                 this.isAdded = true
                 this.id_readLater = response.data[0].id_readLater;
+                this.loading=false
               }
               else{
                 console.log(response.data)
@@ -107,6 +121,7 @@ export default {
         this.news = response.data;
         console.log('data berita')
         console.log(response.data)
+        this.loading =false
       })
       .catch(e=>{
         this.errors(e)

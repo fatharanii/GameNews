@@ -42,10 +42,14 @@
         :key="i"
       >
         <v-card
-          :loading="loading"
           class="ma-4"
           max-width="300"
         >
+         <v-progress-linear
+            v-if="loading"
+            color="error"
+            indeterminate
+          ></v-progress-linear>
           <v-img
             v-img v-bind:src="baseURL + '/api/game_allthumbnail/' + game.id_game"
           ></v-img>

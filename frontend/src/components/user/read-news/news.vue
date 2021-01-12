@@ -12,6 +12,11 @@
                     <v-flex xs11 offset-md1>
                         <div v-for="news in visiblePages" :key="news.id_berita">
                             <v-card class="my-4 mx-2" hover>
+                               <v-progress-linear
+                                  v-if="loading"
+                                  color="error"
+                                  indeterminate
+                                ></v-progress-linear>
                                 <v-img
                                 height="250px"
                                 v-bind:src="baseURL + '/api/news_thumbnail/' + news.id_berita"
@@ -142,6 +147,15 @@
       </div>
     </v-col>
   </v-row>
+    <v-container fluid class="justify-center fill-height">
+    <v-progress-circular
+      class="progressbar"
+      v-if="loading"
+      color="error"
+      height="10"
+      indeterminate
+    ></v-progress-circular>
+  </v-container>
 </v-app>
 </template>
 
@@ -154,6 +168,7 @@ export default {
   data(){
     return{
       drawer : false,
+      loading :false,
       articles :[],
       error:[],
       page: 1,
@@ -173,12 +188,14 @@ export default {
   },
   methods:{
     retrieve() {
+      this.loading = true
       NewsDataService.getAll()
       .then(response =>{
         this.articles = response.data;
         console.log('data')
         console.log(response.data)
         console.log(this.articles[0])
+        this.loading = false
       })
       .catch(e=>{
         this.errors(e)
@@ -199,11 +216,13 @@ export default {
       if(kategori=="All"){
         this.retrieve();
       }else{
+        this.loading = true
         NewsDataService.getByKategori(kategori)
         .then(response =>{
           this.articles = response.data;
           console.log('data')
           console.log(response.data)
+          this.loading = false
         })
         .catch(e=>{
           this.errors(e)
@@ -211,11 +230,13 @@ export default {
       } 
     },
     searchNews () {
+      this.loading = true
       NewsDataService.search(this.searchString)
       .then(response =>{
         this.articles = response.data;
         console.log('data')
         console.log(response.data)
+        this.loading = false
       })
       .catch(e=>{
         this.errors(e)

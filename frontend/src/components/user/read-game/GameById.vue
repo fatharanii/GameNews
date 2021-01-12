@@ -44,6 +44,16 @@
             - {{sR}}</v-row>
         </v-container>
     </v-flex>
+  <v-container fluid class="justify-center fill-height">
+    <v-progress-circular
+      class="progressbar"
+      v-if="loading"
+      color="error"
+      height="10"
+      indeterminate
+    ></v-progress-circular>
+      <v-overlay :value="loading" absolute></v-overlay>
+  </v-container>
 </v-app>
 </template>
 
@@ -55,17 +65,20 @@ export default {
   data(){
     return{
       drawer : false,
+      loading:false,
       game : [],
       baseURL: BASE_URL
     }
   },
   methods:{
     retrieve() {
+      this.loading = true
       GameDataService.getById(this.$route.params.id_game)
       .then(response =>{
         this.game = response.data;
         console.log('data')
         console.log(response.data)
+        this.loading = false
       })
       .catch(e=>{
         this.errors(e)
@@ -81,4 +94,13 @@ export default {
 }
 
 </script>
-<style scoped src="@/assets/styles/style.css"></style>
+<style scoped src="@/assets/styles/style.css">
+.progressbar {
+  position: relative;
+  bottom: 50%; 
+  margin-left:50%
+}
+
+
+
+</style>
