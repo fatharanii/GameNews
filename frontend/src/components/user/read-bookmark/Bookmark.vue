@@ -180,7 +180,7 @@ export default {
       searchString: '',
       userAuth: false,
       baseURL: BASE_URL,
-      id_user:''
+      id_user: 0
     }
   },
   computed: {
