@@ -209,7 +209,7 @@ export default {
         console.log(this.id_user)
       })
       .catch(e=>{
-        this.errors(e)
+        console.log(e)
       })
       console.log("userid : "+this.id_user)
       BookmarkDataService.getUserBookmark(this.id_user)
@@ -228,14 +228,14 @@ export default {
             console.log(this.articles[i]);
           })
           .catch(e => {
-            this.errors(e)
+            console.log(e)
           })
         }
         console.log('data')
         console.log(response.data)
       })
       .catch(e=>{
-        this.errors(e)
+        console.log(e)
       })
       // BookmarkDataService.getAllReadLater()
       // .then(response =>{

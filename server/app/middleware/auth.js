@@ -38,14 +38,14 @@ exports.verifyToken = (req, res, next) => {
     let token = req.headers["x-access-token"];
   
     if (!token) {
-      return res.status(403).send({
+      return res.status(204).send({
         message: "No token provided!"
       });
     }
   
     jwt.verify(token, secret, (err, decoded) => {
       if (err) {
-        return res.status(401).send({
+        return res.status(204).send({
           message: "Unauthorized!"
         });
       }
@@ -65,7 +65,7 @@ exports.isAdmin = (req, res, next) => {
         return;
       }
       
-      res.status(403).send({
+      res.status(204).send({
         message: "Require Admin Role!"
       });
       return;
@@ -77,14 +77,14 @@ exports.getUserIdByToken = (req, res, next) => {
   let token = req.headers["x-access-token"];
 
   if (!token) {
-    return res.status(403).send({
+    return res.status(204).send({
       message: "No token provided!"
     });
   }
 
   jwt.verify(token, secret, (err, decoded) => {
     if (err) {
-      return res.status(401).send({
+      return res.status(204).send({
         message: "Unauthorized!"
       });
     }
