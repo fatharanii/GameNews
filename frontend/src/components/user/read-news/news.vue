@@ -6,7 +6,7 @@
       cols="8"
       class="flex-grow-0 flex-shrink-0"
     >
-      <v-content>
+      <v-main>
             <v-container style="margin-top:0px">
                 <v-layout row wrap align-center>
                     <v-flex xs11 offset-md1>
@@ -27,10 +27,6 @@
                                             <v-flex xs12 align-end d-flex>
                                                 <span class="headline">{{ news.judul_berita }}</span>
                                             </v-flex>
-                                            <!-- <v-btn 
-                                            icon>
-                                              <v-icon>mdi-bookmark</v-icon>
-                                            </v-btn> -->
                                         </v-layout>
                                     </v-container>
                                 </v-card-media>
@@ -71,7 +67,7 @@
                     </v-flex>
                 </v-layout>
             </v-container>
-        </v-content>
+        </v-main>
     </v-col>
     <v-col
       cols=""
@@ -191,26 +187,12 @@ export default {
       NewsDataService.getAll()
       .then(response =>{
         this.articles = response.data;
-        console.log('data')
-        console.log(response.data)
-        console.log(this.articles[0])
         this.loading = false
       })
       .catch(e=>{
         this.errors(e)
       })
     },
-	// addToBookmark(){
-  //     http.get('http://localhost:8000/api/read_later/')
-  //     .then(response =>{
-  //       this.articles = response.data;
-  //       console.log('data')
-  //       console.log(response.data)
-  //     })
-  //     .catch(e=>{
-  //       this.errors(e)
-  //     })
-	// },
     selectKategori: function (kategori){
       if(kategori=="All"){
         this.retrieve();
@@ -219,8 +201,6 @@ export default {
         NewsDataService.getByKategori(kategori)
         .then(response =>{
           this.articles = response.data;
-          console.log('data')
-          console.log(response.data)
           this.loading = false
         })
         .catch(e=>{
@@ -233,8 +213,6 @@ export default {
       NewsDataService.search(this.searchString)
       .then(response =>{
         this.articles = response.data;
-        console.log('data')
-        console.log(response.data)
         this.loading = false
       })
       .catch(e=>{
@@ -248,8 +226,6 @@ export default {
         GameDataService.getASC()
         .then(response =>{
           this.articles = response.data;
-          console.log('data')
-          console.log(response.data)
         })
         .catch(e=>{
           this.errors(e)

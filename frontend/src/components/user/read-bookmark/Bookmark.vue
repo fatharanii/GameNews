@@ -119,7 +119,7 @@ export default {
 
       })
       .catch(e=>{
-        console.log(e)
+        this.errors(e)
       })
       BookmarkDataService.getUserBookmark(this.id_user)
       .then(response =>{
@@ -132,12 +132,12 @@ export default {
             this.articles.push(response.data[0]);
           })
           .catch(e => {
-            console.log(e)
+            this.errors(e)
           })
         }
       })
       .catch(e=>{
-        console.log(e)
+        this.errors(e)
       })
     },
 
@@ -147,7 +147,7 @@ export default {
               this.userAuth = response.data;
             })
             .catch(e => {
-              console.log(e);
+              this.errors(e)
             });
     }
   },

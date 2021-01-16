@@ -181,8 +181,6 @@ export default {
       GameDataService.getAll()
       .then(response =>{
         this.articles = response.data;
-        console.log('data')
-        console.log(response.data)
         this.loading = false
       })
       .catch(e=>{
@@ -197,8 +195,6 @@ export default {
         GameDataService.getByGenre(genre)
         .then(response =>{
           this.articles = response.data;
-          console.log('data')
-          console.log(response.data)
           this.loading = false
         })
         .catch(e=>{
@@ -214,8 +210,6 @@ export default {
         GameDataService.getByPlatform(platform)
         .then(response =>{
           this.articles = response.data;
-          console.log('data')
-          console.log(response.data)
           this.loading = false
         })
         .catch(e=>{
@@ -228,8 +222,6 @@ export default {
       GameDataService.search(this.searchString)
       .then(response =>{
         this.articles = response.data;
-        console.log('data')
-        console.log(response.data)
         this.loading = false
       })
       .catch(e=>{

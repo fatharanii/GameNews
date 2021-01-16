@@ -118,8 +118,6 @@ export default {
       GameDataService.getFiveGamesASC()
       .then(response =>{
         this.articles = response.data;
-        console.log('data')
-        console.log(response.data)
         this.loading = false
       })
       .catch(e=>{
@@ -128,8 +126,6 @@ export default {
       NewsDataService.home()
       .then(response =>{
         this.news = response.data;
-        console.log('data')
-        console.log(response.data)
         this.loading = false
       })
       .catch(e=>{

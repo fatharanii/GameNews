@@ -114,12 +114,9 @@ export default {
               this.errors(e)
             })
           }
-      console.log(this.id_user);
       NewsDataService.get(this.$route.params.id_berita)
       .then(response =>{
         this.news = response.data;
-        console.log('data berita')
-        console.log(response.data)
         this.loading =false
       })
       .catch(e=>{
@@ -132,7 +129,6 @@ export default {
           id_user:this.id_user,
           id_berita: this.$route.params.id_berita
         }
-        console.log(data.id_user);
           BookmarkDataService.add(data)
             .then(response => {
               console.log(response.data);
@@ -140,7 +136,7 @@ export default {
               location.reload();
             })
             .catch(e => {
-              console.log(e);
+              this.errors(e)
             });
       }
       else {
@@ -148,31 +144,11 @@ export default {
       }
     },
     deleteBookmark() {
-      // var id_readLater;
-      // await BookmarkDataService.getBookmarkByUserAndNews(this.id_user,this.$route.params.id_berita)
-      //   .then(response => {
-      //     console.log(response.data)
-      //     if(response.data.length!=0){
-      //       this.id_readLater = response.data[0].id_readLater;
-      //       console.log(this.id_readLater);
-      //     }
-      //     else{
-      //       console.log(response.data)
-      //     }
-      //   })
-      //   .catch(e=>{
-      //     this.errors(e)
-      //   })
-      
       BookmarkDataService.delete(this.id_readLater)
         .then(response => {
-          console.log(this.id_readLater)
-          console.log("berhasil")
           console.log(response.data)
           this.isAdded = false
           this.id_readLater = ''
-          // location.reload()
-          // return false
         })
         .catch(e=>{
           this.errors(e)
@@ -182,33 +158,11 @@ export default {
           UserDataService.userAuthentication()
             .then(response => {
               this.userAuth = response.data;
-              console.log(response.data);
             })
             .catch(e => {
-              console.log(e);
+              this.errors(e)
             });
     },
-    // getUserId(){
-    //   UserDataService.getUserId()
-    //   .then(response =>{
-    //     this.id_user= response.data;
-    //     console.log('user id')
-    //     console.log(response.data)
-    //   })
-    //   .catch(e=>{
-    //     this.errors(e)
-    //   })
-    // },
-    // checkBookmarked(){
-    //   BookmarkDataService.getBookmarkByUserAndNews(this.id_user,this.$route.params.id_berita)
-    //   .then(response => {
-    //     console.log(response.data)
-    //   })
-    //   .catch(e=>{
-    //     this.errors(e)
-    //   })
-    // },
-
     splitText(text){
         return text.split(",");
     }
@@ -218,6 +172,5 @@ export default {
     this.authenticateUser();
   },
 }
-
 </script>
 <style scoped src="@/assets/styles/style.css"></style>
