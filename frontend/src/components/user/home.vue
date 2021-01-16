@@ -9,7 +9,7 @@
       <v-carousel-item
         v-for="(News, index) in news"
         :key="index"
-        v-img v-bind:src="baseURL + '/api/news_thumbnail/' + News.id_berita"
+        v-bind:src="baseURL + '/api/news_thumbnail/' + News.id_berita"
       >
         <v-row
           class="fill-height"
@@ -51,10 +51,11 @@
             indeterminate
           ></v-progress-linear>
           <v-img
-            v-img v-bind:src="baseURL + '/api/game_allthumbnail/' + game.id_game"
+            height="150"
+            v-bind:src="baseURL + '/api/game_allthumbnail/' + game.id_game"
           ></v-img>
           <v-card-title>{{ game.judul_game }}</v-card-title>
-          <v-card-text>
+          <v-card-text height="130">
             <v-row
               align="center"
               class="mx-0"

@@ -6,7 +6,7 @@
       cols="8"
       class="flex-grow-0 flex-shrink-0"
     >
-      <v-content>
+      <v-main>
             <v-container style="margin-top:0px">
                 <v-layout row wrap align-center>
                     <v-flex xs11 offset-md1>
@@ -71,7 +71,7 @@
                     </v-flex>
                 </v-layout>
             </v-container>
-        </v-content>
+        </v-main>
     </v-col>
     <v-col
       cols=""

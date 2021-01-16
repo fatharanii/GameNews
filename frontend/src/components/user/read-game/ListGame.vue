@@ -24,6 +24,7 @@
                 indeterminate
               ></v-progress-linear>
               <v-img
+                height="200"
                  v-bind:src="baseURL + '/api/game_allthumbnail/' + game.id_game"
               ></v-img>
               <v-card-title>{{ game.judul_game }}</v-card-title>
@@ -43,6 +44,7 @@
                     <readmore v-if="!readMoreActivated">...</readmore>
                   </p>
               </v-card-text>
+              
               <v-divider class="mx-5 my-0"></v-divider>
               <v-card-actions>
                 <v-btn
