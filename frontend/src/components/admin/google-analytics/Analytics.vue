@@ -1,8 +1,16 @@
 <template>
     <v-container>
         <v-card class="pa-5">
-            <h3 style=" margin-bottom:20px ; font-family:'Playfair Display' ">Sessions</h3>
+            <h3 style=" margin-bottom:20px ; font-family:'Playfair Display' ">Sessions in the last 30 day</h3>
             <div id="sessions-chart"></div>
+        </v-card>
+         <v-card class="pa-5">
+            <h3 style=" margin-bottom:20px ; font-family:'Playfair Display' ">Top 5 Most Visited Pages in the last 30 days</h3>
+            <div id="mostVisitedPage-chart"></div>
+        </v-card>
+         <v-card class="pa-5">
+            <h3 style=" margin-bottom:20px ; font-family:'Playfair Display' ">Users per day</h3>
+            <div id="chart-user-day"></div>
         </v-card>
     </v-container>
 </template>
@@ -20,10 +28,8 @@ export default {
             await gapi.analytics.ready(function() {
                 gapi.analytics.auth.authorize({
                     'serverAuth': {
-                        'access_token':accessToken
-                          
+                        'access_token':accessToken.data
                     },
-                    
                 });
             
                 var sessionsChart = new gapi.analytics.googleCharts.DataChart({
@@ -41,9 +47,48 @@ export default {
                                 width: '100%'
                             }
                         }
-
                     });
+                    
+                var mostVisitedPageChart = new gapi.analytics.googleCharts.DataChart({
+                    query: {
+                        'ids': 'ga:234832316',
+                        'start-date': '30daysAgo',
+                        'end-date': 'today',
+                        'metrics': 'ga:pageviews,ga:uniquePageviews,ga:timeOnPage,ga:bounces,ga:entrances,ga:exits',
+                        'sort': '-ga:pageviews',
+                        'dimensions': 'ga:pagePath',
+                        'max-results': 5
+                    },
+                    chart: {
+                        'container': 'mostVisitedPage-chart',
+                        'type': 'PIE',
+                        'options': {
+                            'width': '50%',
+                            'pieHole': 0.4,
+                        }
+                    }
+                });
+
+                   var UserDayChart = new gapi.analytics.googleCharts.DataChart({
+                    query: {
+                        'ids': 'ga:234832316', // <-- Replace with the ids value for your view.
+                        'start-date': '30daysAgo',
+                        'end-date': 'today',
+                        'metrics': 'ga:users',
+                        'dimensions': 'ga:date'
+                    },
+                    chart: {
+                        'container': 'chart-user-day',
+                        'type': 'LINE',
+                        'options': {
+                            'width': '100%'
+                        }
+                    }
+                });
+                    
                     sessionsChart.execute();
+                    mostVisitedPageChart.execute();
+                    UserDayChart.execute();
             })
         },
     },
