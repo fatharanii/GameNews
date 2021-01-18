@@ -15,6 +15,8 @@ const read_later = require ('./app/function/read_later.js')
 const permainan = require ('./app/function/game')
 const berita = require ('./app/function/news')
 const uploadImage = require("./app/middleware/upload");
+const {google} = require("googleapis");
+const privateKey = require("./app/analytics-key/amusphere-302111-2e41e50aafd2");
 const fs = require("fs");
 global.__basedir = __dirname;
 
@@ -31,6 +33,26 @@ app.use(function(req, res, next) {
 app.listen(port, ()=>{
    console.log (`app listening at http://localhost:${port}`)
 })
+
+app.get('/accessTokens', async (req,res)=>{
+     
+   // configure a JWT auth client
+   let jwtClient = new google.auth.JWT(
+     privateKey.client_email,
+     null,
+     privateKey.private_key,
+     'https://www.googleapis.com/auth/analytics.readonly');
+  
+     jwtClient.authorize(function (err, token) {
+     if (err) {
+       console.log(err);
+       return res.status(500).send('Error');
+     } else {
+       return res.send(token.access_token);
+     }
+   });
+  })
+
 
 //===============USER BACKEND================
 app.get('/api/users/', async (req,res)=>{

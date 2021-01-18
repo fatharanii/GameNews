@@ -19,9 +19,14 @@ import AddUser from '../components/admin/user-config/AddUser';
 import Login from '../components/user/user-auth/Login';
 import SignUp from '../components/user/user-auth/SignUp';
 import Bookmark from '../components/user/read-bookmark/Bookmark';
+import Dashboard from '../components/admin/google-analytics/Analytics';
 Vue.use(VueRouter)
 
 const routes = [
+    {
+        path : "/dashboard",
+        component : Dashboard
+    },
     {
         path : "/cmsNews",
         name : 'lists',

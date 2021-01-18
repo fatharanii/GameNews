@@ -1,0 +1,12 @@
+{
+  "type": "service_account",
+  "project_id": "amusphere-302111",
+  "private_key_id": "2e41e50aafd2f84c92d015539bd493e29dea65ae",
+  "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvwIBADANBgkqhkiG9w0BAQEFAASCBKkwggSlAgEAAoIBAQCz+zY7LDQzGFVv\nbO5RsGm2TK9qvrNdfJQbt4XS6++0pOBgXLeglDDbUdVY17Gz4kQOoXRsa+hd50VS\nS7NJlVwoFuMjWr737V9Z0YJ90h7G/nYsii1GzsLVn6+3l5GSAWyNQs0mag2Uo/GK\nTHyPy0/6n2FDaBEXhh36cY+gNK+XD/6O8eCJDTlV1/nhABmcEASnFFODHgkyaOeF\ntxHFWecrT1PFB99ELQ5nDJeT4tQT+NDMsDDIFXtjpQdf+ZeX5BVMwxMyojW3SUTS\nNNtH3xOTuUKV3FVrqjvxH5PHtPczKN/0bNB8Xhj9mMgDACGwxFU5lWvYe128SZQe\nKCXfaaalAgMBAAECggEAG73FUqKSGywNgyK5qxqzeJdiVGQ3dlns5EbJ2ERoiqH9\nOa0g2p3s1+lJpqt8ZvshvVWSgeGyC8NJcpFbfaSJc15vvTPQCpvqXghGgklAWDDB\nm0TjDK5y5oV6CqTQmb4hcraQs3KWTEpmwQfgDTPrzHgDgGXKeKNB/KfDWRC13eUl\njUS/vkLGFUC/cJFC3Q5TsHR7ytVUsIWxI0+ren7cxEJlfvJVXPDf1sY8wk4zI3dt\no/B5KobQpBbOwcyu6/yXTiCX5t8wa/ujAPx3Io3rF054jYAhjBrIqWoeAD17Znr5\nQaJZETBSlRxPg8LL5cC1ZL+6vAaq7ZHDApCAJ4x5UQKBgQDYz9XJIHOQ/BNKcL04\ne00xZioHlg3AXTDFcwt7nXX5PBN+jO8TeE/IUTIg0WnloQgAnyMFAZEvTYnwLSYf\n0sTuT7+RlJRkP3bYftyxRJM4BB8IZ2tKgwmGDXq9l0L793USPdPpibDraw1zHYv6\nfWWBypOhHpBg19k1uvmPPEkuPQKBgQDUgy3bPp6XOx7ZmdS6ktYxjABgZRv0Swpy\n3Zg+H562MKOn30mV8txhMse8GK1HQi3zLf34EEPFMHAyDyUankvWPaCucxu8lMzI\n4w0lfRrhCr3MppMGq6UJkOfE4jzluxdLFMswlJgfvKqqL4KU8j/dstI2FZxMuo4h\nu+GkaOYIiQKBgQC/+T81yFsrvFekaTDSizLtk6WRdAcXFizyGAzJ1sG3/r7QJiAm\noDgcifCV6HcY0T4Rtta+PwX72W9Sz9dbBDhFPy3DzMib/ynPRn1JJQwp5FRKD7CL\nmH1dSiAtMXspOZJapY420ilqOi79h+MC1/eCNgoD9tkmNtloXvdMIbg2jQKBgQCz\nMBkOcPKQWg1dNdSlrQJmrMH0hczYZB3fVPH2D/tnbAPSnPgTM8CXRJYeCECzgR31\nmqY28J/0OS+hRhvnIeqYL0a5Ud3lWSKDkM+Y+LAdaU04rovyZ/C07DZBUPJAU00E\nxfe+cs0Clbbh4UWeCdXIPev6JqawG+2UjDNqyfiM4QKBgQDACVscCY33DYmpsd/p\nuqBUoco5yO95kYIuSuoHwjTqNG86G2Q5PwG4l6YQWvNZVcYcJNsDG2V2ibrHYIRJ\nWMvlSX8nlmEAGOipczZaDGGoATxKmZzlA7Q0tRv8Z5moNxVAh+2zjCXcPxJu9LYU\n7rCvRAbmFMdPqyMrj8yeerC/RQ==\n-----END PRIVATE KEY-----\n",
+  "client_email": "google-analytics-465@amusphere-302111.iam.gserviceaccount.com",
+  "client_id": "117027409908775399754",
+  "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+  "token_uri": "https://oauth2.googleapis.com/token",
+  "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+  "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/google-analytics-465%40amusphere-302111.iam.gserviceaccount.com"
+}

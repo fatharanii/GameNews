@@ -41,6 +41,12 @@
           </li>
         </ul>
         <ul v-if="adminAuth" class="navbar-nav ">
+          
+          <li class="nav-item">
+            <RouterLink :to="'/dashboard/'" class="routerlinkgame">
+              <a class="nav-link" href="#">Dashboard</a>
+            </RouterLink>
+          </li>
           <li class="nav-item">
             <RouterLink :to="'/cmsNews/'" class="routerlinkgame">
               <a class="nav-link" href="#">News CMS</a>
