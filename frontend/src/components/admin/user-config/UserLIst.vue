@@ -42,7 +42,7 @@
                 <v-dialog
                   v-model="dialog"
                   persistent
-                  max-width="290"
+                  max-width="400"
                   :retain-focus="false"
                 >
                 <template v-slot:activator="{ on, attrs }">
@@ -66,15 +66,15 @@
                           <v-card-actions>
                             <v-spacer></v-spacer>
                             <v-btn
-                              color="grey darken-1"
-                              text
+                              elevation="6"
+                              color="warning"
                               @click="dialog = false"
                             >
                               Batal
                             </v-btn>
                             <v-btn
-                              color="blue darken-1"
-                              text
+                              elevation="6"
+                              color="error"
                               @click="dialog = false"
                               @click.prevent="deleteUser(selectedIdUser)"
                             >
@@ -175,11 +175,3 @@ export default {
     },
 };
 </script>
-
-<style scoped>
-.progressbar {
-  position: relative;
-  bottom: 50%;
-  left: 50%;
-}
-</style>

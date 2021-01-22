@@ -61,7 +61,7 @@
                 <v-dialog
                   v-model="dialog"
                   persistent
-                  max-width="290"
+                  max-width="400"
                   :retain-focus="false"
                 >
                 <template v-slot:activator="{ on, attrs }">
@@ -85,15 +85,15 @@
                           <v-card-actions>
                             <v-spacer></v-spacer>
                             <v-btn
-                              color="grey darken-1"
-                              text
+                              elevation="6"
+                              color="warning"
                               @click="dialog = false"
                             >
                               Batal
                             </v-btn>
                             <v-btn
-                              color="blue darken-1"
-                              text
+                              elevation="6"
+                              color="error"
                               @click="dialog = false"
                               @click.prevent="deleteGame(selectedIdGame)"
                             >
@@ -152,7 +152,6 @@ export default {
         { text: "Platform",align: "center", sortable: false, value: "platform"},
         { text: "Release Date", align: "center", sortable: false,value: "release_date"},
         { text: "Price", align: "center", sortable: false,value: "price"},
-        { text: "System Requirment", align: "center", sortable: false,value: "system_requirment"},
         { text: "Action", align: "center",sortable: false, value: "actions"},
       ],
         key: "",
@@ -217,11 +216,3 @@ export default {
     },
 };
 </script>
-
-<style scoped>
-.progressbar {
-  position: relative;
-  bottom: 50%;
-  left: 50%;
-}
-</style>

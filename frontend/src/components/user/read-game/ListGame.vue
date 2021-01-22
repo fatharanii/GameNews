@@ -15,7 +15,6 @@
             <v-card
               class="mx-1 my-2"
               max-width="350"
-              height="500"
               hover
             >
              <v-progress-linear
@@ -24,10 +23,14 @@
                 indeterminate
               ></v-progress-linear>
               <v-img
-                height="200"
-                 v-bind:src="baseURL + '/api/game_allthumbnail/' + game.id_game"
+                height="150"
+                v-bind:src="baseURL + '/api/game_allthumbnail/' + game.id_game"
               ></v-img>
-              <v-card-title>{{ game.judul_game }}</v-card-title>
+              <v-card-title>
+                <RouterLink :to="'/game/'+game.id_game" class="routerlinkheadline">
+                  {{ game.judul_game }}
+                </RouterLink>
+              </v-card-title>
               <v-card-text>
                 <v-row
                   align="center"
@@ -106,17 +109,18 @@
           flat
           tile
         >
-          <v-card
+          <v-btn
             v-for="n in genre"
             :key="n"
-            class="kategori pa-1 mx-1 my-2"
-            outlined
-            tile
+            class="pa-1 mx-1 my-2"
+            elevation="2"
+            rounded
+            small
+            color="grey lighten-2"
+            v-on:click="selectGenre(n)"
           >
-            <button
-            v-on:click="selectGenre(n)">
-						{{n}}</button>
-          </v-card>
+						{{n}}
+          </v-btn>
         </v-card>
       </div>
       <div class="game_by">
@@ -126,17 +130,18 @@
           flat
           tile
         >
-          <v-card
+          <v-btn
             v-for="n in platform"
             :key="n"
-            class="kategori pa-1 mx-1 my-2"
-            outlined
-            tile
+            class="pa-1 mx-1 my-2"
+            elevation="2"
+            rounded
+            small
+            color="grey lighten-2"
+            v-on:click="selectPlatform(n)"
           >
-            <button
-            v-on:click="selectPlatform(n)">
-						{{n}}</button>
-          </v-card>
+						{{n}}
+          </v-btn>
         </v-card>
       </div>
     </v-col>

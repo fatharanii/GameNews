@@ -25,7 +25,9 @@
                                     <v-container style="margin-top:0px">
                                         <v-layout>
                                             <v-flex xs12 align-end d-flex>
-                                                <span class="headline">{{ news.judul_berita }}</span>
+                                                <RouterLink :to="'/news/'+news.id_berita" class="routerlinkheadline">
+                                                    <span class="headline">{{ news.judul_berita }}</span>
+                                                </RouterLink>
                                             </v-flex>
                                             <!-- <v-btn 
                                             icon>
@@ -112,17 +114,18 @@
           flat
           tile
         >
-          <v-card
+          <v-btn
             v-for="n in kategori"
             :key="n"
-            class="kategori pa-1 mx-1 my-2"
-            outlined
-            tile
+            class="pa-1 mx-1 my-2"
+            elevation="2"
+            rounded
+            small
+            color="grey lighten-2"
+            v-on:click="selectKategori(n)"
           >
-            <button
-            v-on:click="selectKategori(n)">
-						{{n}}</button>
-          </v-card>
+						{{n}}
+          </v-btn>
         </v-card>
       </div>
       <div class="game_by">
@@ -132,17 +135,18 @@
           flat
           tile
         >
-          <v-card
+          <v-btn
             v-for="n in urutkan"
             :key="n"
-            class="kategori pa-1 mx-1 my-2"
-            outlined
-            tile
+            class="pa-1 mx-1 my-2"
+            elevation="2"
+            rounded
+            small
+            color="grey lighten-2"
+            v-on:click="selectUrutkan(n)"
           >
-            <button
-            v-on:click="selectUrutkan(n)">
-						{{n}}</button>
-          </v-card>
+						{{n}}
+          </v-btn>
         </v-card>
       </div>
     </v-col>

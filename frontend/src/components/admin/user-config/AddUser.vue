@@ -122,10 +122,3 @@ export default {
 };
 </script>
 
-<style>
-.submit-form {
-  max-width: 400px;
-  margin: auto;
-  margin-top: 100px;
-}
-</style>

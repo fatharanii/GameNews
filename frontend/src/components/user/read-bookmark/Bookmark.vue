@@ -21,7 +21,9 @@
                                         <v-container style="margin-top:0px">
                                             <v-layout>
                                                 <v-flex xs12 align-end d-flex>
+                                                    <RouterLink :to="'/news/'+news.id_berita" class="routerlinkheadline">
                                                     <span class="headline">{{ news.judul_berita }}</span>
+                                                </RouterLink>
                                                 </v-flex>
                                                 <!-- <v-btn 
                                                 icon>
