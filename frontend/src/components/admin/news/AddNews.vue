@@ -54,22 +54,20 @@
                       >
                     <template v-slot:activator="{ on, attrs }">
                       <v-btn
-                        class="float-right mt-2"
+                        class="float-right mt-8 mb-4"
                         elevation="6"
                         color="error"
                         width="140px"
                         v-bind="attrs" 
                         v-on ="on"
-                        large
                         @click="saveNews"
                       >Add
                       </v-btn>
                     </template>
-                      <v-card
-                        width="400px">
-                        <v-card-tittle class="text-h8">
+                      <v-card>
+                        <v-card-title class="text-h8">
                           News Added Successfully
-                        </v-card-tittle>
+                        </v-card-title>
                           <v-card-text></v-card-text>
                             <v-card-actions>
                               <v-spacer></v-spacer>
@@ -85,12 +83,10 @@
                             </v-card>
                           </v-dialog>
                             <v-btn
-                              class="float-right mt-2 mx-3"
+                              class="float-right mt-8 mx-3 mb-4"
                               elevation="6"
                               color="warning"
                               width="140px"
-                              large
-                              dark
                               :to="'/cmsNews'"
                           >Cancel
                           </v-btn>
@@ -187,11 +183,3 @@ export default {
     },
 };
 </script>
-
-<style>
-.submit-form {
-  max-width: 400px;
-  margin: auto;
-  margin-top: 100px;
-}
-</style>

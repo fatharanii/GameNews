@@ -11,8 +11,6 @@
           <v-row  justify="center">
             <v-col cols="12" md="10">
               <div class="fields">
-                <div class="text-h6"> Uploade Image</div>
-                <br>
                   <v-file-input 
                     v-model="file" 
                     label="Select Image File..." 
@@ -25,16 +23,15 @@
               <v-dialog
                   v-model="dialog"
                   persistent
-                  max-width="320"
+                  max-width="440"
                   :retain-focus="false"
                 >
               <template v-slot:activator="{ on, attrs }">
               <v-btn 
-                class="float-right mt-2 mx-3"
+                class="float-right mb-2"
                 elevation="6"
                 color="error"
                 width="140px"
-                large
                 v-bind="attrs"
                 v-on="on"
                 @click="onSubmit"
@@ -47,11 +44,10 @@
                 </v-card-title>
                 <v-card-text></v-card-text>
                 <v-card-actions>
+                  <v-spacer></v-spacer>
                   <v-btn
-                    class="float mt-2"
                     color="warning"
-                    width="170px"
-                    large
+                    dark
                     :to="'/cmsGame'"
                   >
                   Back to Dashboard
@@ -60,11 +56,10 @@
               </v-card>
              </v-dialog>
               <v-btn
-                class="float-right mt-2 mx-1"
+                class="float-right mx-3 mb-2"
                 elevation="6"
                 color="warning"
                 width="140px"
-                large
                 dark
                 :to="'/cmsGame'"
             >Cancel
@@ -133,20 +128,7 @@ export default {
 </script>
 
 <style>
-.file {
-  max-width: 400px;
-  margin-left: 50px;
+.container{
   margin-top: 100px;
-}
-.button{
-  margin-left: 300px;
-  background-color: #4CAF50; /* Green */
-  border: none;
-  color: white;
-  padding: 5px 15px;
-  text-align: center;
-  text-decoration: none;
-  display: inline-block;
-  font-size: 16px;
 }
 </style>

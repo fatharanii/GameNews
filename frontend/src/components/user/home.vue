@@ -2,7 +2,7 @@
   <v-app light>
     <v-carousel
       cycle
-      height="620"
+      height="630"
       hide-delimiter-background
       show-arrows-on-hover
     >
@@ -19,7 +19,9 @@
         >
           <div class="news" >
             <p class="kategori"><kategori>{{ News.kategori }}</kategori></p>
-            <h3 class="judul" >{{ News.judul_berita}}</h3>
+            <RouterLink :to="'/news/'+News.id_berita" class="routerlinknews">
+                <h3 class="judul" >{{ News.judul_berita}}</h3>
+            </RouterLink>
             <div class="text-start" v-if="!readMoreActivated" v-html="News.isi.slice(0, 400)">
               </div>
               <readmore class="text-start" v-if="!readMoreActivated">
@@ -54,7 +56,10 @@
             height="150"
             v-bind:src="baseURL + '/api/game_allthumbnail/' + game.id_game"
           ></v-img>
-          <v-card-title>{{ game.judul_game }}</v-card-title>
+          <v-card-title>
+            <RouterLink :to="'/game/'+game.id_game" class="routerlinkheadline">
+                {{ game.judul_game }}
+            </RouterLink></v-card-title>
           <v-card-text height="130">
             <v-row
               align="center"

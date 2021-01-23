@@ -52,7 +52,7 @@
                     >
                     <template v-slot:activator="{ on, attrs }">
                       <v-btn
-                        class="float-right mt-2"
+                        class="float-right mt-2 mb-4"
                         elevation="6"
                         color="error"
                         width="140px"
@@ -62,8 +62,7 @@
                       >Update
                       </v-btn>
                     </template>
-                    <v-card
-                      width="400px">
+                    <v-card>
                       <v-card-title class="text-h8">
                         The User Was Updated Successfully
                       </v-card-title>
@@ -159,10 +158,3 @@ export default {
   }
 };
 </script>
-
-<style>
-.edit-form {
-  max-width: 300px;
-  margin: auto;
-}
-</style>
