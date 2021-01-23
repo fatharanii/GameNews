@@ -80,9 +80,6 @@
 </template>
 
 <script>
-
-// import http from "@/http";
-// import authHeader from '../../../services/auth-header';
 import NewsDataService from "../../../services/NewsDataService";
 import UserDataService from '../../../services/UserDataService';
 export default {

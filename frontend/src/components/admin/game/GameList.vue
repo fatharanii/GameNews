@@ -117,12 +117,19 @@
                 <img :src="baseURL +'/api/game_allthumbnail/'+item.id_game" style="width: 100%;" />
                 </template>
                 </v-data-table>
-          </v-card>
-          </v-col>
-    </v-row>
-    </v-container>
-  </div>
-</div>
+              </v-card>
+            </v-col>
+          </v-row>
+          <v-overlay :value="loading">
+            <v-progress-circular
+              indeterminate
+              size="64"
+              color="error"
+            ></v-progress-circular>
+          </v-overlay>
+        </v-container>
+      </div>
+    </div>
 </div>
 
 <div v-else>
@@ -131,13 +138,9 @@
 </template>
 
 <script>
-// import http from "@/http";
-import "bootstrap/dist/css/bootstrap.css";
-// import authHeader from '../../../services/auth-header';
 import GameDataService from "../../../services/GameDataService";
 import UserDataService from '../../../services/UserDataService';
 import BASE_URL from "../../../base-url";
-//import NewsDataService from "../services/NewsDataService";
 export default {
     name:"games",
     data () {
@@ -178,9 +181,11 @@ export default {
             });
         },
         searchJudulGame() {
+          this.loading=true
           GameDataService.search(this.judul_game)
             .then(response => {
               this.games = response.data;
+              this.loading=false
               console.log(response.data);
             })
             .catch(e => {
@@ -188,10 +193,12 @@ export default {
             });
         },
         deleteGame(id_game) {
+          this.loadin=true
           GameDataService.delete(id_game)
             .then(response => {
               console.log(response.data);
               this.retrieve();
+              this.loading=false
             })
             .catch(e => {
               console.log(e);

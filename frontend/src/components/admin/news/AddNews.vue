@@ -97,6 +97,13 @@
                 </v-col>
             </v-row>
           </v-card>
+               <v-overlay :value="loading">
+            <v-progress-circular
+              indeterminate
+              size="64"
+              color="error"
+            ></v-progress-circular>
+          </v-overlay>
         </v-container>
     </v-form>
    </div>
@@ -106,7 +113,6 @@
 </template>
 
 <script>
-// import http from "@/http";
 import NewsDataService from "../../../services/NewsDataService";
 import UserDataService from '../../../services/UserDataService';
 import { VueEditor } from "vue2-editor";
@@ -140,13 +146,13 @@ export default {
   },
   methods:{
     saveNews(){
-      this.loading = true
       var data ={
         id_game: Number(this.news.id_game),
         judul_berita: this.news.judul_berita,
         kategori: this.news.kategori,
         isi: this.news.isi
       };
+      this.loading = true
       NewsDataService.create(data, { headers: authHeader() })
         .then(response => {
           console.log(response.data);
@@ -159,8 +165,10 @@ export default {
     },
     
     newNews() {
+      this.loading=true
       this.submitted = false;
       this.news = {};
+      this.loading=false
     },
 
     authenticateAdmin() {

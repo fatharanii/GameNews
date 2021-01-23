@@ -1,17 +1,20 @@
 <template>
     <v-container>
         <v-card class="pa-5">
-            <h3 style=" margin-bottom:20px ; font-family:'Playfair Display' ">Sessions in the last 30 day</h3>
+            <h3>Sessions in the last 30 day</h3>
             <div id="sessions-chart"></div>
         </v-card>
-         <v-card class="pa-5">
-            <h3 style=" margin-bottom:20px ; font-family:'Playfair Display' ">Top 5 Most Visited Pages in the last 30 days</h3>
+        <v-card class="pa-5">
+            <h3>Top 5 Most Visited Pages in the last 30 days</h3>
             <div id="mostVisitedPage-chart"></div>
         </v-card>
          <v-card class="pa-5">
-            <h3 style=" margin-bottom:20px ; font-family:'Playfair Display' ">Users per day</h3>
+            <h3>Users per day</h3>
             <div id="chart-user-day"></div>
         </v-card>
+         <v-overlay :value="loading">
+            <v-progress-circular indeterminate size="64" color="#E52B38"></v-progress-circular>
+        </v-overlay>
     </v-container>
 </template>
 
@@ -19,10 +22,12 @@
 import Analytics from '../../../services/AnalyticsDataService';
 export default {
     data: ()=>({
+        loading: false,
     }),
     methods: {
         async Dashboard(){
           const gapi = window.gapi;
+          this.loading=true
             const accessToken = await Analytics.getAccessToken();
             console.log(accessToken);
             await gapi.analytics.ready(function() {
@@ -89,11 +94,21 @@ export default {
                     sessionsChart.execute();
                     mostVisitedPageChart.execute();
                     UserDayChart.execute();
+                   
             })
-        },
+            this.loading=false
+        }
+        
     },
     mounted(){
         this.Dashboard();
     }
 };
 </script>
+
+<style>
+.pa-5{
+    margin-bottom:20px;
+    font-family:'Playfair Display' 
+}
+</style>

@@ -23,10 +23,6 @@
                                                 <v-flex xs12 align-end d-flex>
                                                     <span class="headline">{{ news.judul_berita }}</span>
                                                 </v-flex>
-                                                <!-- <v-btn 
-                                                icon>
-                                                  <v-icon>mdi-bookmark</v-icon>
-                                                </v-btn> -->
                                             </v-layout>
                                         </v-container>
                                     </v-card-media>
@@ -64,80 +60,10 @@
                 </v-container>
             </v-content>
         </v-col>
-        <!-- <v-col
-          cols=""
-          class="flex-grow-1 flex-shrink-0"
-        >
-          <v-row>
-          <v-flex  sm6 ml-4>
-            <v-text-field
-              label='Cari berita'
-              v-model='searchString'
-              clearable
-              >
-            </v-text-field>
-          </v-flex>
-          <v-btn
-            icon
-            color="black"
-            @click="retrieve"
-            class="mt-6 ml-2"
-            x-small
-          >
-            <v-icon>mdi-delete</v-icon>
-          </v-btn>
-          <v-btn
-            flat
-            color="error"
-            @click="searchNews"
-            class="mt-5 ml-2"
-            small
-          >
-            <span>Search</span>
-          </v-btn>
-          </v-row>
-          <div class="game_by">
-            <h2>Kategori :</h2>
-            <v-card
-              class="d-flex align-content-center flex-wrap"
-              flat
-              tile
-            >
-              <v-card
-                v-for="n in kategori"
-                :key="n"
-                class="kategori pa-1 mx-1 my-2"
-                outlined
-                tile
-              >
-                <button
-                v-on:click="selectKategori(n)">
-                {{n}}</button>
-              </v-card>
-            </v-card>
-          </div>
-          <div class="game_by">
-            <h2>Urutkan :</h2>
-            <v-card
-              class="d-flex align-content-center flex-wrap"
-              flat
-              tile
-            >
-              <v-card
-                v-for="n in urutkan"
-                :key="n"
-                class="kategori pa-1 mx-1 my-2"
-                outlined
-                tile
-              >
-                <button
-                v-on:click="selectUrutkan(n)">
-                {{n}}</button>
-              </v-card>
-            </v-card>
-          </div>
-        </v-col> -->
       </v-row>
+        <v-overlay :value="loading">
+          <v-progress-circular indeterminate size="64" color="#E52B38"></v-progress-circular>
+        </v-overlay>
     </v-app>
   </div>
 
@@ -159,17 +85,15 @@
 
 
 <script>
-// import http from "@/http";
-// import authHeader from '../../../services/auth-header';
 import UserDataService from "../../../services/UserDataService";
 import NewsDataService from "../../../services/NewsDataService";
-// import GameDataService from "../../../services/GameDataService";
 import BookmarkDataService from "../../../services/BookmarkDataService";
 import BASE_URL from "../../../base-url"
 export default {
   data(){
     return{
       drawer : false,
+      loading : false,
       articles :[],
       read_later : [],
       error:[],
@@ -190,18 +114,8 @@ export default {
     }
   },
   methods:{
-    // getUserId(){
-    //   UserDataService.getUserId()
-    //   .then(response =>{
-    //     this.id_user = response.data;
-    //     console.log('id_user')
-    //     console.log(this.id_user)
-    //   })
-    //   .catch(e=>{
-    //     this.errors(e)
-    //   })
-    // },
     async retrieve() {
+      this.loading=true
       await UserDataService.getUserId()
       .then(response =>{
         this.id_user = response.data;
@@ -227,6 +141,7 @@ export default {
             console.log("data ke "+1);
             console.log(response.data);
             console.log(this.articles[i]);
+            this.loading=false
           })
           .catch(e => {
             console.log(e)
@@ -238,68 +153,8 @@ export default {
       .catch(e=>{
         console.log(e)
       })
-      // BookmarkDataService.getAllReadLater()
-      // .then(response =>{
-      //   this.articles = response.data;
-      //   console.log('data')
-      //   console.log(response.data)
-      // })
-      // .catch(e=>{
-      //   this.errors(e)
-      // })
     },
-    // deleteNewsFromBookmarkbyid(){
-    //     BookmarkDataService.delete(this.$route.params.id_berita)
-    //       .then(response => {
-    //         console.log(response.data);
-    //         this.message = 'The news was removed from bookmark!';
-    //       })
-    //       .catch(e => {
-    //         console.log(e);
-    //       });
 
-    // },
-    // selectKategori: function (kategori){
-    //   if(kategori=="All"){
-    //     this.retrieve();
-    //   }else{
-    //     NewsDataService.getByKategori(kategori)
-    //     .then(response =>{
-    //       this.articles = response.data;
-    //       console.log('data')
-    //       console.log(response.data)
-    //     })
-    //     .catch(e=>{
-    //       this.errors(e)
-    //     })
-    //   } 
-    // },
-    // searchNews () {
-    //   NewsDataService.search(this.searchString)
-    //   .then(response =>{
-    //     this.articles = response.data;
-    //     console.log('data')
-    //     console.log(response.data)
-    //   })
-    //   .catch(e=>{
-    //     this.errors(e)
-    //   })
-    // },
-    // selectUrutkan: function (urutkan) {
-    //   if(urutkan=="All"){
-    //     this.retrieve();
-    //   }else{
-    //     GameDataService.getASC()
-    //     .then(response =>{
-    //       this.articles = response.data;
-    //       console.log('data')
-    //       console.log(response.data)
-    //     })
-    //     .catch(e=>{
-    //       this.errors(e)
-    //     })
-    //   }
-    // },
     authenticateUser() {
           UserDataService.userAuthentication()
             .then(response => {

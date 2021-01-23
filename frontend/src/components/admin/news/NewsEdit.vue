@@ -109,10 +109,8 @@
 </template>
 
 <script>
-// import http from "@/http";
 import { VueEditor } from "vue2-editor";
 import "bootstrap/dist/css/bootstrap.css";
-// import authHeader from '../../../services/auth-header';
 import NewsDataService from "../../../services/NewsDataService";
 import UserDataService from '../../../services/UserDataService';
 export default {

@@ -126,6 +126,13 @@
           </v-card>
         </v-col>
       </v-row>
+          <v-overlay :value="loading">
+            <v-progress-circular
+              indeterminate
+              size="64"
+              color="error"
+            ></v-progress-circular>
+          </v-overlay>
     </v-container>
   </div>
 </div>
@@ -137,9 +144,6 @@
 </template>
 
 <script>
-// import http from "@/http";
-import "bootstrap/dist/css/bootstrap.css";
-// import authHeader from '../../../services/auth-header';
 import NewsDataService from "../../../services/NewsDataService";
 import UserDataService from '../../../services/UserDataService';
 import BASE_URL from "../../../base-url";
@@ -161,7 +165,7 @@ export default {
         key: "",
         id: 0,
         dialog: false,
-        isLoading: false,
+        loading: false,
         judul_berita: "",
         selectedIdBerita: null,
         adminAuth: false,
@@ -182,20 +186,23 @@ export default {
             
         },
         searchJudulBerita() {
+          this.loading=true
           NewsDataService.search(this.judul_berita)
             .then(response => {
               this.news = response.data;
-              this.loading = false
               console.log(response.data);
+              this.loading = false
             })
             .catch(e => {
               console.log(e);
             });
         },
         deleteNews(id_berita) {
+          this.loading=true
           NewsDataService.delete(id_berita)
             .then(response => {
               console.log(response.data);
+              this.loading=false
               this.retrieve();
             })
             .catch(e => {

@@ -82,9 +82,6 @@
 </template>
 
 <script>
-
-// import http from "@/http";
-// import authHeader from '../../../services/auth-header';
 import GameDataService from "../../../services/GameDataService";
 import UserDataService from '../../../services/UserDataService';
 export default {

@@ -44,20 +44,13 @@
             - {{sR}}</v-row>
         </v-container>
     </v-flex>
-  <v-container fluid class="justify-center fill-height">
-    <v-progress-circular
-      v-if="loading"
-      color="error"
-      height="10"
-      indeterminate
-    ></v-progress-circular>
-      <v-overlay :value="loading" absolute></v-overlay>
-  </v-container>
+       <v-overlay :value="loading">
+        <v-progress-circular indeterminate size="64" color="#E52B38"></v-progress-circular>
+      </v-overlay>
 </v-app>
 </template>
 
 <script>
-// import http from "@/http";
 import BASE_URL from "../../../base-url";
 import GameDataService from "../../../services/GameDataService";
 export default {

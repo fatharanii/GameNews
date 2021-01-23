@@ -93,6 +93,9 @@
         </v-card>
       </v-slide-item>
     </v-slide-group>
+      <v-overlay :value="loading">
+        <v-progress-circular indeterminate size="64" color="#E52B38"></v-progress-circular>
+      </v-overlay>
   </v-app>
 </template>
 

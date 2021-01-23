@@ -161,6 +161,9 @@
           </v-col>
         </v-row>
       </v-card>
+        <v-overlay :value="loading">
+          <v-progress-circular indeterminate size="64"></v-progress-circular>
+      </v-overlay>
     </v-container>
   </v-form>
   </div>
@@ -169,12 +172,7 @@
       <h4>Admin Content</h4>
 </div>
 </template>
-
 <script>
-
-// import http from "@/http";
-import "bootstrap/dist/css/bootstrap.css";
-// import authHeader from '../../../services/auth-header';
 import GameDataService from "../../../services/GameDataService";
 import UserDataService from '../../../services/UserDataService';
 export default {
@@ -240,8 +238,10 @@ export default {
     },
     
     newGame() {
+      this.loading=true;
       this.submitted = false;
       this.game = {};
+      this.loading=false;
     },
     saveDate (date) {
       this.$refs.menu.save(date)

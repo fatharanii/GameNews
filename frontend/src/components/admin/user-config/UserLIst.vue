@@ -85,12 +85,19 @@
                       </v-dialog>  
                 </template>
               </v-data-table>
-          </v-card>
-        </v-col>
-    </v-row>
-  </v-container>
-</div>
-</div>
+            </v-card>
+          </v-col>
+        </v-row>
+          <v-overlay :value="loading">
+            <v-progress-circular
+              indeterminate
+              size="64"
+              color="error"
+            ></v-progress-circular>
+          </v-overlay>
+        </v-container>
+      </div>
+    </div>
 </div>
 
 <div v-else>
@@ -99,7 +106,6 @@
 </template>
 
 <script>
-import "bootstrap/dist/css/bootstrap.css";
 import UserDataService from '../../../services/UserDataService';
 export default {
     name:"users",
@@ -136,20 +142,24 @@ export default {
             });
         },
         searchUsername() {
+          this.loading=true
           UserDataService.search(this.username)
             .then(response => {
               this.users = response.data;
               console.log(response.data);
+              this.loading=false
             })
             .catch(e => {
               console.log(e);
             });
         },
         deleteUser(id_user) {
+          this.loading=true
           UserDataService.delete(id_user)
             .then(response => {
               console.log(response.data);
               this.retrieve();
+              this.loading=false
             })
             .catch(e => {
               console.log(e);
