@@ -18,6 +18,10 @@ class GameDataService {
         return http.get(`/api/game/`)
     }
 
+    getPagination(params) {
+        return http.get(`/api/gamePagination/`,{params})
+    }
+
     getByPlatform(platform) {
         return http.get(`/api/games/platform/${platform}`)
     }

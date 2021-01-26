@@ -7,6 +7,11 @@ module.exports = {
         const result = await client.export().query('SELECT * FROM public.game')
         return result
     },
+
+    getGamePagination : async function getGamePagination(startIndex, limit){
+        const result = await client.export().query('SELECT * FROM public.game limit $2 offset $1', [startIndex, limit])
+        return result
+    },
     
     getGameById : async function getGameById(id_game){
         const result = await client.export().query('SELECT * FROM public.game WHERE id_game = $1', [id_game])

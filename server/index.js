@@ -151,6 +151,16 @@ app.get('/api/game/', async (req,res)=>{
    res.send(await game.rows)
 })
 
+app.get('/api/gamePagination/', async (req,res)=>{
+   const page = parseInt(req.query.page)
+   const limit = parseInt(req.query.limit)
+
+   const startIndex = (page - 1)*limit
+   
+   const game = await permainan.getGamePagination(startIndex, limit)
+   res.send(await game.rows)
+})
+
 app.get('/api/game_allthumbnail/:id', async (req,res)=>{
    const game = await permainan.getGameThumbnail(req.params.id)
    res.setHeader('content-type', 'image/jpg')
@@ -254,6 +264,17 @@ app.get('/api/news', async (req,res)=>{
    res.send(await news.rows)
    })
    
+   app.get('/api/newsPagination/', async (req,res)=>{
+      const page = parseInt(req.query.page)
+      const limit = parseInt(req.query.limit)
+   
+      const startIndex = (page - 1)*limit
+      //const endIndex = page * limit
+      
+      const game = await berita.getNewsPagination(startIndex, limit)
+      res.send(await game.rows)
+   })
+
    app.get('/api/news/:id', async (req,res)=>{
        const news = await berita.getNewsById(req.params.id)
        res.send(await news.rows)

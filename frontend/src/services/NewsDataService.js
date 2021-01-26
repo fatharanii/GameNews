@@ -6,6 +6,10 @@ class NewsDataService {
     return http.get(`/api/news`);
   }
 
+  getPagination(params) {
+    return http.get(`/api/newsPagination/`,{params})
+  }
+
   get(id_berita) {
     return http.get(`/api/news/${id_berita}`);
   }

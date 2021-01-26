@@ -7,7 +7,12 @@ module.exports = {
         const result = await client.export().query('SELECT * FROM public.news_item')
         return result
     },
-    
+
+    getNewsPagination : async function getNewsPagination(startIndex, limit){
+        const result = await client.export().query('SELECT * FROM public.news_item limit $2 offset $1', [startIndex, limit])
+        return result
+    },
+
     getNewsByJudul : async function getNewsByJudul(judul_berita){
         const result = await client.export().query('SELECT * FROM public.news_item WHERE judul_berita ILIKE $1 ', ['%'+judul_berita+'%'])
         return result

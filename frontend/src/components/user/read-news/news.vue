@@ -69,6 +69,7 @@
                         <v-pagination
                               v-model="page"
                               :length="Math.ceil(articles.length/perPage)"
+                              @input="handlePageChange"
                         ></v-pagination>
                     </v-flex>
                 </v-layout>
@@ -166,7 +167,8 @@ export default {
     return{
       drawer : false,
       loading :false,
-      articles :[],
+      articles :[],   
+      articlesPerPage:[],
       error:[],
       page: 1,
       perPage: 4,
@@ -180,10 +182,38 @@ export default {
   computed: {
     visiblePages () {
       window.scrollTo(0,0);
-      return this.articles.slice((this.page - 1)* this.perPage, this.page* this.perPage)
+      return this.articlesPerPage
     }
   },
   methods:{
+    getRequestParams(page, perPage){
+      let params = {};
+      if(page){
+        params["page"]=page;
+      }
+      if(perPage){
+        params["limit"]=perPage;
+      }
+      return params;
+    },
+    retrievePagination() {
+      const params = this.getRequestParams(this.page, this.perPage);
+      this.loading = true
+      NewsDataService.getPagination(params)
+      .then(response =>{
+        this.articlesPerPage = response.data;
+        console.log('data')
+        console.log(response.data)
+        this.loading = false
+      })
+      .catch(e=>{
+        this.errors(e)
+      })
+    },
+    handlePageChange(value) {
+      this.page = value;
+      this.retrievePagination();
+    },
     retrieve() {
       this.loading = true
       NewsDataService.getAll()
@@ -247,6 +277,7 @@ export default {
   },
   mounted(){
     this.retrieve();
+    this.retrievePagination();
   },
 }
 
