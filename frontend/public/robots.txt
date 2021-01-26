@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: http://www.amuspheregg.herokuapp.com/sitemap.xml
+Sitemap: http://amuspheregg.herokuapp.com/sitemap.xml
