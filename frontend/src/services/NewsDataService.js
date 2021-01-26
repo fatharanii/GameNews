@@ -6,6 +6,18 @@ class NewsDataService {
     return http.get(`/api/news`);
   }
 
+  async getAllNewsSitemap(){
+    const result = await http.get(`/api/news`)
+        let array = []
+        result.data.forEach((item)=>{
+            array.push({
+                id_berita: item.id_berita
+            })
+        })
+        
+      return array
+  }
+
   getPagination(params) {
     return http.get(`/api/newsPagination/`,{params})
   }

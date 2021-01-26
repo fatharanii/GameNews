@@ -18,6 +18,18 @@ class GameDataService {
         return http.get(`/api/game/`)
     }
 
+    async getAllGameSitemap(){
+        const result = await http.get(`/api/game`)
+        let array = []
+        result.data.forEach((item)=>{
+            array.push({
+                id_game: item.id_game
+            })
+        })
+        
+        return array
+    }
+
     getPagination(params) {
         return http.get(`/api/gamePagination/`,{params})
     }
