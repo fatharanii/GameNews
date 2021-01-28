@@ -42,6 +42,18 @@ class GameDataService {
         return http.get(`/api/games/genre/${genre}`)
     }
 
+    getPaginationByGenre(params, genre) {
+        return http.get(`/api/gamesPagination/genre/${genre}`,{params})
+    }
+
+    getPaginationByPlatform(params, platform) {
+        return http.get(`/api/gamesPagination/platform/${platform}`,{params})
+    }
+
+    searchPagination(searchString, params) {
+        return http.get(`/api/gamesPagination/search/${searchString}`,{params});
+    }
+
     search(searchString) {
         return http.get(`/api/games/search/${searchString}`)
     }

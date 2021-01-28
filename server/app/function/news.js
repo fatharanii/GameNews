@@ -34,7 +34,7 @@ module.exports = {
     },
 
     getAllNewsASC : async function getAllNewsASC(startIndex, limit){
-        const result = await client.export().query('SELECT * FROM public.news_item ORDER BY publish_date ASC limit $2 offset $1', [startIndex, limit])
+        const result = await client.export().query('SELECT * FROM public.news_item ORDER BY publish_date DESC limit $2 offset $1', [startIndex, limit])
         return result
     },
     

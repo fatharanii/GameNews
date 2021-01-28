@@ -13,6 +13,21 @@ module.exports = {
         return result
     },
     
+    getGamePaginationByGenre : async function getGamePaginationByGenre(startIndex, limit, genre){
+        const result = await client.export().query('SELECT * FROM public.game WHERE genre = $1 limit $2 offset $3', [genre, limit, startIndex])
+        return result
+    },
+
+    getGamePaginationByPlatform : async function getGamePaginationByPlatform(startIndex, limit, platform){
+        const result = await client.export().query('SELECT * FROM public.game WHERE platform = $1 limit $2 offset $3', [platform, limit, startIndex])
+        return result
+    },
+
+    getGameBySearchPagination : async function getGameBySearchPagination(startIndex, limit, judul_game){
+        const result = await client.export().query('SELECT * FROM public.game WHERE judul_game ILIKE $1 limit $2 offset $3', ['%'+judul_game+'%', limit, startIndex])
+        return result
+    },
+
     getGameById : async function getGameById(id_game){
         const result = await client.export().query('SELECT * FROM public.game WHERE id_game = $1', [id_game])
         return result

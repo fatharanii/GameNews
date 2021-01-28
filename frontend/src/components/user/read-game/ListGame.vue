@@ -87,7 +87,7 @@
       <v-btn
         icon
         color="black"
-        @click="retrieve"
+        v-on:click="selectPlatform('All')"
         class="mt-6 ml-2"
         x-small
       >
@@ -168,7 +168,11 @@ export default {
       perPage: 6,
       genre:["All","Action", "Survival","Strategy", "Adventure","Sport"],
       platform:["All","Steam", "Itch.io","GOG", "GamersGate","Humble Bundle", "Game Jolt","PS5", "PS4", "PC", "XboxOne", "Switch", "Nintendo"],
+      genreSelected: '',
+      platformSelected: '',
       searchString: '',
+      searchStringLast: '',
+      filterBy : '',
       baseURL: BASE_URL
     }
   },
@@ -190,8 +194,8 @@ export default {
       return params;
     },
     retrievePagination() {
-      const params = this.getRequestParams(this.page, this.perPage);
       this.loading = true
+      const params = this.getRequestParams(this.page, this.perPage);
       GameDataService.getPagination(params)
       .then(response =>{
         this.articlesPerPage = response.data;
@@ -205,29 +209,75 @@ export default {
     },
     handlePageChange(value) {
       this.page = value;
-      this.retrievePagination();
+      if(this.filterBy=='Genre'){
+        this.selectGenre(this.genreSelected);
+      }else if(this.filterBy=='Platform'){
+        this.selectPlatform(this.platformSelected);
+      }else if(this.filterBy=='Search'){
+        this.searchGame()
+      }else{
+        this.retrievePagination();
+      }
     },
     retrieve() {
-      this.loading = true
-      GameDataService.getAll()
-      .then(response =>{
-        this.articles = response.data;
-        console.log('data')
-        console.log(response.data)
-        this.loading = false
-      })
-      .catch(e=>{
-        this.errors(e)
-      })
+      if(this.filterBy=='Genre'){
+        GameDataService.getByGenre(this.genreSelected)
+        .then(response =>{
+          this.articles = response.data;
+          console.log('data')
+          console.log(response.data)
+        })
+        .catch(e=>{
+          this.errors(e)
+        })
+      }else if(this.filterBy=='Platform'){
+        GameDataService.getByPlatform(this.platformSelected)
+        .then(response =>{
+          this.articles = response.data;
+          console.log('data')
+          console.log(response.data)
+        })
+        .catch(e=>{
+          this.errors(e)
+        })
+      }else if(this.filterBy=='Search'){
+        GameDataService.search(this.searchStringLast)
+        .then(response =>{
+          this.articles = response.data;
+          console.log('data')
+          console.log(response.data)
+        })
+        .catch(e=>{
+          this.errors(e)
+        })
+      }else{
+        GameDataService.getAll()
+        .then(response =>{
+          this.articles = response.data;
+          console.log('data')
+          console.log(response.data)
+        })
+        .catch(e=>{
+          this.errors(e)
+        })
+      }
     },
     selectGenre: function (genre){
-      if(genre=="All"){
+      this.loading =  true;
+      this.filterBy = 'Genre';
+      if(this.genreSelected!=genre){
+        this.genreSelected=genre;
+        this.page=1;
+      }
+      if(genre=='All'){
+        this.page=1;
+        this.filterBy = 'Default';
+      }
         this.retrieve();
-      }else{
-        this.loading = true
-        GameDataService.getByGenre(genre)
+        const params = this.getRequestParams(this.page, this.perPage);
+        GameDataService.getPaginationByGenre(params, genre)
         .then(response =>{
-          this.articles = response.data;
+          this.articlesPerPage = response.data;
           console.log('data')
           console.log(response.data)
           this.loading = false
@@ -235,16 +285,23 @@ export default {
         .catch(e=>{
           this.errors(e)
         })
-      } 
     },
     selectPlatform: function (platform){
-      if(platform=="All"){
+      this.loading =  true;
+      this.filterBy = 'Platform';
+      if(this.platformSelected!=platform){
+        this.platformSelected=platform;
+        this.page=1;
+      }
+      if(platform=='All'){
+        this.page=1;
+        this.filterBy = 'Default';
+      }
         this.retrieve();
-      }else{
-        this.loading = true
-        GameDataService.getByPlatform(platform)
+        const params = this.getRequestParams(this.page, this.perPage);
+        GameDataService.getPaginationByPlatform(params, platform)
         .then(response =>{
-          this.articles = response.data;
+          this.articlesPerPage = response.data;
           console.log('data')
           console.log(response.data)
           this.loading = false
@@ -252,13 +309,19 @@ export default {
         .catch(e=>{
           this.errors(e)
         })
-      } 
     },
     searchGame () {
       this.loading = true
-      GameDataService.search(this.searchString)
+      this.filterBy = 'Search';
+      if(this.searchStringLast!=this.searchString){
+        this.searchStringLast=this.searchString;
+        this.page=1;
+      }
+      this.retrieve();
+      const params = this.getRequestParams(this.page, this.perPage);
+      GameDataService.searchPagination(this.searchString, params)
       .then(response =>{
-        this.articles = response.data;
+        this.articlesPerPage = response.data;
         console.log('data')
         console.log(response.data)
         this.loading = false

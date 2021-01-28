@@ -246,6 +246,50 @@ app.get('/api/games/genre/:genre/', async (req,res)=>{
    res.send(await games.rows)
 })
 
+app.get('/api/gamesPagination/genre/:genre', async (req,res)=>{
+   const page = parseInt(req.query.page)
+   const limit = parseInt(req.query.limit)
+
+   const startIndex = (page - 1)*limit
+   
+   var games;
+   if(req.params.genre=='All'){
+      games = await permainan.getGamePagination(startIndex, limit)
+   }else{
+      games = await permainan.getGamePaginationByGenre(startIndex, limit, req.params.genre)
+   }
+   res.send(await games.rows)
+})
+
+app.get('/api/gamesPagination/platform/:platform', async (req,res)=>{
+   const page = parseInt(req.query.page)
+   const limit = parseInt(req.query.limit)
+
+   const startIndex = (page - 1)*limit
+   
+   var games;
+   if(req.params.platform=='All'){
+      games = await permainan.getGamePagination(startIndex, limit)
+   }else{
+      games = await permainan.getGamePaginationByPlatform(startIndex, limit, req.params.platform)
+   }
+   res.send(await games.rows)
+})
+
+app.get('/api/gamesPagination/search/:searchString', async(req,res)=>{
+   const page = parseInt(req.query.page)
+   const limit = parseInt(req.query.limit)
+
+   const startIndex = (page - 1)*limit
+   var games;
+   if(req.params.searchString=='All'){
+      games = await permainan.getGamePagination(startIndex, limit)
+   }else{
+      games = await permainan.getGameBySearchPagination(startIndex, limit, req.params.searchString)
+   }
+   res.send(await games.rows)
+})
+
 app.get('/api/games/publisher/:publisher/', async (req,res)=>{
    const games = await permainan.getGamesByPublisher(req.params.publisher)
    res.send(await games.rows)
@@ -368,7 +412,7 @@ app.get('/api/games/platform/:platform/', async (req,res)=>{
       }
       res.send(await news.rows)
    })
-   
+
    //GET berita berdasarkan publish_date secara Ascending
    app.get('/api/newsASC', async(req,res)=>{
        const news = await berita.getAllNewsASC()
