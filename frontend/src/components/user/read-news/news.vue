@@ -92,7 +92,7 @@
       <v-btn
         icon
         color="black"
-        @click="retrieve"
+        v-on:click="selectKategori('All')"
         class="mt-6 ml-2"
         x-small
       >
@@ -160,21 +160,24 @@
 
 <script>
 import NewsDataService from "../../../services/NewsDataService";
-import GameDataService from "../../../services/GameDataService";
 import BASE_URL from "../../../base-url"
 export default {
   data(){
     return{
       drawer : false,
       loading :false,
+      filterBy : '',
       articles :[],   
       articlesPerPage:[],
       error:[],
       page: 1,
       perPage: 4,
       kategori:["All","Action", "Survival","Strategy", "Adventure","Sport"],
+      kategoriSelected: '',
       urutkan:["All","Terbaru"],
+      urutkanSelected: '',
       searchString: '',
+      searchStringLast: '',
       baseURL: BASE_URL,
       id_user:''
     }
@@ -197,8 +200,8 @@ export default {
       return params;
     },
     retrievePagination() {
-      const params = this.getRequestParams(this.page, this.perPage);
       this.loading = true
+      const params = this.getRequestParams(this.page, this.perPage);
       NewsDataService.getPagination(params)
       .then(response =>{
         this.articlesPerPage = response.data;
@@ -212,31 +215,67 @@ export default {
     },
     handlePageChange(value) {
       this.page = value;
-      this.retrievePagination();
+      if(this.filterBy=='Kategori'){
+        this.selectKategori(this.kategoriSelected);
+      }else if(this.filterBy=='Urutkan'){
+        this.selectUrutkan(this.urutkanSelected)
+      }else if(this.filterBy=='Search'){
+        this.searchNews ()
+      }else{
+        this.retrievePagination();
+      }
     },
     retrieve() {
-      this.loading = true
-      NewsDataService.getAll()
+      if(this.filterBy=='Kategori'){
+        NewsDataService.getByKategori(this.kategoriSelected)
+        .then(response =>{
+          this.articles = response.data;
+          console.log('data')
+          console.log(response.data)
+        })
+        .catch(e=>{
+          this.errors(e)
+        })
+      }else if(this.filterBy=='Search'){
+        NewsDataService.search(this.searchStringLast)
+        .then(response =>{
+          this.articles = response.data;
+          console.log('data')
+          console.log(response.data)
+        })
+        .catch(e=>{
+          this.errors(e)
+        })
+      }else{
+        NewsDataService.getAll()
       .then(response =>{
         this.articles = response.data;
         console.log('data')
         console.log(response.data)
         console.log(this.articles[0])
-        this.loading = false
       })
       .catch(e=>{
         this.errors(e)
       })
+      }
     },
     
     selectKategori: function (kategori){
-      if(kategori=="All"){
+      this.loading = true
+      this.filterBy = 'Kategori';
+      if(this.kategoriSelected!=kategori){
+        this.kategoriSelected=kategori;
+        this.page=1;
+      }
+      if(kategori=='All'){
+        this.page=1;
+        this.filterBy = 'Default';
+      }
         this.retrieve();
-      }else{
-        this.loading = true
-        NewsDataService.getByKategori(kategori)
+        const params = this.getRequestParams(this.page, this.perPage);
+        NewsDataService.getPaginationByKategori(params, kategori)
         .then(response =>{
-          this.articles = response.data;
+          this.articlesPerPage = response.data;
           console.log('data')
           console.log(response.data)
           this.loading = false
@@ -244,13 +283,19 @@ export default {
         .catch(e=>{
           this.errors(e)
         })
-      } 
     },
     searchNews () {
       this.loading = true
-      NewsDataService.search(this.searchString)
+      this.filterBy = 'Search';
+      if(this.searchStringLast!=this.searchString){
+        this.searchStringLast=this.searchString;
+        this.page=1;
+      }
+      this.retrieve();
+      const params = this.getRequestParams(this.page, this.perPage);
+      NewsDataService.searchPagination(this.searchString, params)
       .then(response =>{
-        this.articles = response.data;
+        this.articlesPerPage = response.data;
         console.log('data')
         console.log(response.data)
         this.loading = false
@@ -260,19 +305,28 @@ export default {
       })
     },
     selectUrutkan: function (urutkan) {
-      if(urutkan=="All"){
-        this.retrieve();
-      }else{
-        GameDataService.getASC()
-        .then(response =>{
-          this.articles = response.data;
-          console.log('data')
-          console.log(response.data)
-        })
-        .catch(e=>{
-          this.errors(e)
-        })
+      this.loading = true
+      this.filterBy='Urutkan';
+      if(this.urutkanSelected!=urutkan){
+        this.urutkanSelected=urutkan;
+        this.page=1;
       }
+      if(urutkan=='All'){ 
+        this.page=1;
+        this.filterBy = 'Default';
+      }
+      this.retrieve();
+      const params = this.getRequestParams(this.page, this.perPage);
+      NewsDataService.getAllNewsASC(params, urutkan)
+      .then(response =>{
+        this.articlesPerPage = response.data;
+        console.log('data')
+        console.log(response.data)
+        this.loading = false
+      })
+      .catch(e=>{
+        this.errors(e)
+      })
     }
   },
   mounted(){

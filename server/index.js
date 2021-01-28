@@ -259,9 +259,23 @@ app.get('/api/games/platform/:platform/', async (req,res)=>{
 
 //=====================NEWS BACKEND===============
 //Mendapatkan semua berita
-app.get('/api/news', async (req,res)=>{
-   const news = await berita.getAllnews()
-   res.send(await news.rows)
+   app.get('/api/news', async (req,res)=>{
+      const news = await berita.getAllnews()
+      res.send(await news.rows)
+   })
+
+   app.get('/api/newsPaginationASC/:urutkan', async (req,res)=>{
+      const page = parseInt(req.query.page)
+      const limit = parseInt(req.query.limit)
+   
+      const startIndex = (page - 1)*limit
+      var news;
+      if(req.params.urutkan=='All'){
+         news = await berita.getNewsPagination(startIndex, limit)
+      }else{
+         news = await berita.getAllNewsASC(startIndex, limit)
+      }
+      res.send(await news.rows)
    })
    
    app.get('/api/newsPagination/', async (req,res)=>{
@@ -271,8 +285,8 @@ app.get('/api/news', async (req,res)=>{
       const startIndex = (page - 1)*limit
       //const endIndex = page * limit
       
-      const game = await berita.getNewsPagination(startIndex, limit)
-      res.send(await game.rows)
+      const news = await berita.getNewsPagination(startIndex, limit)
+      res.send(await news.rows)
    })
 
    app.get('/api/news/:id', async (req,res)=>{
@@ -314,16 +328,45 @@ app.get('/api/news', async (req,res)=>{
        res.status(204).end()
    })
    
-   //GET berita bedasarkan judul (tapi belum sesuai keiinginan)
+   //GET berita bedasarkan judul
    app.get('/api/news/search/:judul_berita', async(req,res)=>{
        const news = await berita.getNewsByJudul(req.params.judul_berita)
        res.send(await news.rows)
    })
+
+   app.get('/api/newsPagination/search/:searchString', async(req,res)=>{
+      const page = parseInt(req.query.page)
+      const limit = parseInt(req.query.limit)
+   
+      const startIndex = (page - 1)*limit
+      var news;
+      if(req.params.searchString=='All'){
+         news = await berita.getNewsPagination(startIndex, limit)
+      }else{
+         news = await berita.getNewsBySearchPagination(startIndex, limit, req.params.searchString)
+      }
+      res.send(await news.rows)
+  })
    
    //GET berita berdasarkan kategori
    app.get('/api/news/kategori/:kategori', async(req,res)=>{
        const news = await berita.getNewsByKategori(req.params.kategori)
        res.send(await news.rows)
+   })
+
+   app.get('/api/newsPagination/kategori/:kategori', async (req,res)=>{
+      const page = parseInt(req.query.page)
+      const limit = parseInt(req.query.limit)
+   
+      const startIndex = (page - 1)*limit
+      //const endIndex = page * limit
+      var news;
+      if(req.params.kategori=='All'){
+         news = await berita.getNewsPagination(startIndex, limit)
+      }else{
+         news = await berita.getNewsPaginationByKategori(startIndex, limit, req.params.kategori)
+      }
+      res.send(await news.rows)
    })
    
    //GET berita berdasarkan publish_date secara Ascending
