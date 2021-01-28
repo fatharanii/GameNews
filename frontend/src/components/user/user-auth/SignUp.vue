@@ -1,16 +1,17 @@
 <template>
   <div class="row justify-content-md-center">
     <div class="col-md-6">
-      <div style=margin-top:60px class="card">
+      <div style=margin-top:100px class="card">
         <div class="card-header">
-          Sign Up
+
+          <h5>Sign Up</h5>
         </div>
           <div class="card-body">
             <form>
               <div class="form-group">
                 <label for="username">Username</label>
                 <validation-provider rules="required" v-slot="{ errors }">
-                  <input type="text" class="form-control" placeholder="Name.." v-model="user.username">
+                  <input type="text" class="form-control" placeholder="Username.." v-model="user.username">
                   <span style="color:red">{{ errors[0] }}</span>
                 </validation-provider>
               </div>
@@ -81,12 +82,17 @@
             </v-alert>
       </div>
     </div>
+     <v-overlay :value="loading">
+            <v-progress-circular
+              indeterminate
+              size="64"
+              color="error"
+            ></v-progress-circular>
+          </v-overlay>
   </div>
 </template>
 
 <script>
-
-// import http from "@/http";
 import "bootstrap/dist/css/bootstrap.css";
 import UserDataService from "../../../services/UserDataService";
 import { ValidationProvider, extend } from 'vee-validate';
@@ -111,6 +117,7 @@ export default {
       },
       submitted: false,
       isError: false,
+      loading : false,
       errorMessage: "",
       reenteredPassword: "",
       differentPassword: false,
@@ -124,6 +131,7 @@ export default {
       this.dataIsNotCompleted = false;
     },
     saveUser() {
+      this.loading = true
       var data = {
         username: this.user.username,
         email: this.user.email,
@@ -136,12 +144,15 @@ export default {
        || this.reenteredPassword=="") {
          this.clearErrorMessage();
          this.dataIsNotCompleted = true;
+         this.loading=false
       }
+      
       else {
         this.dataIsNotCompleted = false;
         if(this.user.password != passwordVerification) {
           this.clearErrorMessage();
           this.differentPassword = true;
+          this.loading=false
         }
         else {
           this.differentPassword = false;
@@ -154,6 +165,7 @@ export default {
                 console.log(response.data.message);
                 console.log(response.data);
                 console.log(data.is_admin)
+                this.loading=false
               }
               else {
                 console.log(response.data);
@@ -161,24 +173,16 @@ export default {
                 this.submitted = true;
                 this.isError = false;
                 this.$router.push({path: '/login/'});
+                this.loading=false
               }
             })
             .catch(e => {
               console.log(e);
             });
         }
-      }
-
-      
-      
-
-      
+      }      
     },
-    
-    // newUser() {
-    //   this.submitted = false;
-    //   this.user = {};
-    // }
+
   },
   mounted(){
     this.submitted = false;
@@ -186,3 +190,14 @@ export default {
   }
 };
 </script>
+
+<style scoped>
+.btn-primary{
+  background-color: #EF5350;
+}
+
+.card-header{
+  background-color: #757575;
+  color :white
+}
+</style>
