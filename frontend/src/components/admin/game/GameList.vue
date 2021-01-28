@@ -36,8 +36,6 @@
               :headers="headers"
               :items="games"
               :items-per-page="5"
-              :loading ="isloading"
-              loading-text="Loading... Please wait"
               class="grey lighten-5"
               fixed-header
             >
@@ -162,7 +160,6 @@ export default {
         id: 0,
         dialog: false,
         loading : false,
-        isloading : false,
         judul_game: "",
         selectedIdGame: null,
         adminAuth: false,
@@ -194,7 +191,7 @@ export default {
             });
         },
         deleteGame(id_game) {
-          this.loadin=true
+          this.loading=true
           GameDataService.delete(id_game)
             .then(response => {
               console.log(response.data);

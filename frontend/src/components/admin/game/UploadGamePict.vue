@@ -4,10 +4,9 @@
       <v-container>
         <v-card
           width="800px"
-          :loading="loading"
           class="mx-auto my-12"
         >
-        <v-card-title width="590" style="background:#EF5350;color:white" class="white--text mt-10">UPLOAD THUMBNAIL GAME</v-card-title>
+        <v-card-title width="590" style="background:#757575;color:white" class="white--text mt-10">UPLOAD THUMBNAIL GAME</v-card-title>
           <v-row  justify="center">
             <v-col cols="12" md="10">
               <div class="fields">
@@ -26,7 +25,7 @@
                   max-width="440"
                   :retain-focus="false"
                 >
-              <template v-slot:activator="{ on, attrs }">
+              <template v-slot:activator="{ on, attrs }" :loading="loading">
               <v-btn 
                 class="float-right mb-2"
                 elevation="6"
@@ -69,6 +68,13 @@
         </v-card>
       </v-container>
     </form>
+      <v-overlay :value="loading">
+        <v-progress-circular
+          indeterminate
+          size="64"
+          color="error"
+        ></v-progress-circular>
+      </v-overlay>
 </div>
 
 <div v-else>
@@ -93,10 +99,13 @@ export default {
   },
   methods: {
     onSelect(){
+      //this.loading=true
       const file = this.$refs.file.files[0];
       this.file = file;
+      //this.loading=false
     },
     async onSubmit(){
+      this.loading=true
       console.log(this.idGameSelected);
       const formData = new FormData();
       formData.append("thumbnail", this.file);
@@ -104,6 +113,7 @@ export default {
         console.log(this.idGameSelected);
         await GameDataService.uploadGamePict(this.idGameSelected, formData)
         this.message = 'Uploaded !!'
+        this.loading=false
       }
       catch(err) {
         console.log(err);
