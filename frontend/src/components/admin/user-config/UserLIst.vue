@@ -6,7 +6,7 @@
     <v-row justify="space-around">
       <v-col>
         <v-card>
-          <v-card-title width="590" style="background:#EF5350;color:white" class="white--text mt-10">LIST USER</v-card-title>
+          <v-card-title width="590" style="background:#757575;color:white" class="white--text mt-10">LIST USER</v-card-title>
           <div class="col-md-12">
             <div class="input-group mb-1">
               <input type="text" class="form-control" placeholder="Search by Username"
@@ -25,7 +25,6 @@
               :headers="headers"
               :items="users"
               :items-per-page="5"
-              :loading="loading"
               class="grey lighten-5"
               fixed-header
             >
@@ -63,7 +62,7 @@
                           Apakah Anda yakin untuk menghapus User ini? (ID = :{{selectedIdUser}})
                           </v-card-title>
                           <v-card-text></v-card-text>
-                          <v-card-actions>
+                          <v-card-actions >
                             <v-spacer></v-spacer>
                             <v-btn
                               elevation="6"
@@ -124,6 +123,7 @@ export default {
         id: 0,
         dialog: false,
         loading : false,
+        isloading:false,
         username: "",
         selectedIdUser: null,
         adminAuth: false
@@ -185,3 +185,9 @@ export default {
     },
 };
 </script>
+
+<style scoped>
+.container{
+  margin-top: 100px;
+}
+</style>
