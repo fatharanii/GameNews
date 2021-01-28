@@ -22,6 +22,14 @@ class NewsDataService {
     return http.get(`/api/newsPagination/`,{params})
   }
 
+  getAllNewsASC(params, urutkan){
+    return http.get(`/api/newsPaginationASC/${urutkan}`,{params});
+  }
+
+  getPaginationByKategori(params, kategori) {
+    return http.get(`/api/newsPagination/kategori/${kategori}`,{params})
+  }
+
   get(id_berita) {
     return http.get(`/api/news/${id_berita}`);
   }
@@ -60,6 +68,10 @@ class NewsDataService {
 
   search(searchString) {
     return http.get(`/api/news/search/${searchString}`);
+  }
+
+  searchPagination(searchString, params) {
+    return http.get(`/api/newsPagination/search/${searchString}`,{params});
   }
 
   home(){

@@ -18,13 +18,23 @@ module.exports = {
         return result
     },
     
+    getNewsBySearchPagination : async function getNewsBySearchPagination(startIndex, limit, judul_berita){
+        const result = await client.export().query('SELECT * FROM public.news_item WHERE judul_berita ILIKE $1 limit $2 offset $3', ['%'+judul_berita+'%', limit, startIndex])
+        return result
+    },
+
     getNewsByKategori : async function getNewsByKategori(kategori){
         const result = await client.export().query('SELECT * FROM public.news_item WHERE kategori= $1',[kategori])
         return result
     },
-    
-    getAllNewsASC : async function getAllNewsASC(){
-        const result = await client.export().query('SELECT * FROM public.news_item ORDER BY publish_date ASC')
+
+    getNewsPaginationByKategori : async function getNewsPaginationByKategori(startIndex, limit, kategori){
+        const result = await client.export().query('SELECT * FROM public.news_item WHERE kategori= $1 limit $2 offset $3',[kategori, limit, startIndex])
+        return result
+    },
+
+    getAllNewsASC : async function getAllNewsASC(startIndex, limit){
+        const result = await client.export().query('SELECT * FROM public.news_item ORDER BY publish_date ASC limit $2 offset $1', [startIndex, limit])
         return result
     },
     
