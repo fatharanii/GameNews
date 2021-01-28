@@ -188,6 +188,6 @@ export default {
 
 <style scoped>
 .container{
-  margin-top: 100px;
+  margin-top: 80px;
 }
 </style>

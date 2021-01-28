@@ -5,10 +5,9 @@
     <v-container>
       <v-card
         width="800px"
-        :loading="loading"
         class="mx-auto my-12"
       >
-      <v-card-title width="590" style="background:#EF5350;color:white" class="white--text mt-10">UPDATE GAME</v-card-title>
+      <v-card-title width="590" style="background:#757575;color:white" class="white--text mt-10">UPDATE GAME</v-card-title>
           <v-row  justify="center">
             <v-col cols="12" md="10">
               <div class="text-h6">Game Tittle</div>
@@ -112,7 +111,7 @@
                     max-width="400"
                     :retain-focus="false"
                     >
-                    <template v-slot:activator="{ on, attrs }">
+                    <template v-slot:activator="{ on, attrs }" :loading="loading">
                       <v-btn
                         class="float-right mb-4"
                         elevation="6"
@@ -160,6 +159,13 @@
       ID BERITA {{ $route.params.id_berita}}
   </div>
   </v-form>
+     <v-overlay :value="loading">
+        <v-progress-circular
+          indeterminate
+          size="64"
+          color="error"
+        ></v-progress-circular>
+      </v-overlay>
   </div>
 
   <div v-else>
@@ -169,7 +175,6 @@
 
 <script>
 
-// import http from "@/http";
 import "bootstrap/dist/css/bootstrap.css";
 // import authHeader from '../../../services/auth-header';
 import GameDataService from "../../../services/GameDataService";
@@ -226,10 +231,12 @@ export default {
     },
 
     updateGame() {
+      this.loading=true
       GameDataService.update(this.$route.params.id_game, this.currentGame)
         .then(response => {
           console.log(response.data);
           this.message = 'The game was updated successfully!';
+          this.loading=false
         })
         .catch(e => {
           console.log(e);
@@ -260,3 +267,9 @@ export default {
   },
 };
 </script>
+
+<style scoped>
+.container{
+  margin-top: 100px;
+}
+</style>

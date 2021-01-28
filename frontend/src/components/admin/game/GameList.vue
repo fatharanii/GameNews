@@ -10,13 +10,14 @@
             color="error"
             elevation="4"
             width="110px"
-            class="my-4"
+            class="my-1"
             >
             <RouterLink :to="'/api/game-add/'" class="white--text" >
               Add Game
             </RouterLink>
           </v-btn>
           <v-card>
+            <v-card-title width="590" style="background:#757575;color:white" class="white--text">LIST GAME</v-card-title>
           <div class="col-md-12">
             <div class="input-group mb-1">
               <input type="text" class="form-control" placeholder="Search by Judul Game"
@@ -35,7 +36,7 @@
               :headers="headers"
               :items="games"
               :items-per-page="5"
-              :loading ="loading"
+              :loading ="isloading"
               loading-text="Loading... Please wait"
               class="grey lighten-5"
               fixed-header
@@ -161,6 +162,7 @@ export default {
         id: 0,
         dialog: false,
         loading : false,
+        isloading : false,
         judul_game: "",
         selectedIdGame: null,
         adminAuth: false,
@@ -223,3 +225,9 @@ export default {
     },
 };
 </script>
+
+<style scoped>
+.container{
+  margin-top:80px
+}
+</style>
