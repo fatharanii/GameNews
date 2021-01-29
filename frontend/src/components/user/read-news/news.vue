@@ -12,11 +12,6 @@
                     <v-flex xs11 offset-md1>
                         <div v-for="news in visiblePages" :key="news.id_berita">
                             <v-card class="my-4 mx-2" hover>
-                               <v-progress-linear
-                                  v-if="loading"
-                                  color="error"
-                                  indeterminate
-                                ></v-progress-linear>
                                 <v-img
                                 height="250px"
                                 v-bind:src="baseURL + '/api/news_thumbnail/' + news.id_berita"
