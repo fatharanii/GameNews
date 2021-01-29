@@ -7,7 +7,7 @@
         :loading="loading"
         class="mx-auto my-12"
       >
-      <v-card-title width="590" style="background:#EF5350;color:white" class="white--text mt-10">UPLOAD THUMBNAIL NEWS</v-card-title>
+      <v-card-title width="590" style="background:#757575;color:white" class="white--text mt-10">UPLOAD THUMBNAIL NEWS</v-card-title>
         <v-row  justify="center">
           <v-col cols="12" md="10">
             <div class="fields">
@@ -125,8 +125,9 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
 .container{
-  margin-top: 100px;
+  margin-top:80px
 }
 </style>
+>

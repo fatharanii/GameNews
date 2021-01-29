@@ -139,6 +139,6 @@ export default {
 
 <style>
 .container{
-  margin-top: 100px;
+  margin-top: 80px;
 }
 </style>

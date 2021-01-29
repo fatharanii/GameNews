@@ -10,7 +10,7 @@
             color="error"
             elevation="4"
             width="110px"
-            class="my-1"
+            class="my-2"
             >
             <RouterLink :to="'/api/game-add/'" class="white--text" >
               Add Game
@@ -36,6 +36,7 @@
               :headers="headers"
               :items="games"
               :items-per-page="5"
+              loading-text="Loading... Please wait"
               class="grey lighten-5"
               fixed-header
             >
@@ -88,7 +89,7 @@
                               color="warning"
                               @click="dialog = false"
                             >
-                              Batal
+                              CANCEL
                             </v-btn>
                             <v-btn
                               elevation="6"
@@ -96,7 +97,7 @@
                               @click="dialog = false"
                               @click.prevent="deleteGame(selectedIdGame)"
                             >
-                              Yakin
+                              DELETE
                             </v-btn>
                           </v-card-actions>
                         </v-card> 
