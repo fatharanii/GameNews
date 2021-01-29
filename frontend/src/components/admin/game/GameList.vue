@@ -36,7 +36,7 @@
               :headers="headers"
               :items="games"
               :items-per-page="5"
-              loading-text="Loading... Please wait"
+              
               class="grey lighten-5"
               fixed-header
             >
@@ -124,7 +124,7 @@
             <v-progress-circular
               indeterminate
               size="64"
-              color="error"
+              color="#E52B38"
             ></v-progress-circular>
           </v-overlay>
         </v-container>

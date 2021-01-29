@@ -56,7 +56,7 @@
         <v-progress-circular
             indeterminate
             size="64"
-          color="error"
+          color="#E52B38"
         ></v-progress-circular>
       </v-overlay>
   </div>
