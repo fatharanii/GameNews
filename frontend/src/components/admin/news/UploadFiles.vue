@@ -7,7 +7,7 @@
         :loading="loading"
         class="mx-auto my-12"
       >
-      <v-card-title width="590" style="background:#EF5350;color:white" class="white--text mt-10">UPLOAD THUMBNAIL NEWS</v-card-title>
+      <v-card-title width="590" style="background:#757575;color:white" class="white--text mt-10">UPLOAD THUMBNAIL NEWS</v-card-title>
         <v-row  justify="center">
           <v-col cols="12" md="10">
             <div class="fields">
@@ -69,6 +69,13 @@
       </v-card>
   </v-container>
 </form>
+  <v-overlay :value="loading">
+    <v-progress-circular
+      indeterminate
+      size="64"
+      color="#E52B38"
+    ></v-progress-circular>
+  </v-overlay>
 </div>
 
 <div v-else>
@@ -86,7 +93,8 @@ export default {
     return {
       file: "",
       idBeritaSelected: this.$route.params.id_berita,
-      adminAuth: false
+      adminAuth: false,
+      loading:false,
     }
   },
   methods: {
@@ -95,6 +103,7 @@ export default {
       this.file = file;
     },
     async onSubmit(){
+      this.loading=true
       console.log(this.idBeritaSelected);
       const formData = new FormData();
       formData.append("thumbnail", this.file);
@@ -102,6 +111,7 @@ export default {
         console.log(this.idBeritaSelected);
         await NewsDataService.uploadNewsThumbnail(this.idBeritaSelected, formData)
         this.message = 'Uploaded !!'
+        this.loading=false
       }
       catch(err) {
         console.log(err);
@@ -125,8 +135,9 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
 .container{
-  margin-top: 100px;
+  margin-top:80px
 }
 </style>
+>

@@ -10,13 +10,14 @@
             color="error"
             elevation="4"
             width="110px"
-            class="my-4"
+            class="my-2"
             >
             <RouterLink :to="'/api/game-add/'" class="white--text" >
               Add Game
             </RouterLink>
           </v-btn>
           <v-card>
+            <v-card-title width="590" style="background:#757575;color:white" class="white--text">LIST GAME</v-card-title>
           <div class="col-md-12">
             <div class="input-group mb-1">
               <input type="text" class="form-control" placeholder="Search by Judul Game"
@@ -35,8 +36,7 @@
               :headers="headers"
               :items="games"
               :items-per-page="5"
-              :loading ="loading"
-              loading-text="Loading... Please wait"
+              
               class="grey lighten-5"
               fixed-header
             >
@@ -89,7 +89,7 @@
                               color="warning"
                               @click="dialog = false"
                             >
-                              Batal
+                              CANCEL
                             </v-btn>
                             <v-btn
                               elevation="6"
@@ -97,7 +97,7 @@
                               @click="dialog = false"
                               @click.prevent="deleteGame(selectedIdGame)"
                             >
-                              Yakin
+                              DELETE
                             </v-btn>
                           </v-card-actions>
                         </v-card> 
@@ -124,7 +124,7 @@
             <v-progress-circular
               indeterminate
               size="64"
-              color="error"
+              color="#E52B38"
             ></v-progress-circular>
           </v-overlay>
         </v-container>
@@ -192,7 +192,7 @@ export default {
             });
         },
         deleteGame(id_game) {
-          this.loadin=true
+          this.loading=true
           GameDataService.delete(id_game)
             .then(response => {
               console.log(response.data);
@@ -223,3 +223,9 @@ export default {
     },
 };
 </script>
+
+<style scoped>
+.container{
+  margin-top:80px
+}
+</style>

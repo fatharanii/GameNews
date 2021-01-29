@@ -105,12 +105,6 @@ export const routes = [
         meta: { sitemap: { ignoreRoute: true } }
     },
     {
-        path :"/api/user-add/",
-        name : 'AddUser',
-        component :() => import("./components/admin/user-config/AddUser"),
-        meta: { sitemap: { ignoreRoute: true } }
-    },
-    {
         path :"/api/news-update-thumbnail/:id_berita",
         name : 'UploadNewsThumbnail',
         component :() => import("./components/admin/news/UploadFiles"),

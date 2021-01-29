@@ -4,9 +4,8 @@
         <v-container>
           <v-card
             width="800px"
-            :loading="loading"
             class="mx-auto my-12">
-            <v-card-title width="590" style="background:#EF5350;color:white" class="white--text mt-10">ADD NEWS</v-card-title>
+            <v-card-title width="590" style="background:#757575;color:white" class="white--text mt-10">ADD NEWS</v-card-title>
             <v-row  justify="center">
                 <v-col cols="12" md="10">
                     <div class="text-h6">ID Game</div>
@@ -44,6 +43,7 @@
                     <vue-editor
                         id="editor"
                         v-model="news.isi"
+                        :rules="isiRules"
                     >
                     </vue-editor>
                      <v-dialog 
@@ -93,12 +93,12 @@
                 </v-col>
             </v-row>
           </v-card>
-               <v-overlay :value="loading">
-            <v-progress-circular
-              indeterminate
-              size="64"
-              color="error"
-            ></v-progress-circular>
+            <v-overlay :value="loading">
+              <v-progress-circular
+                indeterminate
+                size="64"
+                color="#E52B38"
+              ></v-progress-circular>
           </v-overlay>
         </v-container>
     </v-form>
@@ -183,3 +183,9 @@ export default {
     },
 };
 </script>
+
+<style scoped>
+.container{
+  margin-top:80px
+}
+</style>

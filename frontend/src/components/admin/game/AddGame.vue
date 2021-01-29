@@ -4,10 +4,8 @@
      <v-container>
        <v-card
             width="800px"
-            :loading="loading"
-             loading-text="Loading... Please wait"
             class="mx-auto my-12">
-            <v-card-title width="590" style="background:#EF5350;color:white" class="white--text mt-10">ADD GAME</v-card-title>
+            <v-card-title width="590" style="background:#757575;color:white" class="white--text mt-10">ADD GAME</v-card-title>
             <v-row  justify="center">
               <v-col cols="12" md="10">
                   <div class="text-h6"> Game Tittle</div>
@@ -116,7 +114,7 @@
                 max-width="400"
                 :retain-focus="false"
               >
-              <template v-slot:activator="{ on, attrs }">
+              <template v-slot:activator="{ on, attrs }" :loading="loading">
                 <v-btn
                   class="float-right mb-4"
                   elevation="6"
@@ -158,11 +156,15 @@
           </v-col>
         </v-row>
       </v-card>
-        <v-overlay :value="loading">
-          <v-progress-circular indeterminate size="64"></v-progress-circular>
-      </v-overlay>
     </v-container>
   </v-form>
+   <v-overlay :value="loading">
+      <v-progress-circular   
+        indeterminate
+        size="64"
+        color="#E52B38">
+        </v-progress-circular>
+    </v-overlay>
   </div>
 
   <div v-else>
@@ -211,7 +213,6 @@ export default {
   methods: {
  
     saveGame() {
-      this.loading = true
       var data = {
         judul_game: this.game.judul_game,
         genre: this.game.genre,
@@ -222,7 +223,7 @@ export default {
         description: this.game.description,
         system_requirement : this.game.system_requirement
       };
-
+       this.loading = true
       GameDataService.create(data)
         .then(response => {
           console.log(response.data);
@@ -264,3 +265,9 @@ export default {
     },
 };
 </script>
+
+<style scoped>
+.container{
+  margin-top:80px
+}
+</style>

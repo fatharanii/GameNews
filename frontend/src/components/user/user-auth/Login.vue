@@ -1,13 +1,15 @@
 <template>
   <div class="row justify-content-md-center">
     <div class="col-md-6">
-      <div style=margin-top:60px v-if="!submitted" class="card">
-          <div class="card-header">Login</div>
+      <div style=margin-top:100px v-if="!submitted" class="card">
+          <div class="card-header">
+            <h5>Login</h5>
+            </div>
             <div class="card-body">
               <form>
                 <div class="form-group">
                   <label for="username">Username</label>
-                  <input type="text" class="form-control" placeholder="Name.." v-model="user.username">
+                  <input type="text" class="form-control" placeholder="Username.." v-model="user.username">
                 </div>
                 <div class="form-group">
                   <label for="password">Password</label>
@@ -17,7 +19,6 @@
                     <a href="#"><button @click="saveUser" type="submit" class="btn btn-primary">Submit</button></a>
                   </RouterLink>
                 <v-btn
-                color="blue darken-1"
                 cols="4"
                 text
                 >
@@ -51,13 +52,18 @@
           </RouterLink>
       </div>
     </div>
+     <v-overlay :value="loading">
+        <v-progress-circular
+            indeterminate
+            size="64"
+          color="#E52B38"
+        ></v-progress-circular>
+      </v-overlay>
   </div>
 </template>
 
 <script>
-// import http from "@/http";
 import "bootstrap/dist/css/bootstrap.css";
-// import authHeader from '../../../services/auth-header';
 import UserDataService from "../../../services/UserDataService";
 export default {
   template: '#sign-in',
@@ -68,6 +74,7 @@ export default {
         username: "",
         password: "",
       },
+      loading :false,
       submitted: false,
       isError: false,
       errorMessage: "",
@@ -75,6 +82,7 @@ export default {
   },
   methods: {
     saveUser() {
+      this.loading=true
       var data = {
         username: this.user.username,
         password: this.user.password,
@@ -89,6 +97,7 @@ export default {
             this.isError = true;
             console.log(response.data);
             console.log(response.data.message);
+            this.loading=false
           }
           //console.log(data.is_admin)
           else {
@@ -99,7 +108,9 @@ export default {
             this.isError = false;
             this.$router.push({path: '/'});
             location.reload();
+            this.loading=false
             return false;
+            
           }
           // location.reload();
           // return false;
@@ -119,10 +130,6 @@ export default {
               console.log(e);
             });
         }
-    // newUser() {
-    //   this.submitted = false;
-    //   this.user = {};
-    // }
   },
   mounted(){
     this.submitted = false;
@@ -131,3 +138,17 @@ export default {
   }
 };
 </script>
+
+<style scoped>
+.btn-primary{
+  background-color: #EF5350;
+}
+
+.card-header{
+  background-color: #757575;
+  color :white
+}
+.nav-link{
+  color:#B71C1C;
+}
+</style>

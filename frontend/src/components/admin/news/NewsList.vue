@@ -10,13 +10,14 @@
             color="error"
             elevation="4"
             width="110px"
-            class="my-4"
+            class="my-2"
           >
             <RouterLink :to="'/api/news-add/'" class="white--text" >
               Add News
             </RouterLink>
           </v-btn>
           <v-card>
+             <v-card-title width="590" style="background:#757575;color:white" class="white--text">LIST NEWS</v-card-title>
           <div class="col-md-12">
             <div class="input-group mb-1">
               <input type="text" class="form-control" placeholder="Search by Judul Berita"
@@ -35,7 +36,6 @@
               :headers="headers"
               :items="news"
               :items-per-page="5"
-              :loading ="loading"
               loading-text="Loading... Please wait"
               class="grey lighten-5"
               fixed-header
@@ -96,7 +96,7 @@
                               color="warning"
                               @click="dialog = false"
                             >
-                              Batal
+                              CANCEL
                             </v-btn>
                             <v-btn
                               elevation="6"
@@ -104,7 +104,7 @@
                               @click="dialog = false"
                               @click.prevent="deleteNews(selectedIdBerita)"
                             >
-                              Yakin
+                              DELETE
                             </v-btn>
                           </v-card-actions>
                         </v-card> 
@@ -130,7 +130,7 @@
             <v-progress-circular
               indeterminate
               size="64"
-              color="error"
+              color="#E52B38"
             ></v-progress-circular>
           </v-overlay>
     </v-container>
@@ -232,6 +232,6 @@ export default {
 
 <style scoped>
 .container{
-  margin-top: 100px;
+  margin-top: 80px;
 }
 </style>

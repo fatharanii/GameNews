@@ -12,6 +12,10 @@
             <h3>Users per day</h3>
             <div id="chart-user-day"></div>
         </v-card>
+           <v-card class="pa-5">
+            <h3>Average Session Duration</h3>
+            <div id="chart-average-session-duration"></div>
+        </v-card>
          <v-overlay :value="loading">
             <v-progress-circular indeterminate size="64" color="#E52B38"></v-progress-circular>
         </v-overlay>
@@ -90,10 +94,27 @@ export default {
                         }
                     }
                 });
+                var AverageSessionChart= new gapi.analytics.googleCharts.DataChart({
+                query: {
+                        ids: "ga:234832316", // <-- Replace with the ids value for your view.
+                        "start-date": "7daysAgo",
+                        "end-date": "today",
+                        metrics: "ga:avgSessionDuration",
+                        dimensions: "ga:date",
+                    },
+                chart: {
+                        container: "chart-average-session-duration",
+                        type: "LINE",
+                        options: {
+                        width: "100%",
+                        },
+                    },
+                    });
                     
                     sessionsChart.execute();
                     mostVisitedPageChart.execute();
                     UserDayChart.execute();
+                     AverageSessionChart.execute();
                    
             })
             this.loading=false
@@ -111,4 +132,9 @@ export default {
     margin-bottom:20px;
     font-family:'Playfair Display' 
 }
+
+.container{
+  margin-top: 100px;
+}
+
 </style>

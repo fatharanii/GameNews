@@ -1,55 +1,55 @@
+
 <template id="user-edit">
   <div v-if="adminAuth">
     <v-form ref="form">
-    <div v-if="currentUser">
-     <v-container>
-      <v-card
-        width="800px"
-        class="mx-auto my-12"
-      >
-      <v-card-title width="590" style="background:#EF5350;color:white" class="white--text mt-10">UPDATE USER</v-card-title>
-         <v-row  justify="center">
-          <v-col cols="12" md="10">
-            <div class="text-h6">Username</div>
-              <v-text-field
-                v-model="currentUser.username"
-                placeholder="username"
-                required
-                name="username"
-                id="username"
-                readonly
-            ></v-text-field>
+      <div v-if="currentUser">
+        <v-container>
+          <v-card
+            width="800px"
+            class="mx-auto my-12"
+          >
+            <v-card-title width="590" style="background:#757575;color:white" class="white--text mt-10">UPDATE USER</v-card-title>
+              <v-row  justify="center">
+                <v-col cols="12" md="10">
+                  <div class="text-h6">Username</div>
+                    <v-text-field
+                      v-model="currentUser.username"
+                      placeholder="username"
+                      required
+                      name="username"
+                      id="username"
+                      readonly
+                    ></v-text-field>
 
-            <div class="text-h6">Email</div>
-            <v-text-field
-              v-model="currentUser.email"
-              label="email"
-              required
-              name="email"
-              id="email"
-              readonly
-            ></v-text-field>
+                  <div class="text-h6">Email</div>
+                  <v-text-field
+                    v-model="currentUser.email"
+                    label="email"
+                    required
+                    name="email"
+                    id="email"
+                    readonly
+                  ></v-text-field>
 
-            <div class="text-h6">Password</div>
-            <v-text-field
-              v-model="currentUser.password"
-              label="password"
-              required
-              name="password"
-              id="password"
-              readonly
-          ></v-text-field>
-
-          <v-checkbox
-            v-model="currentUser.is_admin"
-            label="Is Admin" 
-          ></v-checkbox>
-            <v-dialog
+                  <div class="text-h6">Password</div>
+                  <v-text-field
+                    v-model="currentUser.password"
+                    label="password"
+                    required
+                    name="password"
+                    id="password"
+                    readonly
+                ></v-text-field>
+                <v-checkbox
+                    v-model="currentUser.is_admin"
+                    label="Is Admin" 
+                ></v-checkbox>
+                  <v-dialog
                       v-model="dialog"
                       persistent
                       max-width="400"
                       :retain-focus="false"
-                    >
+                  >
                     <template v-slot:activator="{ on, attrs }">
                       <v-btn
                         class="float-right mt-2 mb-4"
@@ -90,6 +90,13 @@
               ID User {{ $route.params.id_user}}
             </div>
     </v-form>
+      <v-overlay :value="loading">
+        <v-progress-circular
+          indeterminate
+          size="64"
+          color="#E52B38"
+        ></v-progress-circular>
+      </v-overlay>
   </div>
 
   <div v-else>
@@ -112,11 +119,13 @@ export default {
         password: "",
         is_admin: "",
       },
-      adminAuth: false
+      adminAuth: false,
+      loading :false
     };
   },
   methods: {
     getUser() {
+      this.loading=true
       UserDataService.getById(this.$route.params.id_user)
         .then(response => {
           this.currentUser.username = response.data[0].username;
@@ -124,6 +133,7 @@ export default {
           this.currentUser.password = response.data[0].password;
           this.currentUser.is_admin = response.data[0].is_admin;
           console.log(response.data);
+          this.loading=false
         })
         .catch(e => {
           console.log(e);
@@ -131,11 +141,13 @@ export default {
     },
 
     updateUser() {
+      this.loading=true
       UserDataService.update(this.$route.params.id_user, this.currentUser)
         .then(response => {
           console.log(response.data.is_admin);
           console.log(this.currentUser);
           this.message = 'The user was updated successfully!';
+          this.loading=false
         })
         .catch(e => {
           console.log(e);
@@ -158,3 +170,8 @@ export default {
   }
 };
 </script>
+<style scoped>
+.container{
+  margin-top: 80px;
+}
+</style>

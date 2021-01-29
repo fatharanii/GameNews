@@ -5,9 +5,8 @@
         <v-container>
           <v-card
             width="800px"
-            :loading="loading"
             class="mx-auto my-12">
-            <v-card-title width="590" style="background:#EF5350;color:white" class="white--text mt-10">EDIT NEWS</v-card-title>
+            <v-card-title width="590" style="background:#757575;color:white" class="white--text mt-10">EDIT NEWS</v-card-title>
             <v-row  justify="center">
                 <v-col cols="12" md="10">
                     <div class="text-h6">ID Game</div>
@@ -102,6 +101,13 @@
         ID BERITA {{ $route.params.id_berita}}
   </div>
     </v-form>
+     <v-overlay :value="loading">
+        <v-progress-circular
+          indeterminate
+          size="64"
+          color="#E52B38r"
+        ></v-progress-circular>
+      </v-overlay>
    </div>
    <div v-else>
     <h4>Admin Content</h4>
@@ -162,11 +168,12 @@ export default {
     },
 
     updateNews() {
-
+      this.loading=true
       NewsDataService.update(this.$route.params.id_berita, this.currentNews)
         .then(response => {
           console.log(response.data);
           this.message = 'The news was updated successfully!';
+          this.loading=false
         })
         .catch(e => {
           console.log(e);
@@ -189,3 +196,9 @@ export default {
   }
 };
 </script>
+
+<style scoped>
+.container{
+  margin-top:80px
+}
+</style>
