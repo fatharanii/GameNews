@@ -17,11 +17,6 @@
               max-width="350"
               hover
             >
-             <v-progress-linear
-                v-if="loading"
-                color="error"
-                indeterminate
-              ></v-progress-linear>
               <v-img
                 height="150"
                 v-bind:src="baseURL + '/api/game_allthumbnail/' + game.id_game"
