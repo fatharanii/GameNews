@@ -1,12 +1,15 @@
 const cors = require ('cors')
 const express = require ('express')
 const bodyParser = require('body-parser');
+const compression =require('compression')
 // const {Client} = require ('pg')
 
 const app = express()
 // compress all responses
+app.use(compression())
 
 const port = process.env.PORT || 8000
+
 
 const client = require ('./app/util/database')
 const user = require ('./app/function/user')
@@ -26,10 +29,11 @@ app.use(function(req, res, next) {
     res.header(
       "Access-Control-Allow-Headers",
       "x-access-token, Origin, Content-Type, Accept",
-      "Accept-Encoding: * "
+      "Cache-Control, no-cache"
     );
     next();
   });
+
 app.listen(port, ()=>{
    console.log (`app listening at http://localhost:${port}`)
 })
