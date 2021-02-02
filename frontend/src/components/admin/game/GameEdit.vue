@@ -210,18 +210,18 @@ export default {
       GameDataService.getById(this.$route.params.id_game)
         .then(response => {
           var tanggal = new Date(response.data[0].release_date);
-          console.log(tanggal)
+          //console.log(tanggal)
           this.currentGame.id_game = response.data[0].id_game;
           this.currentGame.judul_game = response.data[0].judul_game;
           this.currentGame.genre = response.data[0].genre;
           this.currentGame.publisher = response.data[0].publisher;
           this.currentGame.platform = response.data[0].platform;
           this.currentGame.release_date = (tanggal.getFullYear() + '-' + (tanggal.getMonth() +1) + '-' + tanggal.getDate());
-          console.log(this.currentGame.release_date);
+          //console.log(this.currentGame.release_date);
           this.currentGame.price = response.data[0].price;
           this.currentGame.description = response.data[0].description;
           this.currentGame.system_requirement = response.data[0].system_requirement;
-          console.log(response.data);
+          //console.log(response.data);
           this.loading = false
         })
         .catch(e => {
@@ -249,7 +249,7 @@ export default {
           UserDataService.adminAuthentication()
             .then(response => {
               this.adminAuth = response.data;
-              console.log(response.data);
+              //console.log(response.data);
             })
             .catch(e => {
               console.log(e);

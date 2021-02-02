@@ -162,14 +162,14 @@ export default {
                 this.submitted = false;
                 this.isError = true;
                 this.errorMessage = response.data.message;
-                console.log(response.data.message);
-                console.log(response.data);
-                console.log(data.is_admin)
+                //console.log(response.data.message);
+                //console.log(response.data);
+                //console.log(data.is_admin)
                 this.loading=false
               }
               else {
-                console.log(response.data);
-                console.log(data.is_admin)
+                //console.log(response.data);
+                //console.log(data.is_admin)
                 this.submitted = true;
                 this.isError = false;
                 this.$router.push({path: '/login/'});

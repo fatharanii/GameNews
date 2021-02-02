@@ -104,11 +104,11 @@ export default {
     },
     async onSubmit(){
       this.loading=true
-      console.log(this.idBeritaSelected);
+      //console.log(this.idBeritaSelected);
       const formData = new FormData();
       formData.append("thumbnail", this.file);
       try{
-        console.log(this.idBeritaSelected);
+        //console.log(this.idBeritaSelected);
         await NewsDataService.uploadNewsThumbnail(this.idBeritaSelected, formData)
         this.message = 'Uploaded !!'
         this.loading=false
@@ -122,7 +122,7 @@ export default {
           UserDataService.adminAuthentication()
             .then(response => {
               this.adminAuth = response.data;
-              console.log(response.data);
+              //console.log(response.data);
             })
             .catch(e => {
               console.log(e);

@@ -68,8 +68,8 @@ export default {
       GameDataService.getById(this.$route.params.id_game)
       .then(response =>{
         this.game = response.data;
-        console.log('data')
-        console.log(response.data)
+        //console.log('data')
+        //console.log(response.data)
         this.loading = false
       })
       .catch(e=>{

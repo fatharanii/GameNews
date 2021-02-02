@@ -95,13 +95,13 @@ export default {
           if(response.data.message != null) {
             this.errorMessage = response.data.message;
             this.isError = true;
-            console.log(response.data);
-            console.log(response.data.message);
+            //console.log(response.data);
+            //console.log(response.data.message);
             this.loading=false
           }
           //console.log(data.is_admin)
           else {
-            console.log("Berhasil");
+            //console.log("Berhasil");
             localStorage.removeItem('user');
             localStorage.setItem('user', JSON.stringify(response.data));
             this.submitted = true;
@@ -116,7 +116,6 @@ export default {
           // return false;
         })
         .catch(e => {
-          //console.log(e);
           console.log(e);
         });
     },
@@ -124,7 +123,7 @@ export default {
           UserDataService.userAuthentication()
             .then(response => {
               this.submitted = response.data;
-              console.log(response.data);
+              //console.log(response.data);
             })
             .catch(e => {
               console.log(e);

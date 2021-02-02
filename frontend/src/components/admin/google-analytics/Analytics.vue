@@ -33,7 +33,7 @@ export default {
           const gapi = window.gapi;
           this.loading=true
             const accessToken = await Analytics.getAccessToken();
-            console.log(accessToken);
+            //console.log(accessToken);
             await gapi.analytics.ready(function() {
                 gapi.analytics.auth.authorize({
                     'serverAuth': {

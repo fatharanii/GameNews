@@ -185,7 +185,7 @@ export default {
             .then(response => {
               this.games = response.data;
               this.loading=false
-              console.log(response.data);
+              //console.log(response.data);
             })
             .catch(e => {
               console.log(e);
@@ -210,7 +210,7 @@ export default {
           UserDataService.adminAuthentication()
             .then(response => {
               this.adminAuth = response.data;
-              console.log(response.data);
+              //console.log(response.data);
             })
             .catch(e => {
               console.log(e);
