@@ -83,8 +83,8 @@ export default {
         await UserDataService.getUserId()
           .then(response =>{
             this.id_user= response.data;
-            console.log('user id')
-            console.log(response.data)
+            //console.log('user id')
+            //console.log(response.data)
             this.loading = false
           })
           .catch(e=>{
@@ -93,26 +93,26 @@ export default {
         if(this.id_user != '') {
           BookmarkDataService.getBookmarkByUserAndNews(this.id_user,this.$route.params.id_berita)
             .then(response => {
-              console.log(response.data)
+              //console.log(response.data)
               if(response.data.length!=0){
                 this.isAdded = true
                 this.id_readLater = response.data[0].id_readLater;
                 this.loading=false
               }
               else{
-                console.log(response.data)
+                //console.log(response.data)
               }
             })
             .catch(e=>{
               this.errors(e)
             })
           }
-      console.log(this.id_user);
+      //console.log(this.id_user);
       NewsDataService.get(this.$route.params.id_berita)
       .then(response =>{
         this.news = response.data;
-        console.log('data berita')
-        console.log(response.data)
+        //console.log('data berita')
+        //console.log(response.data)
         this.loading =false
       })
       .catch(e=>{
@@ -125,7 +125,7 @@ export default {
           id_user:this.id_user,
           id_berita: this.$route.params.id_berita
         }
-        console.log(data.id_user);
+        //console.log(data.id_user);
           BookmarkDataService.add(data)
             .then(response => {
               console.log(response.data);
@@ -159,8 +159,8 @@ export default {
       
       BookmarkDataService.delete(this.id_readLater)
         .then(response => {
-          console.log(this.id_readLater)
-          console.log("berhasil")
+          //console.log(this.id_readLater)
+          //console.log("berhasil")
           console.log(response.data)
           this.isAdded = false
           this.id_readLater = ''
@@ -175,7 +175,7 @@ export default {
           UserDataService.userAuthentication()
             .then(response => {
               this.userAuth = response.data;
-              console.log(response.data);
+              //console.log(response.data);
             })
             .catch(e => {
               console.log(e);

@@ -159,7 +159,7 @@ export default {
           this.currentNews.judul_berita = response.data[0].judul_berita;
           this.currentNews.kategori = response.data[0].kategori;
           this.currentNews.isi = response.data[0].isi;
-          console.log(response.data);
+          //console.log(response.data);
         })
         .catch(e => {
           console.log(e);
@@ -183,7 +183,7 @@ export default {
           UserDataService.adminAuthentication()
             .then(response => {
               this.adminAuth = response.data;
-              console.log(response.data);
+              //console.log(response.data);
             })
             .catch(e => {
               console.log(e);

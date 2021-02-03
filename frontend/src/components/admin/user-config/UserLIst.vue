@@ -146,7 +146,7 @@ export default {
           UserDataService.search(this.username)
             .then(response => {
               this.users = response.data;
-              console.log(response.data);
+              //console.log(response.data);
               this.loading=false
             })
             .catch(e => {
@@ -172,7 +172,7 @@ export default {
           UserDataService.adminAuthentication()
             .then(response => {
               this.adminAuth = response.data;
-              console.log(response.data);
+              //console.log(response.data);
             })
             .catch(e => {
               console.log(e);

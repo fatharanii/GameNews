@@ -200,8 +200,8 @@ export default {
       NewsDataService.getPagination(params)
       .then(response =>{
         this.articlesPerPage = response.data;
-        console.log('data')
-        console.log(response.data)
+        //console.log('data')
+        //console.log(response.data)
         this.loading = false
       })
       .catch(e=>{
@@ -225,8 +225,8 @@ export default {
         NewsDataService.getByKategori(this.kategoriSelected)
         .then(response =>{
           this.articles = response.data;
-          console.log('data')
-          console.log(response.data)
+          //console.log('data')
+          //console.log(response.data)
         })
         .catch(e=>{
           this.errors(e)
@@ -235,8 +235,8 @@ export default {
         NewsDataService.search(this.searchStringLast)
         .then(response =>{
           this.articles = response.data;
-          console.log('data')
-          console.log(response.data)
+          //console.log('data')
+          //console.log(response.data)
         })
         .catch(e=>{
           this.errors(e)
@@ -245,8 +245,8 @@ export default {
         NewsDataService.getAll()
       .then(response =>{
         this.articles = response.data;
-        console.log('data')
-        console.log(response.data)
+        //console.log('data')
+        //console.log(response.data)
       })
       .catch(e=>{
         this.errors(e)
@@ -270,8 +270,8 @@ export default {
         NewsDataService.getPaginationByKategori(params, kategori)
         .then(response =>{
           this.articlesPerPage = response.data;
-          console.log('data')
-          console.log(response.data)
+          //console.log('data')
+          //console.log(response.data)
           this.loading = false
         })
         .catch(e=>{
@@ -290,8 +290,8 @@ export default {
       NewsDataService.searchPagination(this.searchString, params)
       .then(response =>{
         this.articlesPerPage = response.data;
-        console.log('data')
-        console.log(response.data)
+        //console.log('data')
+        //console.log(response.data)
         this.loading = false
       })
       .catch(e=>{
@@ -314,8 +314,8 @@ export default {
       NewsDataService.getAllNewsASC(params, urutkan)
       .then(response =>{
         this.articlesPerPage = response.data;
-        console.log('data')
-        console.log(response.data)
+        //console.log('data')
+        //console.log(response.data)
         this.loading = false
       })
       .catch(e=>{

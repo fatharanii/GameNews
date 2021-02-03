@@ -194,8 +194,8 @@ export default {
       GameDataService.getPagination(params)
       .then(response =>{
         this.articlesPerPage = response.data;
-        console.log('data')
-        console.log(response.data)
+        //console.log('data')
+        //console.log(response.data)
         this.loading = false
       })
       .catch(e=>{
@@ -219,8 +219,8 @@ export default {
         GameDataService.getByGenre(this.genreSelected)
         .then(response =>{
           this.articles = response.data;
-          console.log('data')
-          console.log(response.data)
+          //console.log('data')
+          //console.log(response.data)
         })
         .catch(e=>{
           this.errors(e)
@@ -229,8 +229,8 @@ export default {
         GameDataService.getByPlatform(this.platformSelected)
         .then(response =>{
           this.articles = response.data;
-          console.log('data')
-          console.log(response.data)
+          //console.log('data')
+          //console.log(response.data)
         })
         .catch(e=>{
           this.errors(e)
@@ -239,8 +239,8 @@ export default {
         GameDataService.search(this.searchStringLast)
         .then(response =>{
           this.articles = response.data;
-          console.log('data')
-          console.log(response.data)
+          //console.log('data')
+          //console.log(response.data)
         })
         .catch(e=>{
           this.errors(e)
@@ -249,8 +249,8 @@ export default {
         GameDataService.getAll()
         .then(response =>{
           this.articles = response.data;
-          console.log('data')
-          console.log(response.data)
+          //console.log('data')
+          //console.log(response.data)
         })
         .catch(e=>{
           this.errors(e)
@@ -273,8 +273,8 @@ export default {
         GameDataService.getPaginationByGenre(params, genre)
         .then(response =>{
           this.articlesPerPage = response.data;
-          console.log('data')
-          console.log(response.data)
+          //console.log('data')
+          //console.log(response.data)
           this.loading = false
         })
         .catch(e=>{
@@ -297,8 +297,8 @@ export default {
         GameDataService.getPaginationByPlatform(params, platform)
         .then(response =>{
           this.articlesPerPage = response.data;
-          console.log('data')
-          console.log(response.data)
+          //console.log('data')
+          //console.log(response.data)
           this.loading = false
         })
         .catch(e=>{
@@ -317,8 +317,8 @@ export default {
       GameDataService.searchPagination(this.searchString, params)
       .then(response =>{
         this.articlesPerPage = response.data;
-        console.log('data')
-        console.log(response.data)
+        //console.log('data')
+        //console.log(response.data)
         this.loading = false
       })
       .catch(e=>{

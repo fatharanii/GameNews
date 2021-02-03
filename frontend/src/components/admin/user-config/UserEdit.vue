@@ -132,7 +132,7 @@ export default {
           this.currentUser.email = response.data[0].email;
           this.currentUser.password = response.data[0].password;
           this.currentUser.is_admin = response.data[0].is_admin;
-          console.log(response.data);
+          //console.log(response.data);
           this.loading=false
         })
         .catch(e => {
@@ -145,7 +145,7 @@ export default {
       UserDataService.update(this.$route.params.id_user, this.currentUser)
         .then(response => {
           console.log(response.data.is_admin);
-          console.log(this.currentUser);
+          //console.log(this.currentUser);
           this.message = 'The user was updated successfully!';
           this.loading=false
         })
@@ -157,7 +157,7 @@ export default {
           UserDataService.adminAuthentication()
             .then(response => {
               this.adminAuth = response.data;
-              console.log(response.data);
+              //console.log(response.data);
             })
             .catch(e => {
               console.log(e);

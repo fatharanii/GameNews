@@ -122,35 +122,35 @@ export default {
       .then(response =>{
         this.id_user = response.data;
         if(response.data == ''){this.id_user = 0}
-        console.log('id_user')
-        console.log(this.id_user)
+        //console.log('id_user')
+        //console.log(this.id_user)
       })
       .catch(e=>{
         console.log(e)
       })
-      console.log("userid : "+this.id_user)
+      //console.log("userid : "+this.id_user)
       BookmarkDataService.getUserBookmark(this.id_user)
       .then(response =>{
         // this.articles = response.data;
         this.read_later = response.data;
-        console.log('read_later length ' + this.read_later.length)
+        //console.log('read_later length ' + this.read_later.length)
         var i;
         for(i = 0; i < this.read_later.length; i++){
-          console.log("iterasi " + i);
+          //console.log("iterasi " + i);
           NewsDataService.get(this.read_later[i].id_berita)
           .then(response => {
             this.articles.push(response.data[0]);
-            console.log("data ke "+1);
-            console.log(response.data);
-            console.log(this.articles[i]);
+            //console.log("data ke "+1);
+            //console.log(response.data);
+            //console.log(this.articles[i]);
             this.loading=false
           })
           .catch(e => {
             console.log(e)
           })
         }
-        console.log('data')
-        console.log(response.data)
+        //console.log('data')
+        //console.log(response.data)
       })
       .catch(e=>{
         console.log(e)
@@ -161,7 +161,7 @@ export default {
           UserDataService.userAuthentication()
             .then(response => {
               this.userAuth = response.data;
-              console.log(response.data);
+              //console.log(response.data);
             })
             .catch(e => {
               console.log(e);

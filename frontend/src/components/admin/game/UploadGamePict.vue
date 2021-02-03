@@ -106,11 +106,11 @@ export default {
     },
     async onSubmit(){
       this.loading=true
-      console.log(this.idGameSelected);
+      //console.log(this.idGameSelected);
       const formData = new FormData();
       formData.append("thumbnail", this.file);
       try{
-        console.log(this.idGameSelected);
+        //console.log(this.idGameSelected);
         await GameDataService.uploadGamePict(this.idGameSelected, formData)
         this.message = 'Uploaded !!'
         this.loading=false
@@ -124,7 +124,7 @@ export default {
           UserDataService.adminAuthentication()
             .then(response => {
               this.adminAuth = response.data;
-              console.log(response.data);
+              //console.log(response.data);
             })
             .catch(e => {
               console.log(e);
