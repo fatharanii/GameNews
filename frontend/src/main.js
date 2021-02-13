@@ -8,6 +8,7 @@ import vuetify from './plugins/vuetify';
 import router from './plugins/router'
 
 import VueAnalytics from 'vue-analytics';
+import './registerServiceWorker'
 
 Vue.use(VueAnalytics, {
     id: 'UA-185807551-1',
