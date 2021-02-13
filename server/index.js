@@ -1,7 +1,8 @@
 const cors = require ('cors')
 const express = require ('express')
 const bodyParser = require('body-parser');
-const compression =require('compression')
+const compression =require('compression');
+const path = require('path');
 // const {Client} = require ('pg')
 
 const app = express()
@@ -23,13 +24,14 @@ const privateKey = require("./app/analytics-key/amusphere-302111-2e41e50aafd2");
 const fs = require("fs");
 global.__basedir = __dirname;
 
+app.use(express.static(path.join(__dirname,'public')));
 app.use(express.json({limit: '50mb'}))
 app.use(cors())
 app.use(function(req, res, next) {
     res.header(
       "Access-Control-Allow-Headers",
       "x-access-token, Origin, Content-Type, Accept",
-      "Cache-Control, no-cache"
+      "Cache-Control","public, max-age=31536000"
     );
     next();
   });
