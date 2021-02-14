@@ -1,7 +1,9 @@
 <template>
 <v-app light>
   <h1>GAMES</h1>
-  <v-row>
+  <v-row
+    v-if="!$vuetify.breakpoint.xs"
+  >
     <v-col
       cols="8"
       class="flex-grow-0 flex-shrink-0"
@@ -142,6 +144,147 @@
       </div>
     </v-col>
   </v-row>
+
+
+  <v-html
+    v-if="$vuetify.breakpoint.xs" 
+  >
+  <v-col>
+      <v-row>
+      <v-flex xs7 ml-4>
+        <v-text-field
+          label='Game name'
+          v-model='searchString'
+          clearable
+          >
+        </v-text-field>
+      </v-flex>
+      <v-btn
+        icon
+        color="black"
+        v-on:click="selectPlatform('All')"
+        class="mt-6 ml-2"
+        x-small
+      >
+        <v-icon>mdi-delete</v-icon>
+      </v-btn>
+      <v-btn
+        elevation="2"
+        color="error"
+        @click="searchGame"
+        class="mt-5 mx-2"
+        small
+      >
+        <span>Search</span>
+      </v-btn>
+      </v-row>
+      <div class="game_by">
+        <h2>Genre :</h2>
+        <v-card
+          class="d-flex align-content-center flex-wrap"
+          flat
+          tile
+        >
+          <v-btn
+            v-for="n in genre"
+            :key="n"
+            class="pa-1 mx-1 my-2"
+            elevation="2"
+            rounded
+            small
+            color="grey lighten-2"
+            v-on:click="selectGenre(n)"
+          >
+						{{n}}
+          </v-btn>
+        </v-card>
+      </div>
+      <div class="game_by">
+        <h2>Platform :</h2>
+        <v-card
+          class="d-flex align-content-center flex-wrap"
+          flat
+          tile
+        >
+          <v-btn
+            v-for="n in platform"
+            :key="n"
+            class="pa-1 mx-1 my-2"
+            elevation="2"
+            rounded
+            small
+            color="grey lighten-2"
+            v-on:click="selectPlatform(n)"
+          >
+						{{n}}
+          </v-btn>
+        </v-card>
+      </div>
+    </v-col>
+    <v-col>
+      <div style="padding: 0px 1px 1px 4px">
+        <v-layout row>
+          <v-flex
+            v-for="(game, i) in visiblePages"
+            :key="i"
+          >
+            <v-card
+              class="my-2"
+              max-width="175"
+              hover
+            >
+              <v-img
+                height="75"
+                v-bind:src="baseURL + '/api/game_allthumbnail/' + game.id_game"
+              ></v-img>
+              <v-card-title>
+                <RouterLink :to="'/game/'+game.id_game" class="routerlinkheadlinemobile">
+                  {{ game.judul_game }}
+                </RouterLink>
+              </v-card-title>
+              <v-card-text>
+                <v-row
+                  align="center"
+                  class="mx-0"
+                >
+                  <div class="gamedescmobile">
+                    {{ game.publisher }}
+                  </div>
+                </v-row>
+                <div class="gamedescmobile">
+                  {{ game.price }} • {{ game.genre }} • {{ game.platform }}
+                </div>
+                  <p class="gamedescmobile" v-if="!readMoreActivated">{{ game.description.slice(0, 100) }}
+                    <readmore v-if="!readMoreActivated">...</readmore>
+                  </p>
+              </v-card-text>
+              
+              <v-divider class="mx-5 my-0"></v-divider>
+              <v-card-actions>
+                <v-btn
+                  color="deep-purple lighten-2"
+                  text
+                >
+                  <readmore v-if="!readMoreActivated">
+                    <RouterLink :to="'/game/'+game.id_game" class="routerlinkgame">
+                      Read More
+                    </RouterLink>
+                  </readmore>
+                </v-btn>
+              </v-card-actions>
+            </v-card>
+          </v-flex>
+        </v-layout>
+      </div>
+      <v-pagination
+        v-model="page"
+        :length="Math.ceil(articles.length/perPage)"
+        @input="handlePageChange"
+      ></v-pagination>
+    </v-col>
+  </v-html>
+
+
    <v-overlay :value="loading">
       <v-progress-circular indeterminate size="64" color="#E52B38"></v-progress-circular>
     </v-overlay>

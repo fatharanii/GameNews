@@ -3,7 +3,9 @@
     <v-flex
         v-for="(games, i) in game"
         :key="i"
-    >
+    >   
+      <v-html
+      v-if="!$vuetify.breakpoint.xs">
         <h4>{{games.judul_game}}</h4>
         <v-container class="grey lighten-4" style="width: 1000px; margin-top:30px">
         <v-row no-gutters>
@@ -43,6 +45,49 @@
             class="Gamebyid-subtext">
             - {{sR}}</v-row>
         </v-container>
+      </v-html>
+      <v-html
+      v-if="$vuetify.breakpoint.xs">
+        <h4>{{games.judul_game}}</h4>
+        <v-container class="grey lighten-4" style="width: auto; margin-top:30px">
+        <v-row no-gutters>
+            <v-col
+            color="grey lighten-2"
+            cols="12"
+            class="flex-grow-0 flex-shrink-0"
+            >
+                <div class="Gamebyid-gambar">
+                    <v-img
+                        v-img v-bind:src="baseURL + '/api/game_allthumbnail/' + games.id_game"
+                    ></v-img>  
+                </div>
+            </v-col>
+            <v-col
+            cols=""
+            style="padding: 20px 1px 1px 0px"
+            >
+                <p class="Gamebyid-subtext"><genre>{{ games.genre }}</genre></p>
+                <p class="Gamebyid-desc">{{ games.description }}</p>
+                <p class="Gamebyid-subtext">Release date : <span>{{new Date(games.release_date).toLocaleString('id-ID', {
+                day: 'numeric',
+                month: 'long',
+                year: 'numeric',
+                })}}</span></p>
+                <pre class="Gamebyid-subtext">Publisher      : {{ games.publisher }}</pre>
+                <pre class="Gamebyid-subtext">Platform       : {{ games.platform }}</pre>
+                <pre class="Gamebyid-subtext">Harga           : {{ games.price }}</pre>
+            </v-col>
+        </v-row>
+        </v-container>
+        <v-container class="grey lighten-4 my-3" style="width: auto">
+            <h3>System Requirement</h3>
+            <v-row 
+            v-for="(sR, i) in splitText(games.system_requirement)"
+            :key="i" 
+            class="Gamebyid-subtext">
+            - {{sR}}</v-row>
+        </v-container>
+      </v-html>
     </v-flex>
        <v-overlay :value="loading">
         <v-progress-circular indeterminate size="64" color="#E52B38"></v-progress-circular>

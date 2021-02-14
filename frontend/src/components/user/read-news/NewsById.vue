@@ -4,7 +4,7 @@
         v-for="(newsDetail, i) in news"
         :key="i"
     >
-        <v-container class="white pt-16" style="width: 800px; margin-top:30px">
+        <v-container class="white pt-16" style="width: auto; margin-top:30px">
             <p class="Newsbyid-subtext"><kategori>{{ newsDetail.kategori }}</kategori></p>
             <h5>{{newsDetail.judul_berita}}</h5>
             <p class="Newsbyid-date">

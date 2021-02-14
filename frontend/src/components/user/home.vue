@@ -22,7 +22,7 @@
             <RouterLink :to="'/news/'+News.id_berita" class="routerlinknews">
                 <h3 class="judul" >{{ News.judul_berita}}</h3>
             </RouterLink>
-            <div class="text-start" v-if="!readMoreActivated" v-html="News.isi.slice(0, 400)">
+            <div class="text-start" v-if="!readMoreActivated" v-html="$vuetify.breakpoint.xs ? News.isi.slice(0, 150) : News.isi.slice(0, 400)">
               </div>
               <readmore class="text-start" v-if="!readMoreActivated">
                 <RouterLink :to="'/news/'+News.id_berita" class="routerlinknews">
@@ -35,6 +35,7 @@
     </v-carousel>
     <h6>GAME TERBARU</h6>
     <v-slide-group
+      v-if="!$vuetify.breakpoint.xs"
       class="pa-4"
       active-class="success"
       show-arrows
@@ -98,9 +99,67 @@
         </v-card>
       </v-slide-item>
     </v-slide-group>
-      <v-overlay :value="loading">
-        <v-progress-circular indeterminate size="64" color="#E52B38"></v-progress-circular>
-      </v-overlay>
+    <v-col
+    v-if="$vuetify.breakpoint.xs"
+    >
+      <div style="padding: 0px 1px 1px 25px">
+        <v-layout row >
+          <v-flex
+            v-for="(game, i) in articles"
+            :key="i"
+          >
+            <v-card
+              class="my-2"
+              max-width="150"
+              hover
+            >
+              <v-img
+                height="75"
+                v-bind:src="baseURL + '/api/game_allthumbnail/' + game.id_game"
+              ></v-img>
+              <v-card-title>
+                <RouterLink :to="'/game/'+game.id_game" class="routerlinkheadlinemobile">
+                  {{ game.judul_game }}
+                </RouterLink>
+              </v-card-title>
+              <v-card-text>
+                <v-row
+                  align="center"
+                  class="mx-0"
+                >
+                  <div class="gamedescmobile">
+                    {{ game.publisher }}
+                  </div>
+                </v-row>
+                <div class="gamedescmobile">
+                  {{ game.price }} • {{ game.genre }} • {{ game.platform }}
+                </div>
+                  <p class="gamedescmobile" v-if="!readMoreActivated">{{ game.description.slice(0, 50) }}
+                    <readmore v-if="!readMoreActivated">...</readmore>
+                  </p>
+              </v-card-text>
+              
+              <v-divider class="mx-5 my-0"></v-divider>
+              <v-card-actions>
+                <v-btn
+                  color="deep-purple lighten-2"
+                  text
+                >
+                  <readmore v-if="!readMoreActivated">
+                    <RouterLink :to="'/game/'+game.id_game" class="routerlinkgame">
+                      Read More
+                    </RouterLink>
+                  </readmore>
+                </v-btn>
+              </v-card-actions>
+            </v-card>
+          </v-flex>
+        </v-layout>
+      </div>
+    </v-col>
+    <v-overlay :value="loading">
+      <v-progress-circular indeterminate size="64" color="#E52B38"></v-progress-circular>
+    </v-overlay>
   </v-app>
 </template>
 
