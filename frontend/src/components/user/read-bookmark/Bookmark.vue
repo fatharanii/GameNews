@@ -2,15 +2,12 @@
   <div v-if="userAuth">
     <v-app light>
       <h1>BOOKMARK</h1>
-      <v-row>
-        <v-col
-          cols="8"
-          class="flex-grow-0 flex-shrink-0"
-        >
+      <v-row class="mx-2">
+        <v-col>
           <v-content>
                 <v-container style="margin-top:0px">
                     <v-layout row wrap align-center>
-                        <v-flex xs11 offset-md1>
+                        <v-flex xs12>
                             <div v-for="news in visiblePages" :key="news.id_berita">
                                 <v-card class="my-4 mx-2" hover>
                                     <v-img
