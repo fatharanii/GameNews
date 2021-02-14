@@ -5,10 +5,39 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width,initial-scale=1.0">
     <link rel="icon" href="<%= BASE_URL %>gamepad.png">
-    <link rel="preload" href="@/assets/styles/style.css" as="style">
-    <link rel="preload" href="ui.js" as="script">
     <link rel="manifest" href="/manifest.json">
     <title>Amusphere GG</title>
+    
+    <!-- Preconnect the font file origin -->
+    <link rel="preconnect" 
+          href="https://fonts.googleapis.com"
+          crossorigin />
+    <link rel="preconnect" 
+          href="https://cdn.jsdelivr.net">
+    
+    <!-- Preload the font styleshee asynchornously with low priority -->
+    <link rel="preload" 
+          as="style"
+          href="https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700,900" >
+    
+    <link rel="stylesheet"
+          href="https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700,900"
+          media="print" onload="this.media='all'">
+    
+    <link rel="preload" 
+          as="style"
+          href="https://cdn.jsdelivr.net/npm/@mdi/font@latest/css/materialdesignicons.min.css">
+    
+    <link rel="stylesheet" 
+          href="https://cdn.jsdelivr.net/npm/@mdi/font@latest/css/materialdesignicons.min.css"
+          media="print" onload="this.media='all'">
+
+    <noscript>
+      <link rel="stylesheet" 
+            href="https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700,900">
+      <link rel="stylesheet" 
+            href="https://cdn.jsdelivr.net/npm/@mdi/font@latest/css/materialdesignicons.min.css">
+    </noscript>
   </head>
   <body>
     <script>
